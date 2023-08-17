@@ -3,14 +3,14 @@ const router = express.Router();
 
 const adminAuth = require('../middlewares/adminauth');
 
-const BannerController = require('../controllers/banner.controller');
-const bannerController = new BannerController();
+const ToursiteController = require('../controllers/tourSite.controller');
+const toursiteController = new ToursiteController();
 
 //배너 리스트
-router.get('/banner', bannerController.getBannerList);
+router.get('/toursite', toursiteController.getTourSiteList);
 //배너 생성
-router.post('/banner', adminAuth, bannerController.createBanner);
+router.post('/toursite', adminAuth, toursiteController.createTourSite);
 //배너 수정
-router.put('/banner/:banner_id', adminAuth, bannerController.updateBanner);
+router.delete('/toursite', adminAuth, toursiteController.initTourSite);
 
 module.exports = router;
