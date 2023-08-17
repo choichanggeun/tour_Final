@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Tour.init(
+  Diary.init(
     {
       diary_id: {
         allowNull: false,

@@ -1,14 +1,14 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Admin extends Model {
+  class EmailAuth extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
   }
-  Admin.init(
+  EmailAuth.init(
     {
       auth_code: {
         allowNull: false,
@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
 
     {
       sequelize,
-      modelName: 'Admin',
+      modelName: 'EmailAuth',
     }
   );
-  return Admin;
+  return EmailAuth;
 };
