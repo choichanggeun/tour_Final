@@ -42,12 +42,12 @@ module.exports = (sequelize, DataTypes) => {
           key: 'plan_date_id',
         },
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
