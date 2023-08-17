@@ -2,13 +2,18 @@ const BannerRepository = require('../repositories/banner.repository');
 const AdminRepository = require('../repositories/admin.repository');
 const { CustomError, ServiceReturn } = require('../customError');
 
-class AdminService {
+class BannerService {
   bannerRepository = new BannerRepository();
   adminRepository = new AdminRepository();
   getBannerList = async () => {
     const bannerList = await this.bannerRepository.getBannerList();
-
-    return new ServiceReturn('관리자 생성 성공.', 201, bannerList);
+    const cuttingBannerList = bannerList.map((banner) => {
+      return {
+        banner_id: banner.banner_id,
+        img: banner.img,
+      };
+    });
+    return new ServiceReturn('배너 리스트 불러오기.', 201, cuttingBannerList);
   };
 
   createBanner = async (admin_id, img) => {
@@ -35,4 +40,4 @@ class AdminService {
     return new ServiceReturn('배너 삭제 성공', 200);
   };
 }
-module.exports = AdminService;
+module.exports = BannerService;

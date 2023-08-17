@@ -18,8 +18,8 @@ class BannerController {
   createBanner = async (req, res, next) => {
     try {
       const { admin_id } = res.locals.admin;
-      const { img } = req.body;
-      console.log(img);
+      let image = req.file;
+      const img = image;
       const { status, message, result } = await this.bannerService.createBanner(admin_id, img);
       return res.status(status).json({ message, result });
     } catch (error) {
@@ -33,7 +33,8 @@ class BannerController {
     try {
       const { admin_id } = res.locals.admin;
       const { banner_id } = req.params;
-      const { img } = req.body;
+      let image = req.file;
+      const img = image;
       const { status, message, result } = await this.bannerService.updateBanner(admin_id, banner_id, img);
       return res.status(status).json({ message, result });
     } catch (error) {
