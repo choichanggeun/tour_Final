@@ -29,17 +29,17 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Admin',
           key: 'admin_id',
         },
-        img: {
-          allowNull: false,
-          type: DataTypes.STRING,
-        },
       },
-      created_at: {
+      img: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,

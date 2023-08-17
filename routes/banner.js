@@ -1,15 +1,18 @@
 const express = require('express');
 const router = express.Router();
 
-const auth = require('../middlewares/auth');
+const adminAuth = require('../middlewares/adminauth');
 
 const BannerController = require('../controllers/banner.controller');
 const bannerController = new BannerController();
 
-// 관리자 생성
-router.get('/', bannerController.getBannerList);
-router.post('/', bannerController.createBanner);
-router.put('/', bannerController.updateBanner);
-router.delete('/', bannerController.deleteBanner);
+//배너 리스트
+router.get('/banner', bannerController.getBannerList);
+//배너 생성
+router.post('/banner', adminAuth, bannerController.createBanner);
+//배너 수정
+router.put('/banner/:banner_id', adminAuth, bannerController.updateBanner);
+//배너 삭제
+router.delete('/banner/:banner_id', adminAuth, bannerController.deleteBanner);
 
 module.exports = router;
