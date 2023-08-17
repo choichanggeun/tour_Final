@@ -9,7 +9,7 @@ const cookieParser = require('cookie-parser');
 
 const userRouter = require('./routes/user');
 const commentRouter = require('./routes/comment');
-const diaryRouter = require('./routes/diary');
+const diaryRouter = require('./routes/diary.route');
 const inviteRouter = require('./routes/invite');
 const tourRouter = require('./routes/tour');
 const tourSiteRouter = require('./routes/tourSite');
