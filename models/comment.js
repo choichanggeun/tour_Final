@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Tour.init(
+  Comment.init(
     {
       comment_id: {
         allowNull: false,
