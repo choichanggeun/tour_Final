@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Like.init(
+  Place.init(
     {
       place_id: {
         allowNull: false,

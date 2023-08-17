@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Like.init(
+  Invite.init(
     {
       invite_id: {
         allowNull: false,

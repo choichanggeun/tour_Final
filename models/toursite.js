@@ -24,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-  Tour.init(
+  TourSite.init(
     {
       tour_site_id: {
         allowNull: false,

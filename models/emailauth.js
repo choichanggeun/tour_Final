@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
   }
-  Admin.init(
+  EmailAuth.init(
     {
       auth_code: {
         allowNull: false,
@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
 
     {
       sequelize,
-      modelName: 'Admin',
+      modelName: 'EmailAuth',
     }
   );
-  return Admin;
+  return EmailAuth;
 };
