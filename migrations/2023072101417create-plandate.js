@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('PlanDate', {
-      plan_date_id: {
+    await queryInterface.createTable('PlanDates', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -13,8 +13,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Tour',
-          key: 'tour_id',
+          model: 'Tours',
+          key: 'id',
         },
       },
 
@@ -22,12 +22,12 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
@@ -35,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('PlanDate');
+    await queryInterface.dropTable('PlanDates');
   },
 };

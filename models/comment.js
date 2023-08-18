@@ -9,19 +9,19 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        targetKey: 'user_id',
+        targetKey: 'id',
         foreignKey: 'user_id',
       });
 
       this.belongsTo(models.Diary, {
-        targetKey: 'diary_id',
+        targetKey: 'id',
         foreignKey: 'diary_id',
       });
     }
   }
   Comment.init(
     {
-      comment_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'User',
-          key: 'user_id',
+          key: 'id',
         },
       },
       diary_id: {
@@ -40,19 +40,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'Diary',
-          key: 'diary_id',
+          key: 'id',
         },
       },
       content: {
         allowNull: false,
         type: DataTypes.STRING,
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,

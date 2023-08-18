@@ -17,14 +17,6 @@ class UserController {
       res.status(401).json({ message: error.message });
     }
   };
-
-  // 관리자 생성
-  createAdmin = async (req, res, next) => {
-    const { email, password } = req.body;
-    const { status, message } = await this.userService.createAdmin(email, password);
-
-    res.status(status).json({ message });
-  };
 }
 
 module.exports = UserController;

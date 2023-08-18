@@ -2,8 +2,8 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Invite', {
-      invite_id: {
+    await queryInterface.createTable('Invites', {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -14,24 +14,24 @@ module.exports = {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'User',
-          key: 'user_id',
+          model: 'Users',
+          key: 'id',
         },
       },
       tour_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
         references: {
-          model: 'Tour',
-          key: 'tour_id',
+          model: 'Tours',
+          key: 'id',
         },
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.fn('now'),
@@ -39,6 +39,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Invite');
+    await queryInterface.dropTable('Invites');
   },
 };
