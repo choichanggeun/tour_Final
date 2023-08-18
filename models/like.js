@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Like.init(
     {
-      like_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
