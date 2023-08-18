@@ -8,11 +8,6 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.User, {
-        targetKey: 'user_id',
-        foreignKey: 'user_id',
-      });
-
       this.hasMany(models.Tour, {
         // 1:N 관계 설정을 합니다.
         foreignKey: 'tour_id',
@@ -26,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   TourSite.init(
     {
-      tour_site_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

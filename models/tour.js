@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        targetKey: 'user_id',
+        targetKey: 'id',
         foreignKey: 'user_id',
       });
 
       this.belongsTo(models.TourSite, {
-        targetKey: 'tour_site_id',
+        targetKey: 'id',
         foreignKey: 'tour_site_id',
       });
 
@@ -41,7 +41,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Tour.init(
     {
-      tour_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

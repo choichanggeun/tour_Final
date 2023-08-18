@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Tour, {
-        targetKey: 'tour_id',
+        targetKey: 'id',
         foreignKey: 'tour_id',
       });
 
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   PlanDate.init(
     {
-      plan_date_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'Tour',
-          key: 'tour_id',
+          key: 'id',
         },
       },
 

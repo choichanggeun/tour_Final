@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Admin.init(
     {
-      admin_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
