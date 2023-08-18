@@ -9,14 +9,14 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Admin, {
-        targetKey: 'admin_id',
+        targetKey: 'id',
         foreignKey: 'admin_id',
       });
     }
   }
   Banner.init(
     {
-      banner_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -29,11 +29,14 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Admin',
           key: 'admin_id',
         },
-        img: {
-          allowNull: false,
-          type: DataTypes.STRING,
-        },
       },
+<<<<<<< HEAD
+=======
+      img: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+>>>>>>> 3b72e45d82d722243e43d9d1d522e89fbc3668a8
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
