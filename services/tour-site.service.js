@@ -1,4 +1,4 @@
-const TorusiteRepository = require('../repositories/tourSite.repository');
+const TorusiteRepository = require('../repositories/tour-site.repository');
 const AdminRepository = require('../repositories/admin.repository');
 const { CustomError, ServiceReturn } = require('../customError');
 
