@@ -13,8 +13,8 @@ module.exports = async (req, res, next) => {
     }
 
     const decodedToken = jwt.verify(token, env.COOKIE_SECRET);
-    const adminId = decodedToken.admin_id;
-    const admin = await Admin.findOne({ where: { admin_id: adminId } });
+    const adminId = decodedToken.id;
+    const admin = await Admin.findOne({ where: { id: adminId } });
     if (!admin) {
       res.clearCookie('authorization');
       return res.status(401).json({ message: '토큰 사용자가 존재하지 않습니다.' });

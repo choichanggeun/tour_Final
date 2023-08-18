@@ -8,9 +8,7 @@ class UserController {
     const { email, password } = req.body;
     try {
       const token = await this.userService.loginUser(email, password);
-
       res.cookie('authorization', `Bearer ${token}`);
-
       res.status(200).json({ message: '로그인 성공.' });
     } catch (error) {
       console.error(error.stack);

@@ -24,7 +24,7 @@ class AdminService {
       if (!pwConfirm) throw new CustomError('비밀번호를 확인해 주세요.', 403);
     }
 
-    const token = jwt.sign({ admin_id: admin.admin_id }, env.COOKIE_SECRET);
+    const token = jwt.sign({ id: admin.id }, env.COOKIE_SECRET);
 
     return token;
   };
