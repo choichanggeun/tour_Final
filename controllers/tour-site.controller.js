@@ -1,4 +1,4 @@
-const TourSiteService = require('../services/tourSite.service');
+const TourSiteService = require('../services/tour-site.service');
 
 class ToursiteController {
   tourSiteService = new TourSiteService();
@@ -17,7 +17,7 @@ class ToursiteController {
 
   createTourSite = async (req, res, next) => {
     try {
-      const { admin_id } = res.locals.admin;
+      const admin_id = res.locals.admin.id;
       const { status, message, result } = await this.tourSiteService.createTourSite(admin_id);
       return res.status(status).json({ message, result });
     } catch (error) {
@@ -29,7 +29,7 @@ class ToursiteController {
 
   initTourSite = async (req, res, next) => {
     try {
-      const { admin_id } = res.locals.admin;
+      const admin_id = res.locals.admin.id;
       const { status, message, result } = await this.tourSiteService.initTourSite(admin_id);
       return res.status(status).json({ message, result });
     } catch (error) {

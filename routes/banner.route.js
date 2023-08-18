@@ -5,7 +5,7 @@ const adminAuth = require('../middlewares/adminauth');
 const upload = require('../middlewares/uploadFile.js');
 
 const BannerController = require('../controllers/banner.controller');
-// const bannerController = new BannerController();
+const bannerController = new BannerController();
 
 //배너 리스트
 router.get('/banner', bannerController.getBannerList);
