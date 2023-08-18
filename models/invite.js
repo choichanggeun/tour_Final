@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Invite.init(
     {
-      invite_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

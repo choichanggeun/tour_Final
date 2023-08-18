@@ -10,6 +10,7 @@ const adminController = new AdminController();
 
 // 관리자 생성
 router.post('/admin', adminController.createAdmin);
+// 관리자 로그인
 router.post('/adminlogin', adminController.adminLogin);
 
 module.exports = router;
