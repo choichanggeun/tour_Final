@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Diaries', {
-      diary_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -12,10 +12,10 @@ module.exports = {
       tour_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'Tours',
-        //   key: 'tour_id',
-        // },
+        references: {
+          model: 'Tours',
+          key: 'id',
+        },
       },
       title: {
         allowNull: false,
