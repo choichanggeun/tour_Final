@@ -9,7 +9,7 @@ const AdminController = require('../controllers/admin.controller');
 const adminController = new AdminController();
 
 // 관리자 생성
-router.post(`/${env.ADMIN_URL}`, adminController.createAdmin);
+router.post('/admin', adminController.createAdmin);
 router.post('/adminlogin', adminController.adminLogin);
 
 module.exports = router;

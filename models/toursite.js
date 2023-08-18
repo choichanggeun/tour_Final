@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   TourSite.init(
     {
-      tour_site_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

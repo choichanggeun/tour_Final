@@ -3,7 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Banners', {
-      banner_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -14,7 +14,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Admins',
-          key: 'admin_id',
+          key: 'id',
         },
       },
       img: {
