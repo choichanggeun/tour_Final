@@ -3,7 +3,7 @@ const router = express.Router();
 
 const adminAuth = require('../middlewares/adminauth');
 
-const ToursiteController = require('../controllers/tourSite.controller');
+const ToursiteController = require('../controllers/tour-site.controller');
 const toursiteController = new ToursiteController();
 
 //배너 리스트

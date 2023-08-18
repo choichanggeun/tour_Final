@@ -1,4 +1,4 @@
-const TourSiteService = require('../services/tourSite.service');
+const TourSiteService = require('../services/tour-site.service');
 
 class ToursiteController {
   tourSiteService = new TourSiteService();

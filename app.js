@@ -7,14 +7,14 @@ const app = express();
 const port = 3000;
 const cookieParser = require('cookie-parser');
 
-const adminRouter = require('./routes/admin');
-const userRouter = require('./routes/user');
-const commentRouter = require('./routes/comment');
-const diaryRouter = require('./routes/diary');
-const inviteRouter = require('./routes/invite');
-const tourRouter = require('./routes/tour');
-const tourSiteRouter = require('./routes/tourSite');
-const bannerRouter = require('./routes/banner');
+const adminRouter = require('./routes/admin.route');
+const userRouter = require('./routes/user.route');
+const commentRouter = require('./routes/comment.route');
+const diaryRouter = require('./routes/diary.route');
+const inviteRouter = require('./routes/invite.route');
+const tourRouter = require('./routes/tour.route');
+const tourSiteRouter = require('./routes/tour-site.route');
+const bannerRouter = require('./routes/banner.route');
 
 app.use(express.json());
 
