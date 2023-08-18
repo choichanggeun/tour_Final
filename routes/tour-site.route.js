@@ -6,11 +6,11 @@ const adminAuth = require('../middlewares/adminauth');
 const ToursiteController = require('../controllers/tour-site.controller');
 const toursiteController = new ToursiteController();
 
-//배너 리스트
+//여행지 조회
 router.get('/toursite', toursiteController.getTourSiteList);
-//배너 생성
+//여행지 생성
 router.post('/toursite', adminAuth, toursiteController.createTourSite);
-//배너 수정
+//여행지 삭제
 router.delete('/toursite', adminAuth, toursiteController.initTourSite);
 
 module.exports = router;

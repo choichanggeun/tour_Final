@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   Place.init(
     {
-      place_id: {
+      id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,

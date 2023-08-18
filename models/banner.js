@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'Admin',
-          key: 'admin_id',
+          key: 'id',
         },
       },
       img: {
