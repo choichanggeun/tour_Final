@@ -11,10 +11,8 @@ class TourService {
     if (!content) throw { code: 401, message: '댓글 내용을 입력해주세요.' };
 
     const createCommentData = await this.commentsRepository.createComments({
-      cardId,
       content,
-      createUser: userId,
-      name,
+      nickname,
     });
 
     if (!createCommentData) throw { code: 401, message: '댓글 등록이 실패하였습니다. 않습니다.' };
