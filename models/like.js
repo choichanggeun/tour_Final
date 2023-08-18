@@ -9,12 +9,12 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.User, {
-        targetKey: 'user_id',
+        targetKey: 'id',
         foreignKey: 'user_id',
       });
 
       this.belongsTo(models.Tour, {
-        targetKey: 'tour_id',
+        targetKey: 'id',
         foreignKey: 'tour_id',
       });
     }
@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'User',
-          key: 'user_id',
+          key: 'id',
         },
       },
       tour_id: {
@@ -40,15 +40,15 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         references: {
           model: 'Tour',
-          key: 'tour_id',
+          key: 'id',
         },
       },
-      created_at: {
+      createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
       },
-      updated_at: {
+      updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW,
