@@ -3,11 +3,7 @@
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable('Banners', {
-<<<<<<< HEAD
-      banner_id: {
-=======
       id: {
->>>>>>> 3b72e45d82d722243e43d9d1d522e89fbc3668a8
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
@@ -18,15 +14,6 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {
           model: 'Admins',
-<<<<<<< HEAD
-          key: 'admin_id',
-        },
-        img: {
-          allowNull: false,
-          type: Sequelize.STRING,
-        },
-      },
-=======
           key: 'id',
         },
       },
@@ -35,7 +22,6 @@ module.exports = {
         type: Sequelize.STRING,
       },
 
->>>>>>> 3b72e45d82d722243e43d9d1d522e89fbc3668a8
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
