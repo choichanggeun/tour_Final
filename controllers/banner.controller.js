@@ -17,10 +17,10 @@ class BannerController {
 
   createBanner = async (req, res, next) => {
     try {
-      const { id } = res.locals.admin;
+      const admin_id = res.locals.admin.id;
       let image = req.file;
       const img = image;
-      const { status, message, result } = await this.bannerService.createBanner(id, img);
+      const { status, message, result } = await this.bannerService.createBanner(admin_id, img);
       return res.status(status).json({ message, result });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });

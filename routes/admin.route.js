@@ -12,5 +12,7 @@ const adminController = new AdminController();
 router.post('/admin', adminController.createAdmin);
 // 관리자 로그인
 router.post('/adminlogin', adminController.adminLogin);
+// 인증 메일 생성, 해당 메일에 보내기
+router.post('/admin/authemail', adminController.isEmailValid);
 
 module.exports = router;
