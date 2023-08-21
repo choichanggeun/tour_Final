@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      this.belongsTo(models.Diaries, {
+      this.belongsTo(models.Diary, {
         targetKey: 'id',
         foreignKey: 'diary_id',
       });
@@ -27,7 +27,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: 'Diaries',
+          model: 'Diary',
           key: 'id',
         },
       },
