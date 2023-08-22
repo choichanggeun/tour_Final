@@ -15,7 +15,7 @@ class AdminController {
       return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
     }
   };
-
+  //로그인
   adminLogin = async (req, res, next) => {
     const { email, password } = req.body;
     try {
