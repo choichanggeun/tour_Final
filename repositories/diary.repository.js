@@ -13,7 +13,7 @@ class DiaryRepository {
 
   // 여행 일지 수정
   putDiary = async (diary_id, title, content, diary_img) => {
-    return await Diary.update({ title, content, diary_img }, { where: { id: diary_id } });
+    await Diary.update({ title, content, diary_img }, { where: { id: diary_id } });
   };
 
   // 여행 일지 삭제

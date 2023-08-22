@@ -15,7 +15,7 @@ class DiaryService {
 
   // 여행 일지 수정
   putDiary = async (diary_id, title, content, diary_img) => {
-    const updatedDiary = await this.diaryRepository.putDiary(diary_id, title, content, diary_img);
+    await this.diaryRepository.putDiary(diary_id, title, content, diary_img);
   };
 
   // 여행 일지 삭제
