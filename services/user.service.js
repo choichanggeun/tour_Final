@@ -18,7 +18,7 @@ class UserService {
     const isEmailValemail = await this.userRepository.findOneIsEmailValid(email);
     if (!isEmailValemail) throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);
 
-    const isEmailValidauthCode = isEmailValemail?.auth_code == authCode;
+    const isEmailValidauthCode = isEmailValemail[0]?.auth_code == authCode;
     if (!isEmailValidauthCode) throw new CustomError('인증번호가 일치하지 않습니다.', 401);
 
     const isEmailValidOverTime = dayjs().diff(new Date(isEmailValemail.created_at), 'm') >= 30;
