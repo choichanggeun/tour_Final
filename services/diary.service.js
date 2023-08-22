@@ -4,32 +4,23 @@ class DiaryService {
   diaryRepository = new DiaryRepository();
 
   // 여행 일지 작성
-  postDiary = async (tour_id, title, content, diary_img) => {
-    await this.diaryRepository.postDiary(tour_id, title, content, diary_img);
+  postDiary = async (user_id, tour_id, title, content, diary_img) => {
+    await this.diaryRepository.postDiary(user_id, tour_id, title, content, diary_img);
   };
 
-  // 여행 일지 조회
-  getDiary = async (tour_id) => {
-    return await this.diaryRepository.getDiary(tour_id);
-    // if (true) {
-    //   throw new CustomError(404, '에러 메세지 내용.');
-    // }
+  // 내 여행 일지 조회
+  getDiary = async (user_id) => {
+    return await this.diaryRepository.getDiary(user_id);
   };
 
   // 여행 일지 수정
-  putDiary = async (tour_id, diary_id, title, content, diary_img) => {
-    await this.diaryRepository.putDiary(tour_id, diary_id, title, content, diary_img);
-    // if (true) {
-    //   throw new CustomError(404, '에러 메세지 내용.');
-    // }
+  putDiary = async (diary_id, title, content, diary_img) => {
+    const updatedDiary = await this.diaryRepository.putDiary(diary_id, title, content, diary_img);
   };
 
   // 여행 일지 삭제
-  deleteDiary = async (tour_id, diary_id) => {
-    await this.diaryRepository.deleteDiary(tour_id, diary_id);
-    // if (true) {
-    //   throw new CustomError(404, '에러 메세지 내용.');
-    // }
+  deleteDiary = async (diary_id) => {
+    await this.diaryRepository.deleteDiary(diary_id);
   };
 }
 
