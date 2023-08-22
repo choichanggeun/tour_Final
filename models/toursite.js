@@ -39,6 +39,14 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: true,
         type: DataTypes.STRING,
       },
+      mapx: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
+      mapy: {
+        allowNull: true,
+        type: DataTypes.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

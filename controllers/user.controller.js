@@ -4,8 +4,8 @@ class UserController {
 
   // 회원가입
   createUser = async (req, res, next) => {
-    const { email, password, confirm, nickname } = req.body;
-    const createUserData = await this.userService.createUser(email, password, confirm, nickname);
+    const { email, password, confirm, nickname, authCode } = req.body;
+    const createUserData = await this.userService.createUser(email, password, confirm, nickname, authCode);
 
     res.status(201).json({ data: createUserData });
   };
@@ -64,6 +64,21 @@ class UserController {
     } catch (error) {
       console.error(error);
       res.status(500).json({ errorMessage: '회원탈퇴에 실패하였습니다.' });
+      console.error(error);
+      res.status(500).json({ errorMessage: '회원탈퇴에 실패하였습니다.' });
+    }
+  };
+
+  // 이메일 인증
+  isEmailValid = async (req, res) => {
+    try {
+      const { email } = req.body;
+      const { status, message } = await this.userService.isEmailValid(email);
+      return res.status(status).json({ message });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.error(err);
+      return res.status(500).json({ result: '오류가 발생하였습니다.' });
     }
   };
 }

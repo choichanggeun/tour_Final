@@ -4,13 +4,35 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config(); //물어볼것 //환경변수를 관리하는 구성패키지
 const env = process.env; //물어볼것
+<<<<<<< HEAD
+=======
+const dayjs = require('dayjs');
+
+const sendMail = require('../emailauth');
+>>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
 
 class UserService {
   userRepository = new UserRepository();
   // 회원가입
+<<<<<<< HEAD
   createUser = async (email, password, confirm, nickname) => {
     const createUserData = await this.userRepository.createUser(email, password, confirm, nickname);
+=======
+  createUser = async (email, password, confirm, nickname, authCode) => {
+    const User = await this.userRepository.findLoginUser(email);
+    if (User) throw new CustomError('중복된 이메일입니다.', 403);
+>>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
 
+    const isEmailValemail = await this.userRepository.findOneIsEmailValid(email);
+    if (!isEmailValemail) throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);
+
+    const isEmailValidauthCode = isEmailValemail?.auth_code == authCode;
+    if (!isEmailValidauthCode) throw new CustomError('인증번호가 일치하지 않습니다.', 401);
+
+    const isEmailValidOverTime = dayjs().diff(new Date(isEmailValemail.created_at), 'm') >= 30;
+    if (isEmailValidOverTime) throw new CustomError('이메일 인증 시간이 초과되었습니다.\n이메일 인증을 재시도 해주세요.', 408);
+
+    const createUserData = await this.userRepository.createUser(email, password, confirm, nickname);
     return createUserData;
   };
   // 로그인
@@ -55,6 +77,26 @@ class UserService {
     if (!user) return { message: '존재하지 않는 회원입니다.' };
     const result = await this.userRepository.deleteUser(user_id);
     return { message: '회원 탈퇴에 성공했습니다', result };
+  };
+
+  // 이메일 인증키 전송
+  isEmailValid = async (email) => {
+    const IsValidUser = await this.userRepository.findLoginUser(email);
+    if (IsValidUser) throw new CustomError('이메일을 확인해주세요.', 403);
+
+    const auth_code = String(Math.floor(Math.random() * 1000000)).padStart(6, '0');
+    try {
+      await sendMail({
+        email,
+        title: '[Tour Project] 가입 인증번호 입니다.',
+        body: `사용자의 가입 인증번호는 <b>'${auth_code}'</b> 입니다.`,
+      });
+      await this.userRepository.createIsEmailValid(email, auth_code);
+    } catch (err) {
+      console.error('[이메일 발송 실패]', err);
+    }
+
+    return new ServiceReturn('인증번호가 발송되었습니다.\n이메일을 확인해 주세요.', 200);
   };
 }
 module.exports = UserService;
