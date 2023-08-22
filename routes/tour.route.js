@@ -6,7 +6,7 @@ const TourController = require('../controllers/tour.controller');
 const tourController = new TourController();
 
 // 여행계획 생성
-router.post('tours/', authMiddleware, tourController.postTour);
+router.post('/tours/', authMiddleware, tourController.postTour);
 
 // 여행 일지 조회
 router.get('/tours/tour_id/', authMiddleware, tourController.getTour);

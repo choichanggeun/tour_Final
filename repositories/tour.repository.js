@@ -1,10 +1,17 @@
-const { Tour } = require('../models');
+const { Tour, User } = require('../models');
 
 class TourRepository {
-  createTour = async ({ title, content, start_date, end_date }) => {
-    const createdTourData = await Tour.create({ title, content, start_date, end_date });
+  // 여행 계획 등록
+  createTour = async ({ user_id, title, content, start_date, end_date }) => {
+    const user = await User.findOne({ where: { id: user_id } });
+    if (!user) {
+      throw new Error('해당하는 사용자가 없습니다.');
+    }
+    const createdTourData = await Tour.create({ title, content, start_date, end_date, user_id });
+
     return createdTourData;
   };
+
   // 모든 여행 계획 조회
   getTour = async () => {
     const tours = await Tour.findAll();

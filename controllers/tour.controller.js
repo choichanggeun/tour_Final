@@ -6,7 +6,8 @@ class TourController {
   //여행 계획 등록
   postTour = async (req, res, next) => {
     try {
-      const { user_id } = req.locals.user;
+      const { id: user_id } = res.locals.user;
+      console.log(user_id);
       const { title, start_date, end_date } = req.body;
       const { code, message } = await this.tourService.createTour({
         user_id,

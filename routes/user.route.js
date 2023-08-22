@@ -18,10 +18,7 @@ router.get('/users', auth, userController.getUser);
 router.put('/users/:user_id', auth, userController.updateUser);
 // 사용자 정보 삭제(회원탈퇴)
 router.delete('/users/:user_id', auth, userController.deleteUser);
-<<<<<<< HEAD
-=======
 // 인증 메일 생성, 해당 메일에 보내기
 router.post('/users/authemail', userController.isEmailValid);
->>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
 
 module.exports = router;

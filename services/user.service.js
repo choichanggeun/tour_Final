@@ -4,24 +4,16 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config(); //물어볼것 //환경변수를 관리하는 구성패키지
 const env = process.env; //물어볼것
-<<<<<<< HEAD
-=======
 const dayjs = require('dayjs');
 
 const sendMail = require('../emailauth');
->>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
 
 class UserService {
   userRepository = new UserRepository();
   // 회원가입
-<<<<<<< HEAD
-  createUser = async (email, password, confirm, nickname) => {
-    const createUserData = await this.userRepository.createUser(email, password, confirm, nickname);
-=======
   createUser = async (email, password, confirm, nickname, authCode) => {
     const User = await this.userRepository.findLoginUser(email);
     if (User) throw new CustomError('중복된 이메일입니다.', 403);
->>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
 
     const isEmailValemail = await this.userRepository.findOneIsEmailValid(email);
     if (!isEmailValemail) throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);

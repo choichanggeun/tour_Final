@@ -16,11 +16,7 @@ class UserRepository {
     return createUserData;
   };
   // 로그인
-<<<<<<< HEAD
-  findLoginUser = async (email, password) => {
-=======
   findLoginUser = async (email) => {
->>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
     const user = await User.findOne({ where: { email: email } });
 
     return user;
@@ -44,8 +40,6 @@ class UserRepository {
     const result = await User.destroy({ where: { id: user_id } });
     return result;
   };
-<<<<<<< HEAD
-=======
   //이메일 인증할 때 인증메일을 보냈는지 확인
   findOneIsEmailValid = async (email) => {
     return await EmailAuth.findOne({ where: { email: email } });
@@ -54,7 +48,6 @@ class UserRepository {
   createIsEmailValid = async (email, auth_code) => {
     return await EmailAuth.create({ email, auth_code });
   };
->>>>>>> db5a94f43455e42406b0a3e493fb4faf67d92a8e
 }
 
 module.exports = UserRepository;
