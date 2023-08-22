@@ -1,14 +1,14 @@
-const TourService = require('../services/tour.service');
+const PlaceService = require('../services/place.service');
 
-class TourController {
-  tourService = new TourService();
+class PlaceController {
+  placeService = new PlaceService();
 
   //여행 계획 등록
-  postTour = async (req, res, next) => {
+  postPlace = async (req, res, next) => {
     try {
       // const { user_id } = req.locals.user; 유저 부분 작성되면 수정 할 예정
       const { title, start_date, end_date } = req.body;
-      const { code, message } = await this.tourService.createTour({
+      const { code, message } = await this.placeService.createPlace({
         // user_id,
         title,
         start_date,
@@ -22,20 +22,20 @@ class TourController {
     }
   };
   // 여행 계획 조회
-  getTour = async (req, res, next) => {
+  getPlace = async (req, res, next) => {
     try {
       const { tour_id } = req.params;
-      const { tours, code, message } = await this.tourService.getTour({ tour_id });
+      const { tours, code, message } = await this.placeService.getPlace({ tour_id });
       return res.status(code).json({ message, data: tours });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
     }
   };
-  putTour = async (req, res, next) => {
+  putPlace = async (req, res, next) => {
     try {
       const { tour_id } = req.params;
       const { title, start_date, end_date } = req.body; //
-      const { code, message } = await this.tourService.putTour({
+      const { code, message } = await this.placeService.putPlace({
         title,
         start_date,
         end_date,
@@ -47,11 +47,11 @@ class TourController {
       res.status(500).send('알 수 없는 에러 발생');
     }
   };
-  deleteTour = async (req, res, next) => {
+  deletePlace = async (req, res, next) => {
     try {
       // const {user_id} = req.locals.user; 유저 부분 작성되면 수정 할 예정
       const { tour_id } = req.params;
-      const { code, message } = await this.tourService.deleteTour({
+      const { code, message } = await this.placeService.deletePlace({
         tour_id,
       });
       return res.status(code).json({ message });
@@ -62,4 +62,4 @@ class TourController {
   };
 }
 
-module.exports = TourController;
+module.exports = PlaceController;
