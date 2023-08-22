@@ -9,7 +9,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
 
-fs.readdirSync('./routes').forEach((routes) => {
+fs.readdirSync('./routes').forEach((routes) => {  //routes 폴더에있는걸 다실행시킨다
   app.use('/', require(`./routes/${routes}`));
 });
 
