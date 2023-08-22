@@ -1,25 +1,21 @@
 'use strict';
 const { Model } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-  class Diary extends Model {
+  class DiaryPhoto extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.belongsTo(models.Tour, {
+      // define association here
+      this.belongsTo(models.Diary, {
         targetKey: 'id',
-        foreignKey: 'tour_id',
-      });
-
-      this.hasMany(models.Comment, {
-        // 1:N 관계 설정을 합니다.
         foreignKey: 'diary_id',
       });
     }
   }
-  Diary.init(
+  DiaryPhoto.init(
     {
       id: {
         allowNull: false,
@@ -27,46 +23,30 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      tour_id: {
+      diary_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
         references: {
-          model: 'Tour',
+          model: 'Diary',
           key: 'id',
         },
       },
-      user_id: {
-        allowNull: false,
-        type: DataTypes.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id',
-        },
-      },
-      title: {
-        allowNull: false,
-        type: DataTypes.STRING,
-      },
-      content: {
-        allowNull: false,
+      diary_img: {
         type: DataTypes.STRING,
       },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
       },
       updatedAt: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
       },
     },
-
     {
       sequelize,
-      modelName: 'Diary',
+      modelName: 'DiaryPhoto',
     }
   );
-  return Diary;
+  return DiaryPhoto;
 };
