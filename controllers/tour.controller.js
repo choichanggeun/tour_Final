@@ -6,10 +6,10 @@ class TourController {
   //여행 계획 등록
   postTour = async (req, res, next) => {
     try {
-      // const { user_id } = req.locals.user; 유저 부분 작성되면 수정 할 예정
+      const { user_id } = req.locals.user;
       const { title, start_date, end_date } = req.body;
       const { code, message } = await this.tourService.createTour({
-        // user_id,
+        user_id,
         title,
         start_date,
         end_date,
@@ -36,6 +36,7 @@ class TourController {
       const { tour_id } = req.params;
       const { title, start_date, end_date } = req.body; //
       const { code, message } = await this.tourService.putTour({
+        tour_id,
         title,
         start_date,
         end_date,

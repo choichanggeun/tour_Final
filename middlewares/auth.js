@@ -15,6 +15,7 @@ module.exports = async (req, res, next) => {
     }
     const decodedToken = jwt.verify(token, env.COOKIE_SECRET);
     const user_id = decodedToken.user_id;
+
     if (!user_id) {
       return res.status(401).json({ message: '토큰 사용자 ID가 없습니다.' });
     }
