@@ -30,7 +30,7 @@ class UserService {
   // 로그인
   loginUser = async (email, password) => {
     const user = await this.userRepository.findLoginUser(email);
-    if (!user) throw new Error('닉네임을 확인해주세요.');
+    if (!user) throw new Error('이메일을 확인해주세요.');
     if (user) {
       const pwConfirm = await bcrypt.compare(password, user.password);
       if (!pwConfirm) throw new Error('비밀번호를 확인해 주세요.');

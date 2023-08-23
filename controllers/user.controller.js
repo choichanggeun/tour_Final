@@ -7,7 +7,6 @@ class UserController {
   createUser = async (req, res, next) => {
     const { email, password, confirm, nickname, authCode } = req.body;
     const createUserData = await this.userService.createUser(email, password, confirm, nickname, authCode);
-
     res.status(201).json({ data: createUserData });
   };
   // 로그인
@@ -72,6 +71,7 @@ class UserController {
   isEmailValid = async (req, res) => {
     try {
       const { email } = req.body;
+      console.log(email);
       const { status, message } = await this.userService.isEmailValid(email);
       return res.status(status).json({ message });
     } catch (err) {

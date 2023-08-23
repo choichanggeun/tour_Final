@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tour Project</title>
+
+    <!--Bootstrap core CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link href="css/responsive-style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <style>
+      .button-container {
+        float: right;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
+    <div class="loader loader-bg">
+      <div class="loader-inner ball-pulse-rise">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <header>
+      <div class="small-top">
+        <div class="container">
+          <!-- 시간 가져오는 부분 -->
+          <div class="col-lg-4 date-sec hidden-sm-down">
+            <div id="Date"></div>
+          </div>
+
+          <div class="col-lg-3 offset-lg-5">
+            <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
+            <div class="social-icon">
+              <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-head left">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <h1>Tour ProJect<small>여행 계획을 알차게!</small></h1>
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
+              <!-- 사용자 부분 -->
+              <nav class="nav nav-inline">
+                <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
+                        <a href="#" class="nav-link">
+                  <span class="ping"></span>
+                  <i class="fa fa-envelope-o"></i
+                ></a> -->
+                <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="container">
+              <div class="card-body">
+                <div class="pt-4 pb-2">
+                  <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                  <p class="text-center small">회원가입 시 모든 정보는 필수로 입력해 주세요.</p>
+                </div>
+
+                <div class="row g-3 needs-validation" novalidate>
+                  <div class="col-12">
+                    <label class="form-label">이메일</label>
+                    <div style="display: flex">
+                      <input type="email" class="form-control me-2 fs-14" id="userEmail" placeholder="hongkildong@gmail.com" />
+                      <button class="btn btn-dark fs-14" style="margin-left: auto; width: 25%" id="authBtn" onclick=authMailSending()>인증</button>
+                    </div>
+                  </div>
+
+                  <div class="col-12 d-none" id="authCodeBox">
+                    <input type="text" class="form-control fs-14" id="authCode" placeholder="인증번호를 입력해 주세요." />
+                    <span class="fs-12 ms-2" style="color: gray">인증메일이 안오셨나요? <a href="#" onclick=authMailSending()>재발송</a></span>
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label">비밀번호</label>
+                    <input type="password" class="form-control fs-14" id="userPassword" placeholder="영문, 숫자, 특수문자를 포함해야합니다." />
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label">확인 비밀번호</label>
+                    <input type="password" class="form-control fs-14" id="userConfirmPassword" placeholder="비밀번호를 한번 더 입력해 주세요." />
+                  </div>
+
+                  <div class="col-12">
+                    <label class="form-label">닉네임</label>
+                    <input type="text" class="form-control fs-14" id="userNickname" placeholder="길똥이" />
+                  </div>
+
+                  <div class="col-12">
+                    <button class="btn btn-dark w-100" id="createBtn">Create Account</button>
+                  </div>
+                  <div class="col-12">
+                    <p class="small mb-0">이미 가입된 계정이 있습니까? <a href="/login.html">로그인</a></p>
+                  </div>
+                </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-12">
+            <h6 class="heading-footer">ABOUT US</h6>
+            <p>팀 소개문?</p>
+            <p><i class="fa fa-phone"></i> <span>전화번호 :</span> (공란)</p>
+            <p><i class="fa fa-envelope"></i> <span>Send Email :</span> 깃 허브 주소 / 구글 주소</p>
+          </div>
+          <div class="col-lg-2 col-md-4">
+            <h6 class="heading-footer">QUICK LINKS</h6>
+            <ul class="footer-ul">
+              <li><a href="#"> Career</a></li>
+              <li><a href="#"> Privacy Policy</a></li>
+              <li><a href="#"> Terms & Conditions</a></li>
+              <li><a href="#"> Client Gateway</a></li>
+              <li><a href="#"> Ranking</a></li>
+              <li><a href="#"> Case Studies</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <h6 class="heading-footer">LATEST NEWS</h6>
+          </div>
+          <div class="col-lg-2 col-md-4 social-icons">
+            <h6 class="heading-footer">FOLLOW</h6>
+            <ul class="footer-ul">
+              <li>
+                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-google-plus"></i> Google+</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-linkedin"></i> Linkedin</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--footer start from here-->
+
+    <div class="copyright">
+      <div class="container">
+        <div class="col-lg-6 col-md-4">
+          <p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a></p>
+        </div>
+        <div class="col-lg-6 col-md-8">
+          <ul class="bottom_ul">
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Faq's</a></li>
+            <li><a href="#">Contact us</a></li>
+            <li><a href="#">Site Map</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/signup.js"></script>
+  </body>
+</html>

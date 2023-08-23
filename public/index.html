@@ -14,7 +14,31 @@
     <link href="css/responsive-style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
-    <style></style>
+    <style>
+      .button-container {
+      float: right;
+      }
+      .dropdown{
+        width: 60px;
+        position : relative;
+        display : inline-block;
+      }
+
+      .dropdown-content{
+        overflow: hidden;
+        display : none;
+        position : absolute;
+        z-index : 1; /*다른 요소들보다 앞에 배치*/
+      }
+
+      .dropdown-content a{
+        display : block;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+    </style>
   </head>
 
   <body>
@@ -60,7 +84,24 @@
                   <i class="fa fa-envelope-o"></i
                 ></a> -->
                 <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
-                <a href="" class="nav-link">홍길동 <img class="img-fluid img-circle" src="img/admin-bg.jpg" /></a>
+                <div class="container header-container">
+                  <div class="button-container right-aligned-buttons">
+                      <button type="button" class="btn btn-search " id="loginbtn" ><a href="/login.html">로그인</a></button>
+                      <div  id="profileimg">
+                      <a href="" class="nav-link">
+                          <div class="dropdown">
+                          <span class="dropbtn" id="usernickname">홍길동</span>
+                            <div class="dropdown-content">
+                              <a href="javascript:void(0);" onclick="">회원정보</a>
+                              <a href="javascript:void(0);" onclick="popup()">채팅</a>
+                              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+                            </div>
+                           </div>  
+                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
+                          </a>
+                          </div>
+                        </div>
+                </div>
               </nav>
             </div>
           </div>
@@ -79,9 +120,7 @@
               <!-- 홈 버튼 -->
               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
-            <label for="post-upload-img" class="basic-btn">파일 업로드
-              <input id="post-upload-img" type="file" style="display: none;"/>
-              <button id="testbtn">버튼</button>
+
             <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
             <!-- <li class="nav-item"><a class="nav-link" href="#">World</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Politics</a></li>
@@ -94,9 +133,14 @@
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
+          <label for="post-upload-img" class="basic-btn">파일 업로드
+            <input id="post-upload-img" type="file" style="display: none;"/>
+            <button id="testbtn">버튼</button>
+          </form>
+          <form class="pull-xs-right">
             <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" />
-              <button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
+              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
+              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
             </div>
           </form>
         </div>
@@ -163,48 +207,10 @@
           <div class="col-md-6 top-slider">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
               <!-- Indicators -->
-              <ol class="carousel-indicators">
-                <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-                <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-              </ol>
+              <ol class="carousel-indicators" id="carousel-indicators"></ol>
 
               <!-- Wrapper for slides -->
-              <div class="carousel-inner" role="listbox">
-                <div class="carousel-item active">
-                  <div class="news-block">
-                    <div class="news-media"><img class="img-fluid" src="img/media-5.jpg" alt="" /></div>
-                    <div class="news-title">
-                      <h2 class="title-large"><a href="#">Ray madison may struggle to get best from Paul in a 4-2-3-1 formation</a></h2>
-                    </div>
-                    <div class="news-des">Condimentum ultrices mi est a arcu at cum a elementum per cum turpis dui vulputate vestibulum in vehicula montes vel. Mauris nam suspendisse consectetur mus...</div>
-                    <div class="time-text"><strong>2h ago</strong></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="news-block">
-                    <div class="news-media"><img class="img-fluid" src="img/media-6.jpg" alt="" /></div>
-                    <div class="news-title">
-                      <h2 class="title-large"><a href="#">An Alternative Form of Mental Health Care Gains a Foothold</a></h2>
-                    </div>
-                    <div class="news-des">Condimentum ultrices mi est a arcu at cum a elementum per cum turpis dui vulputate vestibulum in vehicula montes vel. Mauris nam suspendisse consectetur mus...</div>
-                    <div class="time-text"><strong>2h ago</strong></div>
-                    <div></div>
-                  </div>
-                </div>
-                <div class="carousel-item">
-                  <div class="news-block">
-                    <div class="news-media"><img class="img-fluid" src="img/media-7.jpg" alt="" /></div>
-                    <div class="news-title">
-                      <h2 class="title-large"><a href="#">Key Republican Senator Says She Will Not Vote for former president!</a></h2>
-                    </div>
-                    <div class="news-des">Condimentum ultrices mi est a arcu at cum a elementum per cum turpis dui vulputate vestibulum in vehicula montes vel. Mauris nam suspendisse consectetur mus...</div>
-                    <div class="time-text"><strong>2h ago</strong></div>
-                    <div></div>
-                  </div>
-                </div>
-              </div>
+              <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
             </div>
           </div>
         </div>
