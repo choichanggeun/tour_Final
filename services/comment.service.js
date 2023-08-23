@@ -4,8 +4,9 @@ class CommentService {
   commentRepository = new CommentRepository();
 
   // 댓글 조회
-  findComment = async ({ user_id, diary_id }) => {
-    const findComment = await this.commentRepository.findComment({ user_id, diary_id });
+  findComment = async ({ user_id }) => {
+    const findComment = await this.commentRepository.findComment({ user_id });
+    //diary_id 빼씀
     if (!findComment.user_id) {
       throw { code: 412, message: '댓글을 조회할 권한이 존재하지 않습니다.' };
     }

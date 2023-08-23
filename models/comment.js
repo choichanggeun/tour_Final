@@ -7,16 +7,16 @@ module.exports = (sequelize, DataTypes) => {
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
-    // static associate(models) {
-    //   this.belongsTo(models.User, {
-    //     targetKey: 'id',
-    //     foreignKey: 'user_id',
-    //   });
-    //   this.belongsTo(models.Diary, {
-    //     targetKey: 'id',
-    //     foreignKey: 'diary_id',
-    //   });
-    // }
+    static associate(models) {
+      this.belongsTo(models.User, {
+        targetKey: 'id',
+        foreignKey: 'user_id',
+      });
+      //   this.belongsTo(models.Diary, {
+      //     targetKey: 'id',
+      //     foreignKey: 'diary_id',
+      //   });
+    }
   }
   Comment.init(
     {
@@ -34,14 +34,14 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
-      diary_id: {
-        allowNull: true,
-        type: DataTypes.INTEGER,
-        // references: {
-        //   model: 'Diary',
-        //   key: 'id',
-        // },
-      },
+      // diary_id: {
+      //   allowNull: true,
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: 'Diary',
+      //     key: 'id',
+      //   },
+      // },
       content: {
         allowNull: false,
         type: DataTypes.STRING,

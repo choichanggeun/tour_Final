@@ -6,9 +6,10 @@ class CommentController {
   // 댓글 조회
   findComment = async (req, res) => {
     try {
-      const { user_id } = res.locals.user;
-      const { diary_id } = req.params;
-      const { code, data } = await this.commentsService.findComment({ user_id, diary_id });
+      const { id: user_id } = res.locals.user;
+      // const { diary_id } = req.params;
+      const { code, data } = await this.commentService.findComment({ user_id });
+      //윗줄 맨 뒤에 diary_id 뺐음
       res.status(code).json({ data });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
@@ -20,11 +21,11 @@ class CommentController {
   // 댓글 생성
   createComment = async (req, res) => {
     try {
-      const { user_id } = res.locals.user;
+      const { id: user_id } = res.locals.user;
       // const { diary_id } = req.params;
       const { content } = req.body;
 
-      const { code, message } = await this.commentsService.createComment({
+      const { code, message } = await this.commentService.createComment({
         user_id,
         // diary_id,
         content,
@@ -41,11 +42,11 @@ class CommentController {
   // 댓글 수정
   updateComment = async (req, res) => {
     try {
-      const { user_id } = res.locals.user;
+      const { id: user_id } = res.locals.user;
       const { comment_id } = req.params;
       const { content } = req.body;
 
-      const { code, data } = await this.commentsService.updateComment({
+      const { code, data } = await this.commentService.updateComment({
         user_id,
         comment_id,
         content,
@@ -61,10 +62,10 @@ class CommentController {
   // 댓글 삭제
   deleteComment = async (req, res) => {
     try {
-      const { user_id } = res.locals.user;
+      const { id: user_id } = res.locals.user;
       const { comment_id } = req.params;
 
-      const { code, data } = await this.commentsService.deleteComment({
+      const { code, data } = await this.commentService.deleteComment({
         user_id,
         comment_id,
       });

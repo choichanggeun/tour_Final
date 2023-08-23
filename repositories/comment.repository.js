@@ -1,10 +1,17 @@
 const { Comment } = require('../models');
 
 class CommentRepository {
-  //댓글 조회
-  findComment = async ({ diary_id }) => {
-    return await Comment.findAll({
-      where: { diary_id },
+  // 댓글 조회
+  // findComment = async ({ diary_id }) => {
+  //   return await Comment.findAll({
+  //     where: { diary_id },
+  //   });
+  // };
+
+  // 임시 댓글 조회
+  findComment = async ({ comment_id }) => {
+    return await Comment.findOne({
+      where: { comment_id },
     });
   };
 
@@ -15,6 +22,11 @@ class CommentRepository {
       // diary_id,
       content,
     });
+  };
+
+  // 댓글 아이디 찾기
+  findById = async ({ user_id, comment_id }) => {
+    return await Comment.findOne({ where: { user_id, comment_id } });
   };
 
   // 댓글 수정
