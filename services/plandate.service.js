@@ -3,49 +3,40 @@ const PlanDateRepository = require('../repositories/plandate.repository');
 class PlanDateService {
   planDateRepository = new PlanDateRepository();
 
-  // 여행 계획 작성
+  // 여행 일자 작성
 
-  createPlanDate = async ({ title, start_date, end_date }) => {
-    if (!title) throw { code: 401, message: 'title을 입력해주세요.' };
+  postPlanDate = async ({ user_id, tour_id, day }) => {
+    if (!day) throw { code: 401, message: '여행 일자를 입력해주세요.' };
 
-    if (!start_date) throw { code: 401, message: 'start_date 입력해주세요.' };
+    const createPlanDate = await this.planDateRepository.postPlanDate({ user_id, tour_id, day });
 
-    if (!end_date) throw { code: 401, message: 'end_date 입력해주세요.' };
+    if (!createPlanDate) throw { code: 401, message: '여행 장소 등록이 실패하였습니다.' };
 
-    const createPlanDateData = await this.planDateRepository.createPlanDate({
-      title,
-      start_date,
-      end_date,
-    });
-
-    if (!createPlanDateData) throw { code: 401, message: '여행 장소 등록이 실패하였습니다.' };
-
-    return { createPlanDateData, code: 200, message: '여행 장소 작성이 완료되었습니다.' };
+    return { createPlanDate, code: 200, message: '여행 장소 작성이 완료되었습니다.' };
   };
   //여행 장소 조회
   getPlanDate = async ({ tour_id }) => {
     // 매개변수 객체로 수정
     if (!tour_id) {
-      throw { code: 400, message: '실패하였습니다.' };
+      throw { data, code: 400, message: '실패하였습니다.' };
     }
 
-    const findTour = await this.planDateRepository.getPlanDate(tour_id);
+    const findPlan = await this.planDateRepository.getPlanDate(tour_id);
 
     return {
-      findTour,
+      data: findPlan,
       code: 200,
       message: '여행 장소 조회가 완료되었습니다.',
     };
   };
   //여행 장소 수정
-  putPlanDate = async ({ tour_id, title, start_date, end_date }) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
+  putPlanDate = async ({ user_id, plan_date_id, day }) => {
+    if (!plan_date_id) throw { code: 400, message: 'plan_date_id가 필요합니다.' };
 
     const updatedPlace = await this.planDateRepository.putPlanDate({
-      tour_id,
-      title,
-      start_date,
-      end_date,
+      user_id,
+      plan_date_id,
+      day,
     });
 
     if (!updatedPlace) throw { code: 400, message: '여행 장소 수정에 실패했습니다.' };
@@ -53,14 +44,14 @@ class PlanDateService {
     return { code: 200, message: '여행 장소가 성공적으로 수정되었습니다.' };
   };
   //여행 장소 삭제
-  deletePlanDate = async ({ tour_id }) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
+  deletePlanDate = async ({ user_id, plan_date_id }) => {
+    if (!plan_date_id) throw { code: 400, message: 'plan_date_id가 필요합니다.' };
 
-    const deletedTour = await this.planDateRepository.deletePlanDate({ tour_id });
+    const deletedPlanDate = await this.planDateRepository.deletePlanDate({ user_id, plan_date_id });
 
-    if (!deletedTour) throw { code: 400, message: '여행 장소 삭제에 실패했습니다.' };
+    if (!deletedPlanDate) throw { code: 400, message: '여행 일정 삭제에 실패했습니다.' };
 
-    return { code: 200, message: '여행 장소가 성공적으로 삭제되었습니다.' };
+    return { code: 200, message: '여행 일정이 성공적으로 삭제되었습니다.' };
   };
 }
 
