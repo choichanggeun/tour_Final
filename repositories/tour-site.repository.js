@@ -17,12 +17,16 @@ class ToursiteRepository {
           method: 'get', // 통신할 방식
         });
         const site_name = result.data.response.body.items.item[0].title;
-        const site_address = result.data.response.body.items.item[0].addr1;
-        const site_img = result.data.response.body.items.item[0].firstimage;
-        await TourSite.create({ site_name, site_address, site_img });
+        if (site_name) {
+          const site_address = result.data.response.body.items.item[0].addr1;
+          const site_img = result.data.response.body.items.item[0].firstimage;
+          const mapx = result.data.response.body.items.item[0].mapx;
+          const mapy = result.data.response.body.items.item[0].mapy;
+          await TourSite.create({ site_name, site_address, site_img, mapx, mapy });
+        }
         i++;
       }
-    }, 1000);
+    }, 500);
   };
 
   initTourSite = async () => {

@@ -21,6 +21,14 @@ module.exports = {
         allowNull: true,
         type: Sequelize.STRING,
       },
+      mapx: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      mapy: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
