@@ -18,12 +18,12 @@ module.exports = {
         },
       },
       diary_id: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'Diaries',
-          key: 'id',
-        },
+        // references: {
+        //   model: 'Diaries',
+        //   key: 'id',
+        // },
       },
       content: {
         allowNull: false,

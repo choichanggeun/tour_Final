@@ -7,25 +7,23 @@ class CommentService {
   findComment = async ({ user_id, diary_id }) => {
     const findComment = await this.commentRepository.findComment({ user_id, diary_id });
     if (!findComment.user_id) {
-      return { code: 412, message: '댓글을 조회할 권한이 존재하지 않습니다.' };
+      throw { code: 412, message: '댓글을 조회할 권한이 존재하지 않습니다.' };
     }
     return { code: 200, data: findComment };
   };
 
   // 댓글 생성
-  createComment = async ({ user_id, diary_id, content }) => {
+  createComment = async ({ user_id, content }) => {
     const createdComment = await this.commentRepository.createComment({
       user_id,
-      diary_id,
+      // diary_id,
       content,
     });
 
     // 데이터가 정상적으로 전달되지 못한 경우
-    if (!createdComment.user_id) {
-      return { code: 403, message: '로그인이 필요한 기능입니다.' };
-    } else if (createdComment.user_id !== user_id) {
-      return { code: 412, message: '댓글을 생성할 사용자가 존재하지 않습니다.' };
-    }
+    if (!createdComment.user_id) throw { code: 403, message: '로그인이 필요한 기능입니다.' };
+
+    if (createdComment.user_id !== user_id) throw { code: 412, message: '댓글을 생성할 사용자가 존재하지 않습니다.' };
 
     return { code: 201, message: '댓글 생성이 완료되었습니다.' };
   };
@@ -38,9 +36,9 @@ class CommentService {
     });
 
     if (!existsComment.user_id) {
-      return { code: 403, message: '로그인이 필요한 기능입니다.' };
+      throw { code: 403, message: '로그인이 필요한 기능입니다.' };
     } else if (existsComment.user_id !== user_id) {
-      return { code: 412, message: '댓글을 수정할 권한이 존재하지 않습니다.' };
+      throw { code: 412, message: '댓글을 수정할 권한이 존재하지 않습니다.' };
     }
 
     // 댓글의 권한을 확인하고, 게시글 수정
@@ -60,9 +58,9 @@ class CommentService {
     });
 
     if (!existsComment.user_id) {
-      return { code: 403, message: '로그인이 필요한 기능입니다.' };
+      throw { code: 403, message: '로그인이 필요한 기능입니다.' };
     } else if (existsComment.user_id !== user_id) {
-      return { code: 412, message: '댓글을 삭제할 권한이 존재하지 않습니다.' };
+      throw { code: 412, message: '댓글을 삭제할 권한이 존재하지 않습니다.' };
     }
 
     await this.commentRepository.deleteComment({

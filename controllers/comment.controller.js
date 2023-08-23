@@ -13,7 +13,7 @@ class CommentController {
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
-      return res.status(500).json({ errormessage: '댓글 조회에 실패하였습니다.' });
+      throw res.status(500).json({ errormessage: '댓글 조회에 실패하였습니다.' });
     }
   };
 
@@ -21,12 +21,12 @@ class CommentController {
   createComment = async (req, res) => {
     try {
       const { user_id } = res.locals.user;
-      const { diary_id } = req.params;
+      // const { diary_id } = req.params;
       const { content } = req.body;
 
       const { code, message } = await this.commentsService.createComment({
         user_id,
-        diary_id,
+        // diary_id,
         content,
       });
 
@@ -34,7 +34,7 @@ class CommentController {
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
-      return res.status(500).json({ errormessage: '댓글 생성에 실패하였습니다.' });
+      throw res.status(500).json({ errormessage: '댓글 생성에 실패하였습니다.' });
     }
   };
 
@@ -54,7 +54,7 @@ class CommentController {
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
-      return res.status(500).json({ errormessage: '댓글 수정에 실패하였습니다.' });
+      throw res.status(500).json({ errormessage: '댓글 수정에 실패하였습니다.' });
     }
   };
 
@@ -72,7 +72,7 @@ class CommentController {
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
-      return res.status(500).json({ errormessage: '댓글 삭제에 실패하였습니다.' });
+      throw res.status(500).json({ errormessage: '댓글 삭제에 실패하였습니다.' });
     }
   };
 }

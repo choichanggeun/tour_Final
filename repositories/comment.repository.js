@@ -9,10 +9,10 @@ class CommentRepository {
   };
 
   // 댓글 생성
-  createComment = async ({ user_id, diary_id, content }) => {
+  createComment = async ({ user_id, content }) => {
     return await Comment.create({
       user_id,
-      diary_id,
+      // diary_id,
       content,
     });
   };
