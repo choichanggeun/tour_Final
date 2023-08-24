@@ -17,14 +17,14 @@ module.exports = {
           key: 'id',
         },
       },
-      // diary_id: {
-      //   allowNull: true,
-      //   type: Sequelize.INTEGER,
-      //   references: {
-      //     model: 'Diaries',
-      //     key: 'id',
-      //   },
-      // },
+      diary_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Diaries',
+          key: 'id',
+        },
+      },
       content: {
         allowNull: false,
         type: Sequelize.STRING,

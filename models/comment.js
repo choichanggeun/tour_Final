@@ -34,14 +34,14 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
-      // diary_id: {
-      //   allowNull: true,
-      //   type: DataTypes.INTEGER,
-      //   references: {
-      //     model: 'Diary',
-      //     key: 'id',
-      //   },
-      // },
+      diary_id: {
+        allowNull: true,
+        type: DataTypes.INTEGER,
+        references: {
+          model: 'Diary',
+          key: 'id',
+        },
+      },
       content: {
         allowNull: false,
         type: DataTypes.STRING,

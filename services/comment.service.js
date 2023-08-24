@@ -4,9 +4,8 @@ class CommentService {
   commentRepository = new CommentRepository();
 
   // 댓글 조회
-  findComment = async ({ user_id }) => {
-    const findComment = await this.commentRepository.findComment({ user_id });
-    //diary_id 빼씀
+  findComment = async ({ user_id, diary_id }) => {
+    const findComment = await this.commentRepository.findComment({ user_id, diary_id });
     if (!findComment.user_id) {
       throw { code: 412, message: '댓글을 조회할 권한이 존재하지 않습니다.' };
     }
@@ -14,10 +13,10 @@ class CommentService {
   };
 
   // 댓글 생성
-  createComment = async ({ user_id, content }) => {
+  createComment = async ({ user_id, diary_id, content }) => {
     const createdComment = await this.commentRepository.createComment({
       user_id,
-      // diary_id,
+      diary_id,
       content,
     });
 
@@ -42,16 +41,17 @@ class CommentService {
       throw { code: 412, message: '댓글을 수정할 권한이 존재하지 않습니다.' };
     }
 
-    // 댓글의 권한을 확인하고, 게시글 수정
+    // 댓글의 권한을 확인하고, 댓글 수정
 
-    await this.commentRepository.updateComment({
-      user_id,
+    const data = await this.commentRepository.updateComment({
       comment_id,
       content,
     });
+
     return { code: 200, message: '댓글 수정이 완료되었습니다.' };
   };
 
+  // 댓글 삭제
   deleteComment = async ({ user_id, comment_id }) => {
     const existsComment = await this.commentRepository.findById({
       user_id,
