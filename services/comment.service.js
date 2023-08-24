@@ -63,7 +63,6 @@ class CommentService {
     }
 
     await this.commentRepository.deleteComment({
-      user_id,
       comment_id,
     });
     return { code: 201, message: '댓글 삭제가 완료되었습니다.' };
