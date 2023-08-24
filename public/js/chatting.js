@@ -6,7 +6,7 @@ $(document).ready(function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      let socket = io.connect(serverURL);
+      const socket = io('http://localhost:3000/', { transports: ['websocket'] });
       let name = data.data.nickname;
       // let room = Math.floor(Math.random() * (5 - 1)) + 1;
       socket.on('connection', function (data) {

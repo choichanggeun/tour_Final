@@ -4,9 +4,11 @@ const fs = require('fs');
 const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
+const redis = require('socket.io-redis');
 
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
@@ -16,7 +18,15 @@ fs.readdirSync('./routes').forEach((routes) => {
   app.use('/', require(`./routes/${routes}`));
 });
 
+http.listen(3000, () => {
+  console.log('Connected at 3000');
+});
+
 //채팅에 필요한 소켓 기본 설정
+io.adapter(redis({ host: 'localhost', port: 6379 }));
+io.on('connection', (socket) => {
+  /* … */
+});
 io.sockets.on('connection', function (socket) {
   socket.emit('connection', {
     type: 'connected',
@@ -40,8 +50,4 @@ io.sockets.on('connection', function (socket) {
   socket.on('user', function (data) {
     socket.broadcast.to(socket.room).emit('message', data);
   });
-});
-
-http.listen(3000, () => {
-  console.log('Connected at 3000');
 });

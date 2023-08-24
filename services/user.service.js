@@ -11,6 +11,7 @@ const sendMail = require('../emailauth');
 class UserService {
   userRepository = new UserRepository();
   // 회원가입
+
   createUser = async (email, password, confirm, nickname, authCode) => {
     // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //
@@ -120,5 +121,4 @@ class UserService {
     return new ServiceReturn('인증번호가 발송되었습니다.\n이메일을 확인해 주세요.', 200);
   };
 }
-
 module.exports = UserService;
