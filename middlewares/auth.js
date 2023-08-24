@@ -2,16 +2,17 @@ const jwt = require('jsonwebtoken');
 const { User } = require('../models');
 require('dotenv').config();
 const env = process.env;
-
 module.exports = async (req, res, next) => {
   try {
     const { authorization } = req.cookies;
-
+    // console.log(authorization);
+    if (!authorization) {
+      return res.status(401).json({ message: '토큰이 없습니다.' });
+    }
     const [tokenType, token] = authorization.split(' ');
     if (tokenType !== 'Bearer') {
       return res.status(401).json({ message: '토큰 타입이 일치하지 않습니다.' });
     }
-
     const decodedToken = jwt.verify(token, env.COOKIE_SECRET);
     const user_id = decodedToken.user_id;
 
@@ -27,6 +28,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     res.clearCookie('authorization');
+
     return res.status(401).json({
       errorMessage: error.message,
     });
