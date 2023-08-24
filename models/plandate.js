@@ -26,7 +26,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-
       tour_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
@@ -35,7 +34,6 @@ module.exports = (sequelize, DataTypes) => {
           key: 'id',
         },
       },
-
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,

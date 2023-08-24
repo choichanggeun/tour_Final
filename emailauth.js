@@ -2,7 +2,7 @@ require('dotenv').config();
 
 const { MAIL_ID, MAIL_KEY } = process.env;
 const nodemailer = require('nodemailer');
-
+//email 보내는
 module.exports = async function sendMail({ email, title, body }) {
   const transporter = nodemailer.createTransport({
     service: 'gmail',
