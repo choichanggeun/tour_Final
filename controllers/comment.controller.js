@@ -6,9 +6,8 @@ class CommentController {
   // 댓글 조회
   findComment = async (req, res) => {
     try {
-      const user_id = res.locals.user.id;
       const { diary_id } = req.params;
-      const { code, data } = await this.commentService.findComment({ user_id, diary_id });
+      const { code, data } = await this.commentService.findComment({ diary_id });
 
       res.status(code).json({ data });
     } catch (error) {

@@ -5,10 +5,15 @@ class UserController {
 
   // 회원가입
   createUser = async (req, res, next) => {
-    const { email, password, confirm, nickname, authCode } = req.body;
-    const createUserData = await this.userService.createUser(email, password, confirm, nickname, authCode);
-
-    res.status(201).json({ data: createUserData });
+    try {
+      const { email, password, confirm, nickname, authCode } = req.body;
+      const { status, message, result } = await this.userService.createUser(email, password, confirm, nickname, authCode);
+      return res.status(status).json({ message, result });
+    } catch (error) {
+      if (error.status) return res.status(error.status).json({ message: error.message });
+      console.log(error);
+      return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
+    }
   };
   // 로그인
   login = async (req, res) => {
