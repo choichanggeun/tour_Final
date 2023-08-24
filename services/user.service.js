@@ -1,9 +1,9 @@
 const UserRepository = require('../repositories/user.repository');
-const { CustomError, ServiceReturn } = require('../customError'); 
+const { CustomError, ServiceReturn } = require('../customError');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config(); //환경변수를 관리하는 구성패키지
-const env = process.env; 
+const env = process.env;
 const dayjs = require('dayjs');
 
 const sendMail = require('../emailauth');
@@ -13,7 +13,7 @@ class UserService {
   // 회원가입
   createUser = async (email, password, confirm, nickname, authCode) => {
     // 이메일 형식 검사
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  //
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //
     if (!emailRegex.test(email)) {
       throw new CustomError('올바른 이메일 형식이 아닙니다.', 400);
     }
@@ -42,7 +42,7 @@ class UserService {
     if (!isEmailValemail) {
       throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);
     }
-    const isEmailValidauthCode = isEmailValemail?.auth_code == authCode;
+    const isEmailValidauthCode = isEmailValemail[0]?.auth_code == authCode;
     if (!isEmailValidauthCode) {
       throw new CustomError('인증번호가 일치하지 않습니다.', 401);
     }
@@ -52,20 +52,18 @@ class UserService {
     }
     // 패스워드 해싱 및 회원가입 진행
     const encryptedPassword = await bcrypt.hash(password, 10);
-    const createUserData = await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
-    
-    return createUserData;
+    await this.userRepository.createUser(email, encryptedPassword, confirm, nickname, authCode);
+
+    return new ServiceReturn('회원가입성공', 200);
   };
   // 로그인
   loginUser = async (email, password) => {
     const user = await this.userRepository.findLoginUser(email);
-    if (!user) {
-      throw new Error('닉네임을 확인해주세요.');
-    }
-    // if (user) {
-    const pwConfirm = await bcrypt.compare(password, user.password);
-    if (!pwConfirm) {
-      throw new Error('비밀번호를 확인해 주세요.');
+    if (!user) throw new Error('이메일을 확인해주세요.');
+    if (user) {
+      const pwConfirm = await bcrypt.compare(password, user.password);
+      console.log(pwConfirm);
+      if (!pwConfirm) throw new Error('비밀번호를 확인해 주세요.');
     }
 
     const token = jwt.sign({ user_id: user.id }, env.COOKIE_SECRET);

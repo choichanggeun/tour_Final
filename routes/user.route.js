@@ -22,4 +22,14 @@ router.delete('/users/:user_id', auth, userController.deleteUser);
 // 인증 메일 생성, 해당 메일에 보내기
 router.post('/users/authemail', userController.isEmailValid);
 
+// 홈페이지 홈화면에서 상단 header에 로그인이 나올 지 회원정보가 나올 지 판단 용
+router.get('/users/me', auth, async (req, res) => {
+  const id = res.locals.user.id;
+
+  const user = await User.findOne({ where: { id: id } });
+
+  return res.status(200).json({ data: user });
+});
+
+
 module.exports = router;

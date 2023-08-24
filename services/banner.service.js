@@ -1,6 +1,7 @@
 const BannerRepository = require('../repositories/banner.repository');
 const AdminRepository = require('../repositories/admin.repository');
 const { CustomError, ServiceReturn } = require('../customError');
+const dayjs = require('dayjs');
 
 class BannerService {
   bannerRepository = new BannerRepository();
@@ -9,8 +10,9 @@ class BannerService {
     const bannerList = await this.bannerRepository.getBannerList();
     const cuttingBannerList = bannerList.map((banner) => {
       return {
-        banner_id: banner.banner_id,
+        id: banner.id,
         img: banner.img,
+        time: dayjs().diff(new Date(banner.createdAt), 'm'),
       };
     });
     return new ServiceReturn('배너 리스트 불러오기.', 201, cuttingBannerList);
