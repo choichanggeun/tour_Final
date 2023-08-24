@@ -28,6 +28,7 @@ module.exports = async (req, res, next) => {
     next();
   } catch (error) {
     res.clearCookie('authorization');
+
     return res.status(401).json({
       errorMessage: error.message,
     });

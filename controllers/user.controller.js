@@ -5,17 +5,33 @@ class UserController {
 
   // 회원가입
   createUser = async (req, res, next) => {
-    const { email, password, confirm, nickname, authCode } = req.body;
-    const createUserData = await this.userService.createUser(email, password, confirm, nickname, authCode);
-
-    res.status(201).json({ data: createUserData });
+    try {
+      const { email, password, confirm, nickname, authCode } = req.body;
+      const { status, message, result } = await this.userService.createUser(email, password, confirm, nickname, authCode);
+      return res.status(status).json({ message, result });
+    } catch (error) {
+      if (error.status) return res.status(error.status).json({ message: error.message });
+      console.log(error);
+      return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
+    }
   };
   // 로그인
   login = async (req, res) => {
     const { email, password } = req.body;
     try {
       const token = await this.userService.loginUser(email, password);
-      res.cookie('authorization', `Bearer ${token}`);
+      const cookieConfig = {
+        //cookieConfig는 키, 밸류 외에 설정을 보낼 수 있다.
+        maxAge: 30000,
+        //밀리초 단위로 들어가는데 30000을 설정하면 30초만료 쿠키를 생성한다.
+        path: '/',
+        httpOnly: true,
+        //통신할때만 접속할 수 있다. 기본값은 false임
+        signed: true,
+        //쿠키를 암호화 시킨다.
+      };
+      res.cookie('authorization', `Bearer ${token}`, cookieConfig);
+
       res.status(200).json({ message: '로그인 성공.' });
     } catch (error) {
       console.error(error.stack);

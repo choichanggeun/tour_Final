@@ -1,9 +1,9 @@
 const UserRepository = require('../repositories/user.repository');
-const { CustomError, ServiceReturn } = require('../customError'); 
+const { CustomError, ServiceReturn } = require('../customError');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 require('dotenv').config(); //환경변수를 관리하는 구성패키지
-const env = process.env; 
+const env = process.env;
 const dayjs = require('dayjs');
 
 const sendMail = require('../emailauth');
@@ -11,9 +11,11 @@ const sendMail = require('../emailauth');
 class UserService {
   userRepository = new UserRepository();
   // 회원가입
+
   createUser = async (email, password, confirm, nickname, authCode) => {
     // 이메일 형식 검사
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  //
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //
     if (!emailRegex.test(email)) {
       throw new CustomError('올바른 이메일 형식이 아닙니다.', 400);
     }
@@ -53,8 +55,8 @@ class UserService {
     // 패스워드 해싱 및 회원가입 진행
     const encryptedPassword = await bcrypt.hash(password, 10);
     const createUserData = await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
-    
-    return createUserData;
+
+    return new ServiceReturn('회원가입성공', 200);
   };
   // 로그인
   loginUser = async (email, password) => {
@@ -62,7 +64,7 @@ class UserService {
     if (!user) {
       throw new Error('닉네임을 확인해주세요.');
     }
-    // if (user) {
+
     const pwConfirm = await bcrypt.compare(password, user.password);
     if (!pwConfirm) {
       throw new Error('비밀번호를 확인해 주세요.');

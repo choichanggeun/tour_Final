@@ -4,11 +4,10 @@ const bcrypt = require('bcrypt');
 
 class UserRepository {
   // 회원가입
-  createUser = async (email, password, confirm, nickname) => {
-    const encrypted = await bcrypt.hash(password, 10);
+  createUser = async (email, encryptedPassword, confirm, nickname) => {
     const createUserData = await User.create({
       email,
-      password: encrypted,
+      password: encryptedPassword,
       confirm,
       nickname,
     });
@@ -40,9 +39,13 @@ class UserRepository {
     const result = await User.destroy({ where: { id: user_id } });
     return result;
   };
-  //이메일 인증할 때 인증메일을 보냈는지 확인
+  //이메일 인증할 때 인증메일을 보냈는지 확인 / 가장 최신만 유효한 인증번호가 됨
   findOneIsEmailValid = async (email) => {
-    return await EmailAuth.findOne({ where: { email: email } });
+    return await EmailAuth.findAll({
+      limit: 1,
+      where: { email: email },
+      order: [['createdAt', 'ASC']],
+    });
   };
   // 인증 메일 보내기
   createIsEmailValid = async (email, auth_code) => {
