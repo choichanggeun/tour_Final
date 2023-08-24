@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       this.hasMany(models.Tour, {
         // 1:N 관계 설정을 합니다.
-        foreignKey: 'tour_id',
+        foreignKey: 'tour_site_id',
       });
 
       this.hasMany(models.Place, {
         // 1:N 관계 설정을 합니다.
-        foreignKey: 'place_id',
+        foreignKey: 'tour_site_id',
       });
     }
   }
