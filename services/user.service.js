@@ -54,7 +54,7 @@ class UserService {
     const encryptedPassword = await bcrypt.hash(password, 10);
     const createUserData = await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
     
-    return createUserData;
+    return new ServiceReturn('회원가입성공', 200);
   };
   // 로그인
   loginUser = async (email, password) => {
@@ -62,7 +62,7 @@ class UserService {
     if (!user) {
       throw new Error('닉네임을 확인해주세요.');
     }
-    // if (user) {
+
     const pwConfirm = await bcrypt.compare(password, user.password);
     if (!pwConfirm) {
       throw new Error('비밀번호를 확인해 주세요.');
