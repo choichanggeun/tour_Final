@@ -1,9 +1,8 @@
 const TourSiteService = require('../services/tour-site.service');
 
-class ToursiteController {
+class TourSiteController {
   tourSiteService = new TourSiteService();
 
-  // 배너 목록 조회
   getTourSiteList = async (req, res, next) => {
     try {
       const { status, message, result } = await this.tourSiteService.getTourSiteList();
@@ -39,4 +38,4 @@ class ToursiteController {
     }
   };
 }
-module.exports = ToursiteController;
+module.exports = TourSiteController;
