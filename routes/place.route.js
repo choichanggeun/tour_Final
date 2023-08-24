@@ -12,7 +12,7 @@ router.post('/:plan_date_id/:tour_site_id/place/', authMiddleware, placeControll
 router.get('/:plan_date_id/:tour_site_id/place/', authMiddleware, placeController.getPlace);
 
 // 여행 일지 수정
-router.put('/:place_id//place/', authMiddleware, placeController.putPlace);
+router.put('/:place_id/place/', authMiddleware, placeController.putPlace);
 
 // 여행 일지 삭제
 router.delete('/:place_id/place/', authMiddleware, placeController.deletePlace);

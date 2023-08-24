@@ -34,12 +34,14 @@ class PlaceController {
   //여행 경유지 수정
   putPlace = async (req, res, next) => {
     try {
-      const { tour_id } = req.params;
-      const { title, start_date, end_date } = req.body; //
+      const { user_id } = res.locals.user;
+      const { place_id } = req.params;
+      const { plan_date_id, tour_site_id } = req.body; //
       const { code, message } = await this.placeService.putPlace({
-        title,
-        start_date,
-        end_date,
+        plan_date_id,
+        tour_site_id,
+        user_id,
+        place_id,
       });
 
       return res.status(code).json({ message });

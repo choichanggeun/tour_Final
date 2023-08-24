@@ -20,8 +20,14 @@ class PlaceRepository {
   };
 
   // 여행 장소 수정
-  updatePlace = async ({ tour_id, plan_date_id, tour_site_id }) => {
-    const updatedPlace = await Place.update({ title, content, start_date, end_date }, { where: { id: Place_id } });
+  updatePlace = async ({ plan_date_id, tour_site_id, place_id }) => {
+    const updatedPlace = await Place.update(
+      {
+        plan_date_id,
+        tour_site_id,
+      },
+      { where: { id: place_id } }
+    );
 
     return updatedPlace; // 업데이트 성공 여부 반환
   };

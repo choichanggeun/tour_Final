@@ -6,8 +6,6 @@ class PlaceService {
   // 경유지 작성
 
   createPlace = async ({ user_id, plan_date_id, tour_site_id }) => {
-    if (!user_id) throw { code: 401, message: 'title을 입력해주세요.' };
-
     if (!plan_date_id) throw { code: 401, message: 'start_date 입력해주세요.' };
 
     if (!tour_site_id) throw { code: 401, message: 'end_date 입력해주세요.' };
@@ -38,17 +36,16 @@ class PlaceService {
     };
   };
   //경유지 장소 수정
-  putPlace = async ({ tour_id, plan_date_id, tour_site_id }) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
-
+  putPlace = async ({ plan_date_id, tour_site_id, user_id, place_id }) => {
     if (!plan_date_id) throw { code: 400, message: 'plan_date_id가 필요합니다.' };
 
     if (!tour_site_id) throw { code: 400, message: 'tour_site_id가 필요합니다.' };
 
     const updatedPlace = await this.placeRepository.updatePlace({
-      tour_id,
       plan_date_id,
       tour_site_id,
+      user_id,
+      place_id,
     });
 
     if (!updatedPlace) throw { code: 400, message: '경유지 장소 수정에 실패했습니다.' };
