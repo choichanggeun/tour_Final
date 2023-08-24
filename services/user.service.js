@@ -1,9 +1,9 @@
 const UserRepository = require('../repositories/user.repository');
-const { CustomError, ServiceReturn } = require('../customError'); //물어볼것
+const { CustomError, ServiceReturn } = require('../customError'); 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-require('dotenv').config(); //물어볼것 //환경변수를 관리하는 구성패키지
-const env = process.env; //물어볼것
+require('dotenv').config(); //환경변수를 관리하는 구성패키지
+const env = process.env; 
 const dayjs = require('dayjs');
 
 const sendMail = require('../emailauth');
@@ -12,28 +12,60 @@ class UserService {
   userRepository = new UserRepository();
   // 회원가입
   createUser = async (email, password, confirm, nickname, authCode) => {
+    // 이메일 형식 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  //
+    if (!emailRegex.test(email)) {
+      throw new CustomError('올바른 이메일 형식이 아닙니다.', 400);
+    }
+
+    // 패스워드 형식 검사: 최소 4자 이상, 문자와 숫자 포함
+    const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
+    if (!passwordRegex.test(password)) {
+      throw new CustomError('패스워드의 형식이 일치하지 않습니다.', 400);
+    }
+    // 패스워드 일치 검사
+    if (password !== confirm) {
+      throw new CustomError('패스워드가 일치하지 않습니다.', 400);
+    }
+
+    // 닉네임 형식 검사: 최소 3자 이상, 문자 및 숫자만 가능
+    const nicknameRegex = /^[a-zA-Z0-9]{3,}$/;
+    if (!nicknameRegex.test(nickname)) {
+      throw new CustomError('닉네임의 형식이 일치하지 않습니다.', 400);
+    }
+
     const User = await this.userRepository.findLoginUser(email);
-    if (User) throw new CustomError('중복된 이메일입니다.', 403);
-
+    if (User) {
+      throw new CustomError('중복된 이메일입니다.', 403);
+    }
     const isEmailValemail = await this.userRepository.findOneIsEmailValid(email);
-    if (!isEmailValemail) throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);
-
+    if (!isEmailValemail) {
+      throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);
+    }
     const isEmailValidauthCode = isEmailValemail?.auth_code == authCode;
-    if (!isEmailValidauthCode) throw new CustomError('인증번호가 일치하지 않습니다.', 401);
-
+    if (!isEmailValidauthCode) {
+      throw new CustomError('인증번호가 일치하지 않습니다.', 401);
+    }
     const isEmailValidOverTime = dayjs().diff(new Date(isEmailValemail.created_at), 'm') >= 30;
-    if (isEmailValidOverTime) throw new CustomError('이메일 인증 시간이 초과되었습니다.\n이메일 인증을 재시도 해주세요.', 408);
-
-    const createUserData = await this.userRepository.createUser(email, password, confirm, nickname);
+    if (isEmailValidOverTime) {
+      throw new CustomError('이메일 인증 시간이 초과되었습니다.\n이메일 인증을 재시도 해주세요.', 408);
+    }
+    // 패스워드 해싱 및 회원가입 진행
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    const createUserData = await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
+    
     return createUserData;
   };
   // 로그인
   loginUser = async (email, password) => {
     const user = await this.userRepository.findLoginUser(email);
-    if (!user) throw new Error('닉네임을 확인해주세요.');
-    if (user) {
-      const pwConfirm = await bcrypt.compare(password, user.password);
-      if (!pwConfirm) throw new Error('비밀번호를 확인해 주세요.');
+    if (!user) {
+      throw new Error('닉네임을 확인해주세요.');
+    }
+    // if (user) {
+    const pwConfirm = await bcrypt.compare(password, user.password);
+    if (!pwConfirm) {
+      throw new Error('비밀번호를 확인해 주세요.');
     }
 
     const token = jwt.sign({ user_id: user.id }, env.COOKIE_SECRET);
