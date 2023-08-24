@@ -62,7 +62,6 @@ class UserService {
     if (!user) throw new Error('이메일을 확인해주세요.');
     if (user) {
       const pwConfirm = await bcrypt.compare(password, user.password);
-      console.log(pwConfirm);
       if (!pwConfirm) throw new Error('비밀번호를 확인해 주세요.');
     }
 
