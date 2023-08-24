@@ -22,16 +22,13 @@ class UserController {
       const token = await this.userService.loginUser(email, password);
       const cookieConfig = {
         //cookieConfig는 키, 밸류 외에 설정을 보낼 수 있다.
-        maxAge: 30000,
+        maxAge: 60000 * 60,
         //밀리초 단위로 들어가는데 30000을 설정하면 30초만료 쿠키를 생성한다.
         path: '/',
         httpOnly: true,
         //통신할때만 접속할 수 있다. 기본값은 false임
-        signed: true,
-        //쿠키를 암호화 시킨다.
       };
       res.cookie('authorization', `Bearer ${token}`, cookieConfig);
-
       res.status(200).json({ message: '로그인 성공.' });
     } catch (error) {
       console.error(error.stack);
@@ -90,6 +87,7 @@ class UserController {
   isEmailValid = async (req, res) => {
     try {
       const { email } = req.body;
+      console.log(email);
       const { status, message } = await this.userService.isEmailValid(email);
       return res.status(status).json({ message });
     } catch (err) {
