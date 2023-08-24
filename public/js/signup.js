@@ -25,7 +25,7 @@ createBtn.addEventListener('click', function () {
     .then((response) => response.json())
     .then((data) => {
       alert('회원가입이 완료되었습니다.');
-      window.location.href = '/login.js';
+      window.location.href = '/login.html';
     })
     .catch((error) => {
       console.error('회원가입 실패:', error);

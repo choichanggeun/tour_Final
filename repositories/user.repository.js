@@ -4,11 +4,10 @@ const bcrypt = require('bcrypt');
 
 class UserRepository {
   // 회원가입
-  createUser = async (email, password, confirm, nickname) => {
-    const encrypted = await bcrypt.hash(password, 10);
+  createUser = async (email, encryptedPassword, confirm, nickname) => {
     const createUserData = await User.create({
       email,
-      password: encrypted,
+      password: encryptedPassword,
       confirm,
       nickname,
     });
