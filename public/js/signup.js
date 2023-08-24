@@ -28,8 +28,8 @@ createBtn.addEventListener('click', function () {
       window.location.href = '/login.js';
     })
     .catch((error) => {
-      console.error('칼럼생성 실패:', error);
-      alert('칼럼생성에 실패하였습니다.');
+      console.error('회원가입 실패:', error);
+      alert('회원가입에 실패하였습니다.');
     });
 });
 
