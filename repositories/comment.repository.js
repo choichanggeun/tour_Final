@@ -37,7 +37,7 @@ class CommentRepository {
   // 댓글 삭제
   deleteComment = async ({ comment_id }) => {
     return await Comment.destroy({
-      where: { comment_id },
+      where: { id: comment_id },
     });
   };
 }

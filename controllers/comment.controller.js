@@ -45,12 +45,12 @@ class CommentController {
       const { comment_id } = req.params;
       const { content } = req.body;
 
-      const { code, data } = await this.commentService.updateComment({
+      const { code, message } = await this.commentService.updateComment({
         user_id,
         comment_id,
         content,
       });
-      res.status(code).json({ data });
+      res.status(code).json({ message });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
@@ -64,11 +64,11 @@ class CommentController {
       const user_id = res.locals.user.id;
       const { comment_id } = req.params;
 
-      const { code, data } = await this.commentService.deleteComment({
+      const { code, message } = await this.commentService.deleteComment({
         user_id,
         comment_id,
       });
-      res.status(code).json({ data });
+      res.status(code).json({ message });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);

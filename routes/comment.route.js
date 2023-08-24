@@ -15,6 +15,6 @@ commentRouter.post('/diaries/:diary_id/comments', Auth, commentController.create
 commentRouter.put('/comments/:comment_id', Auth, commentController.updateComment);
 
 // 댓글 삭제
-commentRouter.delete('comments/:comment_id', Auth, commentController.deleteComment);
+commentRouter.delete('/comments/:comment_id', Auth, commentController.deleteComment);
 
 module.exports = commentRouter;
