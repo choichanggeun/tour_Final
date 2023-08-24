@@ -1,4 +1,5 @@
 const UserService = require('../services/user.service');
+const bcrypt = require('bcrypt');
 class UserController {
   userService = new UserService();
 
@@ -10,7 +11,7 @@ class UserController {
     res.status(201).json({ data: createUserData });
   };
   // 로그인
-  login = async (req, res, next) => {
+  login = async (req, res) => {
     const { email, password } = req.body;
     try {
       const token = await this.userService.loginUser(email, password);
@@ -56,7 +57,7 @@ class UserController {
     return res.status(201).json({ message, result });
   };
   // 사용자 정보 삭제(회원탈퇴)
-  deleteUser = async (req, res, next) => {
+  deleteUser = async (req, res) => {
     try {
       const { id: user_id } = res.locals.user;
       const { message, result } = await this.userService.deleteUser(user_id);

@@ -37,8 +37,8 @@ class DiaryController {
       const { diary_id } = req.params;
       const { title, content, diary_img } = req.body;
 
-      const data = await this.diaryService.putDiary(diary_id, title, content, diary_img);
-      return res.status(200).json({ message: '여행 일지가 수정되었습니다.', data });
+      await this.diaryService.putDiary(diary_id, title, content, diary_img);
+      return res.status(200).json({ message: '여행 일지가 수정되었습니다.' });
     } catch (error) {
       console.log(error.stack);
       return res.status(error.status || 500).send({ message: `${error.message}` });
