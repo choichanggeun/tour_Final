@@ -8,6 +8,7 @@ $(document).ready(function () {
     .then((data) => {
       const socket = io('http://localhost:3000/', { transports: ['websocket'] });
       let name = data.data.nickname;
+      let id = data.data.id;
       // let room = Math.floor(Math.random() * (5 - 1)) + 1;
       socket.on('connection', function (data) {
         if (data.type == 'connected') {
@@ -15,11 +16,16 @@ $(document).ready(function () {
             type: 'join',
             name: name,
             room: 5,
+            id: id,
           });
         }
       });
 
       socket.on('system', function (data) {
+        const log = data.messagelog;
+        for (i = 0; i < log.length; i++) {
+          writeMessage('me', name, log[i]);
+        }
         writeMessage('system', 'system', data.message);
       });
 
@@ -36,6 +42,7 @@ $(document).ready(function () {
       $('#message-button').click(function () {
         let msg = $('#message-input').val();
         socket.emit('user', {
+          id: id,
           name: name,
           message: msg,
         });

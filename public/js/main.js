@@ -1,20 +1,20 @@
-const testbtn = document.querySelector('#testbtn');
-testbtn.addEventListener('click', async () => {
-  const image = document.querySelector('#post-upload-img').files[0];
-  const formData = new FormData();
-  formData.append('image', image);
-  try {
-    await fetch('/banner', {
-      method: 'POST',
-      body: formData,
-    });
-    alert('게시글을 작성하였습니다.');
-    window.location.href = '/';
-  } catch (error) {
-    console.log(error);
-    alert('게시글 작성에 실패하였습니다.');
-  }
-});
+// const testbtn = document.querySelector('#testbtn');
+// testbtn.addEventListener('click', async () => {
+//   const image = document.querySelector('#post-upload-img').files[0];
+//   const formData = new FormData();
+//   formData.append('image', image);
+//   try {
+//     await fetch('/banner', {
+//       method: 'POST',
+//       body: formData,
+//     });
+//     alert('게시글을 작성하였습니다.');
+//     window.location.href = '/';
+//   } catch (error) {
+//     console.log(error);
+//     alert('게시글 작성에 실패하였습니다.');
+//   }
+// });
 
 const indicators = document.getElementById('carousel-indicators');
 const bannerListbox = document.getElementById('bannerlistbox');
