@@ -1,15 +1,19 @@
 const { TourSite } = require('../models');
 const axios = require('axios');
-
+const { Op } = require('sequelize');
 class ToursiteRepository {
   getTourSiteList = async () => {
     return await TourSite.findAll();
   };
 
+  searchSiteList = async (search_site) => {
+    return await TourSite.findAll({ where: { site_address: { [Op.like]: '%' + search_site + '%' } } });
+  };
+
   createTourSite = async () => {
-    var i = 125701; // max = 127503, min = 125701
+    var i = 125714; // max = 127503, min = 125701
     var timer = setInterval(async function () {
-      if (i > 125702) {
+      if (i > 125720) {
         clearInterval(timer);
       } else {
         const result = await axios({

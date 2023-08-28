@@ -53,7 +53,7 @@ class UserService {
     }
     // 패스워드 해싱 및 회원가입 진행
     const encryptedPassword = await bcrypt.hash(password, 10);
-    await this.userRepository.createUser(email, encryptedPassword, confirm, nickname, authCode);
+    await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
 
     return new ServiceReturn('회원가입성공', 200);
   };
