@@ -1,5 +1,8 @@
 const DiaryPhotoRepository = require('../repositories/diary-photo.repository');
-const fs = require('fs');
+// const fs = require('fs');
+
+const S3Image = require('../middlewares/s3Image');
+const s3Image = new S3Image();
 
 class DiaryPhotoService {
   diaryPhotoRepository = new DiaryPhotoRepository();
@@ -17,10 +20,15 @@ class DiaryPhotoService {
   };
 
   deleteDiaryPhoto = async (photo_id) => {
-    const image = await this.diaryPhotoRepository.getPhoto(photo_id);
+    const { diary_img } = await this.diaryPhotoRepository.getPhoto(photo_id);
 
-    // 사진 파일 삭제
-    fs.unlink('public/img-server/' + image.diary_img);
+    const fileName = `diary-img/${diary_img}`;
+
+    // s3 이미지 삭제
+    s3Image.deleteImage(fileName);
+
+    // multer 이미지 삭제
+    // fs.unlink('public/img-server/' + image.diary_img);
 
     await this.diaryPhotoRepository.deleteDiaryPhoto(photo_id);
   };

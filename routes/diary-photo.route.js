@@ -19,4 +19,7 @@ router.get('/diaries/:diary_id/photos', diaryPhotoController.getDiaryPhoto);
 // 여행일지 사진 삭제
 router.delete('/photos/:photo_id', auth, diaryPhotoController.deleteDiaryPhoto);
 
+// 버켓 객체 리스트 출력 (폴더, 파일)
+router.get('/photos', s3Image.getBucketLists);
+
 module.exports = router;
