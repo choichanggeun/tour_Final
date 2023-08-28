@@ -12,11 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'id',
         foreignKey: 'user_id',
       });
-
-      this.belongsTo(models.Diary, {
-        targetKey: 'id',
-        foreignKey: 'diary_id',
-      });
+      //   this.belongsTo(models.Diary, {
+      //     targetKey: 'id',
+      //     foreignKey: 'diary_id',
+      //   });
     }
   }
   Comment.init(
@@ -36,7 +35,7 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       diary_id: {
-        allowNull: false,
+        allowNull: true,
         type: DataTypes.INTEGER,
         references: {
           model: 'Diary',
