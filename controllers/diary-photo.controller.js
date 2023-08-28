@@ -7,8 +7,9 @@ class DiaryPhotoController {
     try {
       const { diary_id } = req.params;
       const images = req.files;
+      console.log(images);
 
-      await this.diaryPhotoService.postDiaryPhoto(diary_id, images);
+      // await this.diaryPhotoService.postDiaryPhoto(diary_id, images);
       return res.status(200).json({ message: '여행 일지 사진을 업로드했습니다.' });
     } catch (error) {
       console.log(error.stack);
