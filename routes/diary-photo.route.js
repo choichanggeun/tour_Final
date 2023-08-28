@@ -10,13 +10,16 @@ const diaryPhotoController = new DiaryPhotoController();
 const S3Image = require('../middlewares/s3Image');
 const s3Image = new S3Image();
 
-// 여행일지 사진 생성
+// 여행일지 이미지 생성
 router.post('/diaries/:diary_id/photos', auth, s3Image.uploadImages, diaryPhotoController.postDiaryPhoto);
 
-// 여행일지 사진 조회
+// 여행일지 이미지 조회
 router.get('/diaries/:diary_id/photos', diaryPhotoController.getDiaryPhoto);
 
-// 여행일지 사진 삭제
+// 모든 여행일지 이미지 조회
+router.get('/diaries/photos', diaryPhotoController.getAllDiaryPhotos);
+
+// 여행일지 이미지 삭제
 router.delete('/photos/:photo_id', auth, diaryPhotoController.deleteDiaryPhoto);
 
 // 버켓 객체 리스트 출력 (폴더, 파일)

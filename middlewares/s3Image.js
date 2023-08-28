@@ -35,7 +35,7 @@ class S3Image {
   // 이미지 여러 개 업로드
   uploadImages = multer({ storage: this.storage, fileFilter: this.imageFilter, limits: this.limits }).array('image');
 
-  // 이미지 하나 삭제
+  // 이미지 삭제
   deleteImage = async (filename) => {
     const objectParams_del = {
       Bucket: 'final-tour-2',

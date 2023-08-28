@@ -10,13 +10,17 @@ class DiaryPhotoService {
   postDiaryPhoto = async (diary_id, images) => {
     // 이미지 갯수만큼 반복문으로 데이터 베이스 접근하기
     for (let image of images) {
-      let diary_img = image.filename;
+      let diary_img = image.key;
       await this.diaryPhotoRepository.postDiaryPhoto(diary_id, diary_img);
     }
   };
 
   getDiaryPhoto = async (diary_id) => {
     return await this.diaryPhotoRepository.getDiaryPhoto(diary_id);
+  };
+
+  getAllDiaryPhotos = async () => {
+    return await this.diaryPhotoRepository.getAllDiaryPhotos();
   };
 
   deleteDiaryPhoto = async (photo_id) => {
