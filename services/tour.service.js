@@ -4,7 +4,6 @@ class TourService {
   tourRepository = new TourRepository();
 
   // 여행 계획 작성
-
   createTour = async ({ user_id, title, start_date, end_date, tour_site_id }) => {
     if (!user_id) throw { code: 401, message: '유저ID가 존재하지않습니다.' };
 
