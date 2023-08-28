@@ -9,6 +9,10 @@ class DiaryPhotoRepository {
     return await DiaryPhoto.findAll({ where: { diary_id } });
   };
 
+  getAllDiaryPhotos = async () => {
+    return await DiaryPhoto.findAll();
+  };
+
   deleteDiaryPhoto = async (photo_id) => {
     await DiaryPhoto.destroy({ where: { id: photo_id } });
   };
