@@ -10,7 +10,7 @@ const diaryController = new DiaryController();
 router.post('/tours/:tour_id/diaries', auth, diaryController.postDiary);
 
 // 내 모든 여행 일지 조회
-router.get('/diaries', auth, diaryController.getDiary);
+router.get('/diaries', auth, diaryController.getMyDiaries);
 
 // 여행 일지 수정
 router.put('/diaries/:diary_id', auth, diaryController.putDiary);
