@@ -64,6 +64,7 @@ window.onload = function () {
     });
 };
 // 사용자 정보 확인하여 로그인 상태에 따라 버튼 표시
+
 function checkLoggedInStatus() {
   fetch('/users/me', {
     method: 'GET',

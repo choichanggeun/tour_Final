@@ -16,7 +16,6 @@ class TourSiteController {
   searchTourSite = async (req, res, next) => {
     try {
       const { search_site } = req.params;
-      console.log(search_site);
       const { status, message, result } = await this.tourSiteService.searchTourSite(search_site);
       return res.status(status).json({ message, result });
     } catch (error) {

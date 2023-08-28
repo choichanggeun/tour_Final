@@ -10,8 +10,8 @@ const sendMail = require('../emailauth');
 
 class UserService {
   userRepository = new UserRepository();
+  
   // 회원가입
-
   createUser = async (email, password, confirm, nickname, authCode) => {
     // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //

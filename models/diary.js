@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       tour_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: 'Tour',
-        //   key: 'id',
-        // },
+        references: {
+          model: 'Tour',
+          key: 'id',
+        },
       },
       user_id: {
         allowNull: false,

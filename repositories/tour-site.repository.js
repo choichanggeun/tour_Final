@@ -7,7 +7,6 @@ class ToursiteRepository {
   };
 
   searchSiteList = async (search_site) => {
-    console.log(search_site);
     return await TourSite.findAll({ where: { site_address: { [Op.like]: '%' + search_site + '%' } } });
   };
 
