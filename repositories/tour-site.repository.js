@@ -11,7 +11,7 @@ class ToursiteRepository {
   };
 
   createTourSite = async () => {
-    var i = 125714; // max = 127503, min = 125701
+    var i = 125701; // max = 127503, min = 125701
     var timer = setInterval(async function () {
       if (i > 125720) {
         clearInterval(timer);
