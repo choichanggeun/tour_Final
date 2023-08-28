@@ -1,5 +1,6 @@
 const siteListBox = document.getElementById('siteList');
 const searchButton = document.getElementById('searchSite-button');
+const enterInput = document.getElementById('searchSite-input');
 
 window.onload = function () {
   const urlParams = new URLSearchParams(window.location.search);
@@ -37,10 +38,16 @@ window.onload = function () {
   }
 };
 
+enterInput.addEventListener('keyup', function (event) {
+  if (event.keyCode === 13) {
+    const searchInput = document.getElementById('searchSite-input').value;
+    window.location.href = `tourSite.html?search_site=${searchInput}`;
+  }
+});
+
 searchButton.addEventListener('click', function () {
   const searchInput = document.getElementById('searchSite-input').value;
-  console.log(searchInput);
-  location.href = `/tourSite.html/${searchInput}`;
+  window.location.href = `tourSite.html?search_site=${searchInput}`;
 });
 
 function loadSearchSiteItem(search_site) {
