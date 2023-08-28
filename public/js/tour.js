@@ -2,6 +2,7 @@ window.onload = function () {
   createMap();
   checkLoggedInStatus();
 };
+const tourId = 1;
 const siteListBox = document.getElementById('siteCardBox');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-button');
@@ -19,7 +20,7 @@ searchInput.addEventListener('keyup', function (event) {
 
 //검색 기능
 function loadSearchSiteItem(search_site) {
-  fetch(`/toursite/${search_site}`, {
+  fetch(`/searchtour/${search_site}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -30,17 +31,35 @@ function loadSearchSiteItem(search_site) {
       siteListBox.innerHTML = '';
       data.result.forEach((site) => {
         const siteCard = `<div id="card" width="300" height="400">
-                                <div class="info" id=${site.id}>
-                                    <div class="title">${site.site_name}</div>
+                                <div class="info" id=${site.id} >
                                     <div class="body">
                                     <div class="img">
                                         <img src="${site.site_img}" width="100%" height="auto" />
                                     </div>
+                                    <div class="title"><strong><p3>${site.site_name}</p3></strong></div>
                                     <div class="ellipsis">${site.site_address}</div>
                                     </div>
                                 </div>
                             </div>`;
         siteListBox.innerHTML += siteCard;
+        const card = document.getElementById('card');
+
+        card.addEventListener('click', function () {
+          fetch(`/redis/${tourId}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ data: `${site.id}` }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              alert('test');
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+        });
       });
     });
 }
