@@ -12,10 +12,10 @@ module.exports = {
       tour_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        // references: {
-        //   model: 'Tours',
-        //   key: 'id',
-        // },
+        references: {
+          model: 'Tours',
+          key: 'id',
+        },
       },
       user_id: {
         allowNull: false,

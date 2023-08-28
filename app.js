@@ -1,14 +1,6 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
-const adminRouter = require('./routes/admin.route');
-const userRouter = require('./routes/user.route');
-const commentRouter = require('./routes/comment.route');
-const diaryRouter = require('./routes/diary.route');
-const inviteRouter = require('./routes/invite.route');
-const tourRouter = require('./routes/tour.route');
-const tourSiteRouter = require('./routes/tour-site.route');
-const bannerRouter = require('./routes/banner.route');
 const fs = require('fs');
 const app = express();
 const http = require('http').createServer(app);
