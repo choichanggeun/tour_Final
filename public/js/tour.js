@@ -8,10 +8,12 @@ window.onload = function () {
     createTour(tour_site_id);
   }
   if (tour_id) {
+    let day = document.getElementById('tourDays').value;
     TourDayCheck(tour_id);
-    restartTour(tour_id);
+    restartTour(tour_id, day);
   }
 };
+
 const urlParams = new URLSearchParams(window.location.search);
 const tour_id = urlParams.get('tourId');
 const startChatting = document.getElementById('startChatting');
@@ -51,6 +53,7 @@ function loadSearchSiteItem(search_site) {
   })
     .then((response) => response.json())
     .then((data) => {
+      let day = checkday();
       siteListBox.innerHTML = '';
       data.result.forEach((site) => {
         const siteCard = `<div id="card" width="300" height="400" value="${site.id}">
@@ -67,14 +70,13 @@ function loadSearchSiteItem(search_site) {
         siteListBox.innerHTML += siteCard;
       });
       data.result.forEach((sites) => {
-        siteApi(sites.id);
+        siteApi(sites.id, day);
       });
     });
 }
 //검색 창에 나온 카드들 클릭하면 이벤트 발생
-function siteApi(siteId) {
+function siteApi(siteId, day) {
   const card = document.getElementById(`${siteId}`);
-  const day = document.getElementById('tourDays').value;
   const formData = {
     site_id: siteId,
     day: day,
@@ -91,6 +93,7 @@ function siteApi(siteId) {
       .then((data) => {
         panTo(siteId, i);
         i++;
+        siteListBox.innerHTML = '';
       })
       .catch((error) => {
         console.error(error);
@@ -228,6 +231,7 @@ function TourDayCheck(tour_id) {
       }
     });
 }
+
 //마커 숫자 만들어줌
 function addMarker(position, idx, type) {
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png'; // 마커 이미지 url, 스프라이트 이미지를 씁니다
@@ -249,8 +253,7 @@ function addMarker(position, idx, type) {
   return marker;
 }
 //새로고침하거나 뒤로갔다가 다시오면 redis에서 불러옴
-function restartTour(tour_id) {
-  const day = document.getElementById('tourDays').value;
+function restartTour(tour_id, day) {
   fetch(`/redis/${tour_id}/${day}`, {
     method: 'GET',
   })
@@ -267,7 +270,7 @@ function restartTour(tour_id) {
 }
 // 날짜 변경시 해당 날짜에 맞는 redis 정보를 불러옴
 tourDays.addEventListener('change', function () {
-  const day = document.getElementById('tourDays').value;
+  let day = checkday();
   fetch(`/redis/${tour_id}/${day}`, {
     method: 'GET',
   })
@@ -306,4 +309,8 @@ function setMarkers(map) {
   for (var i = 0; i < markers.length; i++) {
     markers[i].setMap(map);
   }
+}
+
+function checkday() {
+  return document.getElementById('tourDays').value;
 }
