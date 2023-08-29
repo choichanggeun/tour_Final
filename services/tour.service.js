@@ -26,7 +26,7 @@ class TourService {
     return { createTourData, code: 200, message: '여행계획 작성이 완료되었습니다.' };
   };
   //여행계획 조회
-  getTour = async ({ tour_site_id, tour_id }) => {
+  getTourData = async ({ tour_site_id, tour_id, user_id }) => {
     if (!tour_id) {
       throw { code: 400, message: '실패하였습니다.' };
     }
@@ -34,7 +34,7 @@ class TourService {
     if (!tour_site_id) {
       throw { code: 400, message: '실패하였습니다.' };
     }
-    const findTour = await this.tourRepository.getTour(tour_site_id, tour_id);
+    const findTour = await this.tourRepository.getUserTour(tour_site_id, tour_id, user_id);
 
     return {
       data: findTour,
