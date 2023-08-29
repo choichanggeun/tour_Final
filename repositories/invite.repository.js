@@ -1,5 +1,4 @@
 const { Invite, User } = require('../models');
-const { Op } = require('sequelize');
 
 class InviteRepository {
   findInvite = async ({ tour_id }) => {
@@ -17,7 +16,11 @@ class InviteRepository {
   };
 
   findById = async ({ user_id, invite_id }) => {
-    return await Invite.findOne({ where: { [Op.and]: [{ user_id }, { id: invite_id }] } });
+    return await Invite.findOne({ where: { id: invite_id } });
+  };
+
+  findByEmail = async ({ email }) => {
+    return await User.findOne({ where: { email } });
   };
 
   deleteInvite = async ({ invite_id }) => {

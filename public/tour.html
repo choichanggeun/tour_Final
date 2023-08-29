@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tour Project</title>
+
+    <!--Bootstrap core CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link href="css/responsive-style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <style>
+      html,
+      body {
+        width: 100%;
+        height: 100%;
+      }
+      header {
+        width: 100%;
+        height: 13%;
+        background-color: black;
+      }
+      section {
+        width: 100%;
+      }
+      section.left {
+        width: 20%;
+        height: 100%;
+        float: left;
+        box-sizing: border-box;
+      }
+      section.map {
+        width: 80%;
+        height: 100%;
+      }
+      section.right {
+        float: right;
+        box-sizing: border-box;
+      }
+      .dropdown {
+        width: 60px;
+        color: skyblue;
+        position: relative;
+        display: inline-block;
+        margin-right: 30px;
+        margin-top: 50px;
+      }
+      .dropdown-content {
+        overflow: hidden;
+        display: none;
+        position: absolute;
+        z-index: 1; /*다른 요소들보다 앞에 배치*/
+      }
+
+      .dropdown-content a {
+        display: block;
+      }
+
+      .dropdown:hover .dropdown-content {
+        display: block;
+      }
+      .header-button {
+        float: left;
+        margin-right: 30px;
+        margin-left: 10px;
+        margin-top: 40px;
+        border: 1px solid skyblue;
+        background-color: rgba(0, 0, 0, 0);
+        color: skyblue;
+        padding: 5px;
+      }
+      button:hover {
+        color: white;
+        background-color: skyblue;
+      }
+      #Title {
+        margin-top: 40px;
+        margin-left: 20px;
+      }
+      #search-button {
+        margin-left: 30px;
+        float: right;
+      }
+      #search-input {
+        margin-right: 30px;
+        float: left;
+      }
+      #siteCardBox {
+        overflow: scroll;
+        height: 700px;
+      }
+      #card {
+        border-radius: 10px;
+        border: 2px solid;
+        box-sizing: border-box;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <header>
+    <div class="top-head left">
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <h1 id="Title">Tour ProJect</h1>
+        </div>
+        <button class="header-button" id="inviteBtn">초대하기</button>
+        <button class="header-button" id="invitedUser">초대된 인원</button>
+        <button class="header-button" id="startChatting">채팅창 입장</button>
+        <button class="header-button" id="createTour">등록하기</button>
+        <div class="dropdown" style="float: right">
+          <span class="dropbtn" id="usernickname">홍길동</span>
+          <div class="dropdown-content">
+            <a href="javascript:void(0);" onclick="">회원정보</a>
+            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <body>
+    <container>
+      <section class="left">
+        <div class="search">
+          <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
+          <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+        </div>
+        <section id="siteCardBox">
+          <div id="card" width="300" height="400">
+            <div class="info">
+              <div class="title">${name}</div>
+              <div class="body">
+                <div class="img">
+                  <img src="" width="265" height="150" />
+                </div>
+                <div class="ellipsis">${address}</div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section class="map" id="map"></section>
+    </container>
+  </body>
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
+  <script src="./js/tour.js"></script>
+</html>

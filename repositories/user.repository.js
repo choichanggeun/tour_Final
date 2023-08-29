@@ -1,7 +1,5 @@
 const { User, EmailAuth } = require('../models');
 
-const bcrypt = require('bcrypt');
-
 class UserRepository {
   // 회원가입
   createUser = async (email, encryptedPassword, confirm, nickname) => {

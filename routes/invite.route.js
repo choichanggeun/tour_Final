@@ -9,6 +9,6 @@ inviterouter.get('/invite/:tour_id', Auth, inviteController.findInvite);
 
 inviterouter.post('/invite/:tour_id', Auth, inviteController.createInvite);
 
-inviterouter.delete('/invite/:tour_id/:invite_id', Auth, inviteController.deleteInvite);
+inviterouter.delete('/invite/:invite_id', Auth, inviteController.deleteInvite);
 
 module.exports = inviterouter;

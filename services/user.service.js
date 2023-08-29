@@ -10,8 +10,8 @@ const sendMail = require('../emailauth');
 
 class UserService {
   userRepository = new UserRepository();
+  
   // 회원가입
-
   createUser = async (email, password, confirm, nickname, authCode) => {
     // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; //
@@ -53,7 +53,7 @@ class UserService {
     }
     // 패스워드 해싱 및 회원가입 진행
     const encryptedPassword = await bcrypt.hash(password, 10);
-    await this.userRepository.createUser(email, encryptedPassword, confirm, nickname, authCode);
+    await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
 
     return new ServiceReturn('회원가입성공', 200);
   };
@@ -63,7 +63,6 @@ class UserService {
     if (!user) throw new Error('이메일을 확인해주세요.');
     if (user) {
       const pwConfirm = await bcrypt.compare(password, user.password);
-      console.log(pwConfirm);
       if (!pwConfirm) throw new Error('비밀번호를 확인해 주세요.');
     }
 

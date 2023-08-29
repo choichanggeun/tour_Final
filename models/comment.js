@@ -12,10 +12,10 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'id',
         foreignKey: 'user_id',
       });
-      //   this.belongsTo(models.Diary, {
-      //     targetKey: 'id',
-      //     foreignKey: 'diary_id',
-      //   });
+      this.belongsTo(models.Diary, {
+        targetKey: 'id',
+        foreignKey: 'diary_id',
+      });
     }
   }
   Comment.init(

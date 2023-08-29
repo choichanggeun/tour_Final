@@ -8,10 +8,10 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // this.belongsTo(models.Tour, {
-      //   targetKey: 'id',
-      //   foreignKey: 'tour_id',
-      // });
+      this.belongsTo(models.Tour, {
+        targetKey: 'id',
+        foreignKey: 'tour_id',
+      });
 
       this.hasMany(models.Comment, {
         // 1:N 관계 설정을 합니다.
@@ -30,10 +30,10 @@ module.exports = (sequelize, DataTypes) => {
       tour_id: {
         allowNull: false,
         type: DataTypes.INTEGER,
-        // references: {
-        //   model: 'Tour',
-        //   key: 'id',
-        // },
+        references: {
+          model: 'Tour',
+          key: 'id',
+        },
       },
       user_id: {
         allowNull: false,

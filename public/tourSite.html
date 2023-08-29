@@ -16,27 +16,39 @@
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <style>
       .button-container {
-      float: right;
+        float: right;
       }
-      .dropdown{
+      .dropdown {
         width: 60px;
-        position : relative;
-        display : inline-block;
+        position: relative;
+        display: inline-block;
       }
 
-      .dropdown-content{
+      .dropdown-content {
         overflow: hidden;
-        display : none;
-        position : absolute;
-        z-index : 1; /*다른 요소들보다 앞에 배치*/
+        display: none;
+        position: absolute;
+        z-index: 1; /*다른 요소들보다 앞에 배치*/
       }
 
-      .dropdown-content a{
-        display : block;
+      .dropdown-content a {
+        display: block;
       }
 
       .dropdown:hover .dropdown-content {
         display: block;
+      }
+      .img-fluid {
+        width: 500px;
+        height: 300px;
+      }
+      .dropdown-button {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin-right: 10px;
+        margin-left: 100px;
       }
     </style>
   </head>
@@ -86,21 +98,21 @@
                 <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
                 <div class="container header-container">
                   <div class="button-container right-aligned-buttons">
-                      <button type="button" class="btn btn-search " id="loginbtn" ><a href="/login.html">로그인</a></button>
-                      <div  id="profileimg">
+                    <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                    <div id="profileimg">
                       <a href="" class="nav-link">
-                          <div class="dropdown">
+                        <div class="dropdown">
                           <span class="dropbtn" id="usernickname">홍길동</span>
-                            <div class="dropdown-content">
-                              <a href="javascript:void(0);" onclick="">회원정보</a>
-                              <a href="javascript:void(0);" onclick="popup()">채팅</a>
-                              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
-                            </div>
-                           </div>  
-                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
-                          </a>
+                          <div class="dropdown-content">
+                            <a href="javascript:void(0);" onclick="">회원정보</a>
+                            <a href="javascript:void(0);" onclick="popup()">채팅</a>
+                            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
                           </div>
                         </div>
+                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </nav>
             </div>
@@ -123,7 +135,7 @@
 
             <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
-             <li class="nav-item"><a class="nav-link" href="#">여행 계획</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="#">여행 일지</a></li>
             <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
@@ -133,97 +145,21 @@
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
           </ul>
           <!-- 검색기능 -->
-          <form class="pull-xs-right">
-          <label for="post-upload-img" class="basic-btn">파일 업로드
-            <input id="post-upload-img" type="file" style="display: none;"/>
-            <button id="testbtn">버튼</button>
-          </form>
-          <form class="pull-xs-right">
+          <form class="pull-xs-right" onsubmit="return false">
             <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="searchSite-input" accept-charset="utf-8" />
+              <button type="button" class="btn btn-search" id="searchSite-button"><i class="fa fa-search"></i></button>
             </div>
           </form>
         </div>
       </div>
     </nav>
-    <!-- 왼쪽에 4개 있는 부분입니다. -->
-    <section class="banner-sec">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <img class="img-fluid" src="img/media-1.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-danger">News</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Syria war: Why the battle for Aleppo matters</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-            <div class="card">
-              <img class="img-fluid" src="img/media-3.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-info">Politics</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Key Republicans sign letter warning against candidate</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img class="img-fluid" src="img/media-2.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-success">Travel</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Obamacare Appears to Be Making People Healthier</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-            <div class="card">
-              <img class="img-fluid" src="img/media-4.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-danger">News</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">‘S.N.L.’ to Lose Two Longtime Cast Members</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-          </div>
 
-          <!-- 배너부분이 들어갈 자리입니다. -->
-          <div class="col-md-6 top-slider">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-              <!-- Indicators -->
-              <ol class="carousel-indicators" id="carousel-indicators"></ol>
-
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Politics 부분입니다. -->
     <section class="section-01">
       <div class="container">
         <div class="row">
-          <h3 class="heading-large">Politics</h3>
-          <div class="row">
+          <h3 class="heading-large">국내 여행지</h3>
+          <div class="row" id="siteList">
             <div class="col-lg-6">
               <div class="card">
                 <img class="img-fluid" src="img/media-9.jpg" alt="" />
@@ -361,6 +297,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/tourSite.js"></script>
   </body>
 </html>
