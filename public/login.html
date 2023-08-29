@@ -18,6 +18,34 @@
       .button-container {
         float: right;
       }
+      /* #userEmail {
+        margin-top: 150px;  
+      } */
+      #userEmail, #userPassword {
+        width: 50%;
+        margin-left: 15px;
+        border-radius: 10px;
+        /* margin-top: 50px; */
+      }
+      #loginBtn {
+        width: 20% !important;
+        height: 30px;
+        display: block;
+        margin-top: 10px;
+        color: #03207f;
+        margin-left: 15px;
+        border-radius: 30px;
+        /* margin: auto; */
+      }
+      @keyframes blink {
+        0% {opacity: 1;}
+        50% {opacity: 0.5;}
+        100% {opacity: 1;}
+    }
+
+    #loginBtn:hover {
+        animation: blink 1s infinite;
+    }
     </style>
   </head>
 
@@ -100,7 +128,7 @@
           <div class="col-12">
             <button class="btn btn-dark w-100" id="loginBtn">Login</button>
           </div>
-          <div class="col-12">
+          <div class="col-12"style="margin-left: 5px;">
             <p class="small mb-0">계정이 없으신가요? <a href="/signup.html">회원가입</a></p>
           </div>
         </div>
@@ -112,23 +140,28 @@
         <div class="row">
           <div class="col-lg-4 col-md-12">
             <h6 class="heading-footer">ABOUT US</h6>
-            <p>팀 소개문?</p>
-            <p><i class="fa fa-phone"></i> <span>전화번호 :</span> (공란)</p>
-            <p><i class="fa fa-envelope"></i> <span>Send Email :</span> 깃 허브 주소 / 구글 주소</p>
+            <p>나만의 여행 코스를 만들고 함께 만드는 "투어 플래너"</p>
+            <p><i class="fa fa-phone"></i> <span>전화번호 :</span>내배캠-119</p>
+            <p><i class="fa fa-envelope"></i> <span>github :</span>https://github.com/choichanggeun/tour_Final</p>
           </div>
           <div class="col-lg-2 col-md-4">
             <h6 class="heading-footer">QUICK LINKS</h6>
             <ul class="footer-ul">
-              <li><a href="#"> Career</a></li>
-              <li><a href="#"> Privacy Policy</a></li>
-              <li><a href="#"> Terms & Conditions</a></li>
-              <li><a href="#"> Client Gateway</a></li>
-              <li><a href="#"> Ranking</a></li>
-              <li><a href="#"> Case Studies</a></li>
+              <li><a href="#"> 최창근</a></li>
+              <li><a href="#"> 이예진</a></li>
+              <li><a href="#"> 이수현</a></li>
+              <li><a href="#"> 정희윤</a></li>
+              <li><a href="#"> 최원빈</a></li>
+              <li><a href="#"> 마님과 돌쇠들(2조)</a></li>
             </ul>
           </div>
           <div class="col-lg-4 col-md-4">
             <h6 class="heading-footer">LATEST NEWS</h6>
+            <li><a href="#"> https://github.com/choichanggeun</a></li>
+            <li><a href="#"> https://github.com/dldPwls03</a></li>
+            <li><a href="#"> https://github.com/jrmun</a></li>
+            <li><a href="#"> https://github.com/yuni416</a></li>
+            <li><a href="#"> https://github.com/wonbinchoi2353</a></li>
           </div>
           <div class="col-lg-2 col-md-4 social-icons">
             <h6 class="heading-footer">FOLLOW</h6>

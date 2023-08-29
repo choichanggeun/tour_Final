@@ -62,6 +62,7 @@ strong {
 b,
 strong {
   font-weight: bolder;
+  color: #0a70ff;
 }
 dfn {
   font-style: italic;
@@ -329,7 +330,7 @@ blockquote {
   margin: 0 0 1rem;
 }
 a {
-  color: #0275d8;
+  color: #fdfdfd;
   text-decoration: none;
 }
 a:focus,
@@ -396,6 +397,9 @@ th {
 label {
   display: inline-block;
   margin-bottom: 0.5rem;
+  color: #022491;
+  margin-left: 15px;
+  /* margin-top: 130px; */
 }
 button:focus {
   outline: 1px dotted;
@@ -517,6 +521,8 @@ hr {
 small {
   font-size: 80%;
   font-weight: 400;
+  color: #91a5e9;
+  margin-left: 15px;
 }
 .mark,
 mark {
@@ -3117,6 +3123,7 @@ input[type='submit'].btn-block {
 .input-group-btn:not(:last-child) > .btn:not(:first-child) {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
+  margin: 5px; 
 }
 .form-control + .input-group-addon:not(:first-child) {
   border-left: 0;
