@@ -75,7 +75,7 @@ io.sockets.on('connection', function (socket) {
   });
 });
 
-// redis에 저장되어있는 정보를 MySQL에 저장
+// 접속 종료하면 redis에 채팅 데이터를 남김
 async function saveChattingData(data) {
   try {
     return await client.lRange(REDIS_PREFIX + data.id, 0, -1);

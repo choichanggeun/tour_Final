@@ -16,7 +16,7 @@ window.onload = function () {
       .then((data) => {
         siteListBox.innerHTML = '';
         data.result.forEach((site) => {
-          const siteCard = `<div class="col-lg-6">
+          const siteCard = `<div class="col-lg-6" id=${site.id}>
                                                 <div class="card">
                                                 <img class="img-fluid" src="${site.site_img}" alt="" />
                                                 <div class="card-block">
@@ -33,6 +33,9 @@ window.onload = function () {
                                             </div>
                                     </div>`;
           siteListBox.innerHTML += siteCard;
+        });
+        data.result.forEach((sites) => {
+          siteApi(sites.id);
         });
       });
   }
@@ -51,14 +54,15 @@ searchButton.addEventListener('click', function () {
 });
 
 function loadSearchSiteItem(search_site) {
-  fetch(`/toursite/${search_site}`, {
+  fetch(`/searchtour/${search_site}`, {
     method: 'GET',
   })
     .then((response) => response.json())
     .then((data) => {
       siteListBox.innerHTML = '';
+
       data.result.forEach((site) => {
-        const siteCard = `<div class="col-lg-6">
+        const siteCard = `<div class="col-lg-6" id=${site.id}>
                                                 <div class="card">
                                                 <img class="img-fluid" src="${site.site_img}" alt="" />
                                                 <div class="card-block">
@@ -76,6 +80,9 @@ function loadSearchSiteItem(search_site) {
                                     </div>`;
         siteListBox.innerHTML += siteCard;
       });
+      data.result.forEach((sites) => {
+        siteApi(sites.id);
+      });
     });
 }
 
@@ -89,6 +96,7 @@ function checkLoggedInStatus() {
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        document.getElementById('usernickname').value = data.data.id;
         document.querySelector('#profileimg').style.display = 'block';
         document.querySelector('#loginbtn').style.display = 'none';
       } else {
@@ -117,4 +125,44 @@ function logout() {
 
 function popup() {
   window.open('chatting.html', 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
+}
+
+function siteApi(id) {
+  const card = document.getElementById(`${id}`);
+  card.addEventListener('click', function () {
+    const modal = document.getElementById('modal');
+    modal.style.display = 'flex';
+    fetch(`/toursite/${id}`, {
+      method: 'GET',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const site = data.result;
+        document.getElementById('siteModalTitle').innerHTML = site.site_name;
+        document.getElementById('siteModalImg').src = site.site_img;
+        document.getElementById('siteModalAddress').innerHTML = site.site_address;
+        const tourBtn = document.getElementById('tourBtn');
+        tourBtn.addEventListener('click', function () {
+          window.location.href = `tour.html?id=${site.id}`;
+        });
+      });
+  });
+  //모달의 x 버튼 누르면 꺼짐
+  const closeBtn = modal.querySelector('.close-area');
+  closeBtn.addEventListener('click', (e) => {
+    modal.style.display = 'none';
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      modal.style.display = 'none';
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      modal.style.display = 'none';
+    }
+  });
 }
