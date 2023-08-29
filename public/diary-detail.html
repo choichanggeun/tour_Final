@@ -12,6 +12,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
     <link href="css/responsive-style.css" rel="stylesheet" />
+    <link href="css/diary.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <style>
@@ -151,59 +152,8 @@
     <section class="banner-sec">
       <div class="container">
         <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <img class="img-fluid" src="img/media-1.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-danger">News</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Syria war: Why the battle for Aleppo matters</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-            <div class="card">
-              <img class="img-fluid" src="img/media-3.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-info">Politics</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Key Republicans sign letter warning against candidate</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img class="img-fluid" src="img/media-2.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-success">Travel</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Obamacare Appears to Be Making People Healthier</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-            <div class="card">
-              <img class="img-fluid" src="img/media-4.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-danger">News</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">‘S.N.L.’ to Lose Two Longtime Cast Members</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-          </div>
-
+          <!-- 여행 일지 조회하는 부분입니다. -->
+          <div id="diaryList"></div>
           <!-- 배너부분이 들어갈 자리입니다. -->
           <div class="col-md-6 top-slider">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -212,81 +162,6 @@
 
               <!-- Wrapper for slides -->
               <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Politics 부분입니다. -->
-    <section class="section-01">
-      <div class="container">
-        <div class="row">
-          <h3 class="heading-large">Politics</h3>
-          <div class="row">
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-9.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-10.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-7.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-8.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -362,5 +237,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>
     <script src="js/main.js"></script>
+    <script src="./js/diary.js"></script>
   </body>
 </html>

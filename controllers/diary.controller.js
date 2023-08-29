@@ -18,12 +18,49 @@ class DiaryController {
     }
   };
 
+  // 여행 일지 조회
+  getDiary = async (req, res) => {
+    try {
+      const { diary_id } = req.params;
+
+      const data = await this.diaryService.getDiary(diary_id);
+      return res.status(200).json({ data });
+    } catch (error) {
+      console.log(error.stack);
+      return res.status(error.status || 500).send({ message: `${error.message}` });
+    }
+  };
+
   // 내 모든 여행 일지 조회
   getMyDiaries = async (_, res) => {
     try {
       const { id: user_id } = res.locals.user;
 
       const data = await this.diaryService.getMyDiaries(user_id);
+      return res.status(200).json({ data });
+    } catch (error) {
+      console.log(error.stack);
+      return res.status(error.status || 500).send({ message: `${error.message}` });
+    }
+  };
+
+  // 여행 계획 여행 일지 조회
+  getTourDiaries = async (req, res) => {
+    try {
+      const { tour_id } = req.params;
+
+      const data = await this.diaryService.getTourDiaries(tour_id);
+      return res.status(200).json({ data });
+    } catch (error) {
+      console.log(error.stack);
+      return res.status(error.status || 500).send({ message: `${error.message}` });
+    }
+  };
+
+  // 모든 여행 일지 조회
+  getDiaries = async (_, res) => {
+    try {
+      const data = await this.diaryService.getDiaries();
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
