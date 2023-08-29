@@ -17,15 +17,15 @@ class BannerRepository {
   };
 
   getBannerList = async () => {
-    // let value = await redisCli.get('banner', 0, -1);
-    // if (value) {
-    //   return JSON.parse(value);
-    // } else {
-    let data = await Banner.findAll();
-    // await redisCli.set('banner', JSON.stringify(data));
-    // await redisCli.expire('banner', 360);
-    return data;
-    // }
+    let value = await redisCli.get('banner', 0, -1);
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      let data = await Banner.findAll();
+      await redisCli.set('banner', JSON.stringify(data));
+      await redisCli.expire('banner', 360);
+      return data;
+    }
   };
 
   createBanner = async (admin_id, img) => {

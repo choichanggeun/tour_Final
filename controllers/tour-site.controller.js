@@ -13,6 +13,13 @@ class TourSiteController {
       return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
     }
   };
+  getTourSite = async (req, res, next) => {
+    try {
+      const { tour_id } = req.params;
+      const { status, message, result } = await this.tourSiteService.getTourSite(tour_id);
+      return res.status(status).json({ message, result });
+    } catch (error) {}
+  };
   searchTourSite = async (req, res, next) => {
     try {
       const { search_site } = req.params;
