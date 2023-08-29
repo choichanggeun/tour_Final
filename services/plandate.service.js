@@ -5,10 +5,10 @@ class PlanDateService {
 
   // 여행 일자 작성
 
-  postPlanDate = async ({ user_id, tour_id, day }) => {
-    if (!day) throw { code: 401, message: '여행 일자를 입력해주세요.' };
+  postPlanDate = async ({ user_id, tour_id, days }) => {
+    if (!days) throw { code: 401, message: '여행 일자를 입력해주세요.' };
 
-    const createPlanDate = await this.planDateRepository.postPlanDate({ user_id, tour_id, day });
+    const createPlanDate = await this.planDateRepository.postPlanDate({ tour_id, days });
 
     if (!createPlanDate) throw { code: 401, message: '여행 장소 등록이 실패하였습니다.' };
 

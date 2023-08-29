@@ -18,7 +18,7 @@ class RedisRepository {
     const REDIS_PREFIX = 'KEY_';
     const REDIS_SUFFIX = 'DAY_';
     await client.RPUSH(REDIS_PREFIX + key + REDIS_SUFFIX + day, JSON.stringify(site_id));
-    await client.expire(REDIS_PREFIX + REDIS_SUFFIX + day, 1800);
+    await client.expire(REDIS_PREFIX + key + REDIS_SUFFIX + day, 1800);
   };
   deleteRedis = async (key, day) => {
     const REDIS_PREFIX = 'KEY_';

@@ -1,3 +1,4 @@
+//창이 열리면 실행되는 목록
 window.onload = function () {
   const urlParams = new URLSearchParams(window.location.search);
   const tour_site_id = urlParams.get('id');
@@ -18,6 +19,8 @@ const siteListBox = document.getElementById('siteCardBox');
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-button');
 const tourDays = document.getElementById('tourDays');
+const createTourBtn = document.getElementById('createTour');
+var markers = [];
 let i = 0;
 let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 let options = {
@@ -68,6 +71,7 @@ function loadSearchSiteItem(search_site) {
       });
     });
 }
+//검색 창에 나온 카드들 클릭하면 이벤트 발생
 function siteApi(siteId) {
   const card = document.getElementById(`${siteId}`);
   const day = document.getElementById('tourDays').value;
@@ -93,7 +97,7 @@ function siteApi(siteId) {
       });
   });
 }
-
+//계획 작성전에 tour테이블에 생성함
 function createTour(tour_site_id) {
   const modal = document.getElementById('modal');
   modal.style.display = 'flex';
@@ -158,7 +162,7 @@ function panTo(site_id, i) {
 
       let marker = addMarker(markerPosition, i);
       marker.setMap(map);
-
+      markers.push(marker);
       //생성된 마커에 이벤트 부여
       let iwContent = `
       <div class="wrap" width="300" height="400">
@@ -201,11 +205,11 @@ function logout() {
       console.error('Error:', error);
     });
 }
-
+//채팅시작버튼
 startChatting.addEventListener('click', function () {
   window.open(`chatting.html?tourId=${tour_id}`, 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
 });
-
+//드랍박스에 날짜 수만큼 생성 23~24 여행간다고하면 1일차 2일차 생김
 function TourDayCheck(tour_id) {
   fetch(`/tours/${tour_id}`, {
     method: 'GET',
@@ -224,7 +228,7 @@ function TourDayCheck(tour_id) {
       }
     });
 }
-
+//마커 숫자 만들어줌
 function addMarker(position, idx, type) {
   var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png'; // 마커 이미지 url, 스프라이트 이미지를 씁니다
   var imageSize = new kakao.maps.Size(36, 37); // 예제 사이트 마커 이미지의 크기
@@ -244,7 +248,7 @@ function addMarker(position, idx, type) {
 
   return marker;
 }
-
+//새로고침하거나 뒤로갔다가 다시오면 redis에서 불러옴
 function restartTour(tour_id) {
   const day = document.getElementById('tourDays').value;
   fetch(`/redis/${tour_id}/${day}`, {
@@ -261,6 +265,7 @@ function restartTour(tour_id) {
       console.error(error);
     });
 }
+// 날짜 변경시 해당 날짜에 맞는 redis 정보를 불러옴
 tourDays.addEventListener('change', function () {
   const day = document.getElementById('tourDays').value;
   fetch(`/redis/${tour_id}/${day}`, {
@@ -269,6 +274,7 @@ tourDays.addEventListener('change', function () {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.result;
+      setMarkers(null);
       for (i = 0; i < tourlist.length; i++) {
         panTo(tourlist[i], i);
       }
@@ -277,3 +283,27 @@ tourDays.addEventListener('change', function () {
       console.error(error);
     });
 });
+
+createTourBtn.addEventListener('click', function () {
+  const days = tourDays.length;
+  fetch(`/${tour_id}/planDate`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ days }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert('계획을 완성했습니다!');
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
+
+function setMarkers(map) {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(map);
+  }
+}
