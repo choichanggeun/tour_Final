@@ -6,6 +6,9 @@ class ToursiteRepository {
     return await TourSite.findAll();
   };
 
+  getTourSite = async (tour_id) => {
+    return await TourSite.findOne({ where: { id: tour_id } });
+  };
   searchSiteList = async (search_site) => {
     return await TourSite.findAll({ where: { site_address: { [Op.like]: '%' + search_site + '%' } } });
   };
@@ -30,7 +33,7 @@ class ToursiteRepository {
         }
         i++;
       }
-    }, 500);
+    }, 1000);
   };
 
   initTourSite = async () => {

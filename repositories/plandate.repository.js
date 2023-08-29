@@ -1,18 +1,26 @@
-const { PlanDate, User, Tour } = require('../models');
+const { PlanDate, User, Tour, Place } = require('../models');
+const redis = require('redis');
+//Redis 실행
+const client = redis.createClient();
+(async () => {
+  await client.connect();
+})();
+client.on('error', function (err) {
+  console.log('Error ' + err);
+});
 
 class PlanDateRepository {
   //여행 일자 등록
-  postPlanDate = async ({ user_id, tour_id, day }) => {
-    console.log(user_id, tour_id, day);
-    const user = await User.findOne({ where: { id: user_id } });
-    const tour = await Tour.findOne({ where: { id: tour_id } });
-
-    if (!user || !tour) {
-      throw new Error('해당하는 사용자 또는 여행 정보가 없습니다.');
+  postPlanDate = async ({ tour_id, days }) => {
+    const REDIS_PREFIX = 'KEY_';
+    const REDIS_SUFFIX = 'DAY_';
+    for (let i = 1; i < days + 1; i++) {
+      const plan = await client.lRange(REDIS_PREFIX + tour_id + REDIS_SUFFIX + i, 0, -1);
+      const plandate = await PlanDate.create({ tour_id, day: i });
+      for (let j = 0; j < plan.length; j++) {
+        await Place.create({ tour_site_id: plan[j], plan_date_id: plandate.id });
+      }
     }
-    const createdPlanDate = await PlanDate.create({ tour_id, day });
-
-    return createdPlanDate;
   };
 
   // 모든 여행 일자 조회

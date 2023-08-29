@@ -1,4 +1,6 @@
 let serverURL = 'localhost:3000';
+const urlParams = new URLSearchParams(window.location.search);
+const roomNumber = urlParams.get('tourId');
 
 $(document).ready(function () {
   fetch('/users', {
@@ -15,7 +17,7 @@ $(document).ready(function () {
           socket.emit('connection', {
             type: 'join',
             name: name,
-            room: 5,
+            room: roomNumber,
             id: id,
           });
         }

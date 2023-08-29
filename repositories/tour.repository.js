@@ -15,6 +15,9 @@ class TourRepository {
     return createdTourData;
   };
 
+  getTourOne = async (tour_id) => {
+    return await Tour.findOne({ where: { id: tour_id } });
+  };
   // 모든 여행 계획 조회
   getUserTour = async (tour_site_id, tour_id, user_id) => {
     const tours = await Tour.findAll({

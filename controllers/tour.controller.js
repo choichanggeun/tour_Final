@@ -9,14 +9,14 @@ class TourController {
       const { id: user_id } = res.locals.user;
       const { tour_site_id } = req.params;
       const { title, start_date, end_date } = req.body;
-      const { code, message } = await this.tourService.createTour({
+      const { result, code, message } = await this.tourService.createTour({
         user_id,
         title,
         start_date,
         end_date,
         tour_site_id,
       });
-      return res.status(code).json({ message });
+      return res.status(code).json({ result, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
       console.log(err);
@@ -24,6 +24,16 @@ class TourController {
     }
   };
 
+  getTourOne = async (req, res, next) => {
+    try {
+      const { tour_id } = req.params;
+      const { code, message, result } = await this.tourService.getTourOne(tour_id);
+      return res.status(code).json({ message, result });
+    } catch (error) {
+      console.log(error);
+      return res.status(error.code).json({ message: error.message });
+    }
+  };
   // 여행 계획 조회
   getTour = async (req, res, next) => {
     try {

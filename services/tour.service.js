@@ -23,7 +23,12 @@ class TourService {
 
     if (!createTourData) throw { code: 401, message: '여행계획 등록이 실패하였습니다.' };
 
-    return { createTourData, code: 200, message: '여행계획 작성이 완료되었습니다.' };
+    return { result: createTourData, code: 200, message: '여행계획 작성이 완료되었습니다.' };
+  };
+
+  getTourOne = async (tour_id) => {
+    const findTour = await this.tourRepository.getTourOne(tour_id);
+    return { code: 200, message: '여행계획 조회 성공', result: findTour };
   };
   //여행계획 조회
   getTourData = async ({ tour_site_id, tour_id, user_id }) => {
