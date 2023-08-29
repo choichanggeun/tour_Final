@@ -16,7 +16,7 @@ window.onload = function () {
       .then((data) => {
         siteListBox.innerHTML = '';
         data.result.forEach((site) => {
-          const siteCard = `<div class="col-lg-6">
+          const siteCard = `<div class="col-lg-6" id=${site.id}>
                                                 <div class="card">
                                                 <img class="img-fluid" src="${site.site_img}" alt="" />
                                                 <div class="card-block">
@@ -33,6 +33,9 @@ window.onload = function () {
                                             </div>
                                     </div>`;
           siteListBox.innerHTML += siteCard;
+        });
+        data.result.forEach((sites) => {
+          siteApi(sites.id);
         });
       });
   }
@@ -93,6 +96,7 @@ function checkLoggedInStatus() {
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        document.getElementById('usernickname').value = data.data.id;
         document.querySelector('#profileimg').style.display = 'block';
         document.querySelector('#loginbtn').style.display = 'none';
       } else {
@@ -137,6 +141,10 @@ function siteApi(id) {
         document.getElementById('siteModalTitle').innerHTML = site.site_name;
         document.getElementById('siteModalImg').src = site.site_img;
         document.getElementById('siteModalAddress').innerHTML = site.site_address;
+        const tourBtn = document.getElementById('tourBtn');
+        tourBtn.addEventListener('click', function () {
+          window.location.href = `tour.html?id=${site.id}`;
+        });
       });
   });
   //모달의 x 버튼 누르면 꺼짐
