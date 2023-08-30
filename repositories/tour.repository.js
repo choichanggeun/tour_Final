@@ -6,10 +6,10 @@ class TourRepository {
     const user = await User.findOne({ where: { id: user_id } });
 
     const tourSite = await TourSite.findOne({ where: { id: tour_site_id } });
-
     if (!user) {
       throw new Error('해당하는 사용자가 없습니다.');
     }
+
     const createdTourData = await Tour.create({ title, start_date, end_date, user_id, tour_site_id });
 
     return createdTourData;
@@ -19,12 +19,19 @@ class TourRepository {
     return await Tour.findOne({ where: { id: tour_id } });
   };
   // 모든 여행 계획 조회
-  getUserTour = async (tour_site_id, tour_id, user_id) => {
+  getUserTour = async (user_id) => {
     const tours = await Tour.findAll({
-      where: { user_id: user_id },
+      where: {
+        user_id: user_id,
+      },
       attributes: ['title', 'start_date', 'end_date', 'user_id', 'tour_site_id'],
+      include: [
+        {
+          model: TourSite,
+          attributes: ['site_img'],
+        },
+      ],
     });
-
     return tours;
   };
   // 여행 계획 수정
