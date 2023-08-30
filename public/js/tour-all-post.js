@@ -101,7 +101,7 @@ function displayData(currentPage, dataPerPage) {
   dataPerPage = Number(dataPerPage);
 
   for (var i = (currentPage - 1) * dataPerPage; i < (currentPage - 1) * dataPerPage + dataPerPage; i++) {
-    const siteCard = `<div class="col-md-3">
+    const siteCard = `<div class="col-lg-6">
                                     <div class="card">
                                     <img class="img-fluid" src="${dataList[i].site_img}" style="width: 500px; height: 300px" alt="" />
                                     <div class="card-img-overlay"><span class="tag tag-pill tag-success" >${dataList[i].site_name}</span></div>

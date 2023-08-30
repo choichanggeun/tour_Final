@@ -6,9 +6,16 @@ class TourService {
   // 여행 계획 작성
 
   createTour = async ({ user_id, title, start_date, end_date, tour_site_id }) => {
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth() + 1;
+    let date = now.getDate();
     if (!title) throw { code: 401, message: 'title을 입력해주세요.' };
     if (!start_date) throw { code: 401, message: 'start_date 입력해주세요.' };
     if (!end_date) throw { code: 401, message: 'end_date 입력해주세요.' };
+    if (new Date(start_date) > new Date(end_date)) throw { code: 401, message: '시작 날짜는 마지막 날짜보다 이전이어야 합니다.' };
+    if (new Date(start_date).getFullYear() <= year && new Date(start_date).getMonth() + 1 <= month && new Date(start_date).getDate() < date) throw { code: 401, message: '과거의 날짜는 선택할 수 없습니다.' };
+
     const createTourData = await this.tourRepository.createTour({
       user_id,
       title,
