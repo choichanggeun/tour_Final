@@ -6,14 +6,9 @@ class TourService {
   // 여행 계획 작성
 
   createTour = async ({ user_id, title, start_date, end_date, tour_site_id }) => {
-    if (!user_id) throw { code: 401, message: '유저ID가 존재하지않습니다.' };
-
     if (!title) throw { code: 401, message: 'title을 입력해주세요.' };
-
     if (!start_date) throw { code: 401, message: 'start_date 입력해주세요.' };
-
     if (!end_date) throw { code: 401, message: 'end_date 입력해주세요.' };
-
     const createTourData = await this.tourRepository.createTour({
       user_id,
       title,
