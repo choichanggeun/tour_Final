@@ -16,7 +16,7 @@ router.get('/diaries/:diary_id', auth, diaryController.getDiary);
 router.get('/my_diaries', auth, diaryController.getMyDiaries);
 
 // 여행 계획 여행 일지 조회
-router.get('/tour/:tour_id/diaries', auth, diaryController.getTourDiaries);
+router.get('/tours/:tour_id/diaries', auth, diaryController.getTourDiaries);
 
 // 모든 여행 일지 조회
 router.get('/diaries', diaryController.getDiaries);

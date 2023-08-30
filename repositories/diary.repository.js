@@ -18,7 +18,7 @@ class DiaryRepository {
 
   // 여행 계획 여행 일지 조회
   getTourDiaries = async (tour_id) => {
-    return await Diary.findOne({ where: { id: tour_id } });
+    return await Diary.findAll({ where: { tour_id } });
   };
 
   // 모든 여행 일지 조회
