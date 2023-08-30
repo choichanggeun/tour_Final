@@ -14,9 +14,24 @@ class DiaryService {
     await this.diaryRepository.postDiary(user_id, tour_id, title, content);
   };
 
+  // 여행 일지 조회
+  getDiary = async (diary_id) => {
+    return await this.diaryRepository.getDiary(diary_id);
+  };
+
   // 내 모든 여행 일지 조회
   getMyDiaries = async (user_id) => {
     return await this.diaryRepository.getMyDiaries(user_id);
+  };
+
+  // 여행 계획 여행 일지 조회
+  getTourDiaries = async (tour_id) => {
+    return await this.diaryRepository.getTourDiaries(tour_id);
+  };
+
+  // 모든 여행 일지 조회
+  getDiaries = async () => {
+    return await this.diaryRepository.getDiaries();
   };
 
   // 여행 일지 수정
