@@ -21,6 +21,7 @@ class PlanDateRepository {
         await Place.create({ tour_site_id: plan[j], plan_date_id: plandate.id });
       }
     }
+    return true;
   };
 
   // 모든 여행 일자 조회

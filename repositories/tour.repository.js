@@ -1,4 +1,9 @@
 const { Tour, User, TourSite } = require('../models');
+const redis = require('redis');
+//Redis 실행
+const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 반드시 설정 !!
+redisClient.connect().then(); // redis v4 연결 (비동기)
+const redisCli = redisClient.v4;
 
 class TourRepository {
   // 여행 계획 등록
@@ -17,6 +22,23 @@ class TourRepository {
 
   getTourOne = async (tour_id) => {
     return await Tour.findOne({ where: { id: tour_id } });
+  };
+
+  getTourList = async () => {
+    let value = await redisCli.get('tour', 0, -1);
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      let data = await Tour.findAll({
+        include: [
+          { model: User, attributes: ['nickname'] },
+          { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
+        ],
+      });
+      await redisCli.set('tour', JSON.stringify(data));
+      await redisCli.expire('tour', 360);
+      return data;
+    }
   };
   // 모든 여행 계획 조회
   getTour = async (user_id, tour_site_id) => {

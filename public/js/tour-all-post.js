@@ -4,7 +4,7 @@ const enterInput = document.getElementById('searchSite-input');
 const pagingul = document.getElementById('pagingul');
 const display = document.getElementById('displayCount');
 let totalData; //총 데이터 수
-let dataPerPage = 10; //한 페이지에 나타낼 글 수
+let dataPerPage = 8; //한 페이지에 나타낼 글 수
 let pageCount = 10; //페이징에 나타낼 페이지 수
 let globalCurrentPage = 1; //현재 페이지
 let dataList; //표시하려하는 데이터 리스트
@@ -16,7 +16,7 @@ window.onload = function () {
   if (search_data) {
     loadSearchSiteItem(search_data, search_type);
   } else {
-    fetch('/toursite', {
+    fetch('/tours', {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -93,43 +93,6 @@ function logout() {
     });
 }
 
-function siteApi(id) {
-  const modal = document.getElementById('modal');
-  modal.style.display = 'flex';
-  fetch(`/toursite/${id}`, {
-    method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const site = data.result;
-      document.getElementById('siteModalTitle').innerHTML = site.site_name;
-      document.getElementById('siteModalImg').src = site.site_img;
-      document.getElementById('siteModalAddress').innerHTML = site.site_address;
-      const tourBtn = document.getElementById('tourBtn');
-      tourBtn.addEventListener('click', function () {
-        window.location.href = `tour.html?id=${site.id}`;
-      });
-    });
-  //모달의 x 버튼 누르면 꺼짐
-  const closeBtn = modal.querySelector('.close-area');
-  closeBtn.addEventListener('click', (e) => {
-    modal.style.display = 'none';
-  });
-  //모달의 바깥부분을 누르면 꺼짐
-  modal.addEventListener('click', (e) => {
-    const evTarget = e.target;
-    if (evTarget.classList.contains('modal-overlay')) {
-      modal.style.display = 'none';
-    }
-  });
-  //esc누르면 꺼짐
-  window.addEventListener('keyup', (e) => {
-    if (modal.style.display === 'flex' && e.key === 'Escape') {
-      modal.style.display = 'none';
-    }
-  });
-}
-
 function displayData(currentPage, dataPerPage) {
   siteListBox.innerHTML = '';
 
@@ -138,24 +101,22 @@ function displayData(currentPage, dataPerPage) {
   dataPerPage = Number(dataPerPage);
 
   for (var i = (currentPage - 1) * dataPerPage; i < (currentPage - 1) * dataPerPage + dataPerPage; i++) {
-    const siteCard = `<div class="col-lg-6" onclick="siteApi(${dataList[i].id})">
-                                             <div class="card">
-                                             <img class="img-fluid" src="${dataList[i].site_img}" alt="" />
-                                             <div class="card-block">
-                                                 <div class="news-title">
-                                                 <a href="#">
-                                                     <h2 class="title-small">${dataList[i].site_name}</h2>
-                                                 </a>
-                                                 </div>
-                                                 <p class="card-text">${dataList[i].site_address}</p>
-                                                 <p class="card-text">
-                                                 <small class="text-time"><em>3 mins ago</em></small>
-                                                 </p>
-                                             </div>
-                                         </div>
-                                 </div>`;
+    const siteCard = `<div class="col-md-3">
+                                    <div class="card">
+                                    <img class="img-fluid" src="${dataList[i].site_img}" style="width: 500px; height: 300px" alt="" />
+                                    <div class="card-img-overlay"><span class="tag tag-pill tag-success" >${dataList[i].site_name}</span></div>
+                                    <div class="card-block">
+                                        <div class="news-title">
+                                        <h2 class="title-small"><a href="#">${dataList[i].title}</a></h2>
+                                        </div>
+                                        <p class="card-text">
+                                        <small class="text-time"><em>${dataList[i].nickname}</em></small>
+                                        </p>
+                                    </div>
+                                    </div>
+                        </div>`;
     siteListBox.innerHTML += siteCard;
-  } //dataList는 임의의 데이터임.. 각 소스에 맞게 변수를 넣어주면 됨...
+  }
 }
 
 function paging(totalData, dataPerPage, pageCount, currentPage) {
@@ -202,7 +163,6 @@ function paging(totalData, dataPerPage, pageCount, currentPage) {
 
   //페이징 번호 클릭 이벤트
   $('#pagingul li a').click(function () {
-    console.log(this);
     let $id = $(this).attr('id');
     selectedPage = $(this).text();
 

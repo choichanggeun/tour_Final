@@ -22,6 +22,7 @@ const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-button');
 const tourDays = document.getElementById('tourDays');
 const createTourBtn = document.getElementById('createTour');
+
 var markers = [];
 let i = 0;
 let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -34,18 +35,20 @@ let map = new kakao.maps.Map(container, options);
 
 searchBtn.addEventListener('click', function () {
   const searchInputValue = document.getElementById('search-input').value;
-  loadSearchSiteItem(searchInputValue);
+  const searchType = document.getElementById('search_type').value;
+  loadSearchSiteItem(searchInputValue, searchType);
 });
 searchInput.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     const searchInputValue = document.getElementById('search-input').value;
-    loadSearchSiteItem(searchInputValue);
+    const searchType = document.getElementById('search_type').value;
+    loadSearchSiteItem(searchInputValue, searchType);
   }
 });
 
 //검색 기능
-function loadSearchSiteItem(search_site) {
-  fetch(`/searchtour/${search_site}`, {
+function loadSearchSiteItem(search_data, search_type) {
+  fetch(`/searchtour/${search_data}/${search_type}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -270,6 +273,7 @@ function restartTour(tour_id, day) {
 }
 // 날짜 변경시 해당 날짜에 맞는 redis 정보를 불러옴
 tourDays.addEventListener('change', function () {
+  siteListBox.innerHTML = '';
   let day = checkday();
   fetch(`/redis/${tour_id}/${day}`, {
     method: 'GET',
@@ -298,7 +302,8 @@ createTourBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert('계획을 완성했습니다!');
+      alert(data.message);
+      window.location.href = '/';
     })
     .catch((error) => {
       console.log(error);
