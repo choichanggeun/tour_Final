@@ -45,7 +45,7 @@ class TourRepository {
     if (search_type === '제목') {
       return await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } } });
     } else if (search_type === '사용자') {
-      return await Tour.findAll({ where: { nickname: { [Op.like]: '%' + search_data + '%' } } });
+      return await User.findAll({ where: { nickname: { [Op.like]: '%' + search_data + '%' } } });
     }
   };
   // 모든 여행 계획 조회

@@ -23,7 +23,7 @@ const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-button');
 const tourDays = document.getElementById('tourDays');
 const createTourBtn = document.getElementById('createTour');
-
+const closeBtn = document.getElementById('tourcloseBtn');
 var markers = [];
 let i = 0;
 let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -136,6 +136,22 @@ function createTour(tour_site_id) {
         console.error('여행계획 생성 실패:', error);
         alert('여행 계획 생성에 실패하였습니다.');
       });
+  });
+  closeBtn.addEventListener('click', () => {
+    window.location.href = `tourSite.html`;
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      window.location.href = `tourSite.html`;
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      window.location.href = `tourSite.html`;
+    }
   });
 }
 

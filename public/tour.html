@@ -188,7 +188,7 @@
         <div class="modal-title">
           <h2 id="siteModalTitle">날짜 생성</h2>
         </div>
-        <div class="modal-close-area">X</div>
+        <div class="modal-close-area" id="tourcloseBtn">X</div>
         <div class="modal-content">
           <label for="tourTitle" class="form-label">여행 계획 제목 : </label>
           <input type="text" class="form-control" id="tourTitle" required />
@@ -205,7 +205,7 @@
         <div class="modal-title">
           <h2 id="siteModalTitle">회원 초대</h2>
         </div>
-        <div class="modal-close-area">X</div>
+        <div class="modal-close-area" id="closeBtn">X</div>
         <div class="modal-conten">
           <label for="inviteEmail" class="form-label">초대할 회원의 이메일 : </label>
           <input type="text" class="form-control" id="inviteEmail" required />
@@ -241,7 +241,18 @@
       <section class="map" id="map"></section>
     </container>
   </body>
-
+  <script>
+    //새로고침 방지입니다.
+    function noEvent() {
+      if (event.keyCode == 116) {
+        event.keyCode = 2;
+        return false;
+      } else if (event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) {
+        return false;
+      }
+    }
+    document.onkeydown = noEvent;
+  </script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
   <script type="module" src="./js/tour.js"></script>
