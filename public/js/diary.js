@@ -192,23 +192,26 @@ const getAllDiary = function () {
           method: 'GET',
         });
         const { data } = await response.json();
+
         const { images } = await response2.json();
         if (response.ok) {
           const row = document.getElementById('row');
           let count = 4;
           for (let diary of data) {
             let diaryImg;
-            for (let image of images) {
-              if (diary.id === image.diary_id) {
-                diaryImg = image;
-                break;
+            if (images) {
+              for (let image of images) {
+                if (diary.id === image.diary_id) {
+                  diaryImg = image;
+                  break;
+                }
               }
             }
             if (count % 4 === 0) {
               row.innerHTML += `
               <div class="row-md-3" id="cardList${~~(count / 4)}">
                 <div class="card" id="card${count - 3}">
-                  <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="img-fluid" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${diaryImg.diary_img}" alt="" /></a>
+                   <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="img-fluid" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${diaryImg.diary_img}" alt="" /></a>
                   <div class="card-block">
                     <div class="news-title">
                       <h2 class="title-small">${diary.title}</h2>
