@@ -22,8 +22,8 @@ class TourSiteController {
   };
   searchTourSite = async (req, res, next) => {
     try {
-      const { search_site } = req.params;
-      const { status, message, result } = await this.tourSiteService.searchTourSite(search_site);
+      const { search_data, search_type } = req.params;
+      const { status, message, result } = await this.tourSiteService.searchTourSite(search_data, search_type);
       return res.status(status).json({ message, result });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });
@@ -34,7 +34,8 @@ class TourSiteController {
   createTourSite = async (req, res, next) => {
     try {
       const admin_id = res.locals.admin.id;
-      const { status, message, result } = await this.tourSiteService.createTourSite(admin_id);
+      const { startNumber } = req.body;
+      const { status, message, result } = await this.tourSiteService.createTourSite(admin_id, startNumber);
       return res.status(status).json({ message, result });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });

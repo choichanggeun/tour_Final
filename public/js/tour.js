@@ -4,12 +4,13 @@ window.onload = function () {
   const tour_site_id = urlParams.get('id');
   const tour_id = urlParams.get('tourId');
   checkLoggedInStatus();
-  if (tour_site_id) {
+  if (tour_site_id && !tour_id) {
     createTour(tour_site_id);
   }
   if (tour_id) {
     let day = document.getElementById('tourDays').value;
     TourDayCheck(tour_id);
+    firstSite(tour_site_id, day);
     restartTour(tour_id, day);
   }
 };
@@ -22,6 +23,7 @@ const searchInput = document.getElementById('search-input');
 const searchBtn = document.getElementById('search-button');
 const tourDays = document.getElementById('tourDays');
 const createTourBtn = document.getElementById('createTour');
+const closeBtn = document.getElementById('tourcloseBtn');
 var markers = [];
 let i = 0;
 let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -34,18 +36,20 @@ let map = new kakao.maps.Map(container, options);
 
 searchBtn.addEventListener('click', function () {
   const searchInputValue = document.getElementById('search-input').value;
-  loadSearchSiteItem(searchInputValue);
+  const searchType = document.getElementById('search_type').value;
+  loadSearchSiteItem(searchInputValue, searchType);
 });
 searchInput.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     const searchInputValue = document.getElementById('search-input').value;
-    loadSearchSiteItem(searchInputValue);
+    const searchType = document.getElementById('search_type').value;
+    loadSearchSiteItem(searchInputValue, searchType);
   }
 });
 
 //검색 기능
-function loadSearchSiteItem(search_site) {
-  fetch(`/searchtour/${search_site}`, {
+function loadSearchSiteItem(search_data, search_type) {
+  fetch(`/searchtour/${search_data}/${search_type}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -76,6 +80,7 @@ function loadSearchSiteItem(search_site) {
 }
 //검색 창에 나온 카드들 클릭하면 이벤트 발생
 function siteApi(siteId, day) {
+  console.log(typeof siteId, typeof day);
   const card = document.getElementById(`${siteId}`);
   const formData = {
     site_id: siteId,
@@ -125,12 +130,28 @@ function createTour(tour_site_id) {
       .then((response) => response.json())
       .then((data) => {
         alert(data.message);
-        window.location.href = `tour.html?tourId=${data.result.id}`;
+        window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
       })
       .catch((error) => {
         console.error('여행계획 생성 실패:', error);
         alert('여행 계획 생성에 실패하였습니다.');
       });
+  });
+  closeBtn.addEventListener('click', () => {
+    window.location.href = `tourSite.html`;
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      window.location.href = `tourSite.html`;
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      window.location.href = `tourSite.html`;
+    }
   });
 }
 
@@ -270,6 +291,7 @@ function restartTour(tour_id, day) {
 }
 // 날짜 변경시 해당 날짜에 맞는 redis 정보를 불러옴
 tourDays.addEventListener('change', function () {
+  siteListBox.innerHTML = '';
   let day = checkday();
   fetch(`/redis/${tour_id}/${day}`, {
     method: 'GET',
@@ -298,7 +320,8 @@ createTourBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert('계획을 완성했습니다!');
+      alert(data.message);
+      window.location.href = '/';
     })
     .catch((error) => {
       console.log(error);
@@ -313,4 +336,27 @@ function setMarkers(map) {
 
 function checkday() {
   return document.getElementById('tourDays').value;
+}
+
+function firstSite(tour_site_id, day) {
+  const formData = {
+    site_id: Number(tour_site_id),
+    day: day,
+  };
+  fetch(`/redis/${tour_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      panTo(tour_site_id, i);
+      i++;
+      siteListBox.innerHTML = '';
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 }

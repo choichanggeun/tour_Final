@@ -618,7 +618,7 @@ header {
 }
 
 footer {
-  background-color: #7993f9;
+  background-color: #b5c4ff;
   width: 100%;
   padding: 40px 0 20px;
   /* position: fixed; */
@@ -678,7 +678,7 @@ footer .post p span {
 
 .copyright {   
   min-height: 40px;
-  background-color: #d4cef6;;
+  background-color: #d4cef6;
   float: left;
   width: 100%;
   /* position: fixed; */

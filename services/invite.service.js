@@ -6,22 +6,26 @@ class InviteService {
   findInvite = async ({ user_id, tour_id }) => {
     if (!user_id) throw { code: 403, message: '로그인이 필요한 기능입니다.' };
     const findInvite = await this.inviteRepository.findInvite({ tour_id });
-
-    return { code: 200, data: findInvite };
+    const findUser = findInvite.map((user) => {
+      return {
+        nickname: user.User.nickname,
+      };
+    });
+    return { code: 200, data: findUser };
   };
 
   createInvite = async ({ tour_id, email, user_id }) => {
-    await this.inviteRepository.createInvite({
+    const existsEmail = await this.inviteRepository.findByEmail({ email });
+    if (!existsEmail) throw { code: 412, message: '초대된 사용자가 존재하지 않습니다.' };
+
+    const invitedUser = await this.inviteRepository.createInvite({
       tour_id,
       email,
       user_id,
     });
-    const existsEmail = await this.inviteRepository.findByEmail({ email });
+    if (!invitedUser) throw { code: 412, message: '초대 실패' };
 
-    if (!user_id) throw { code: 403, message: '로그인이 필요한 기능입니다.' };
-    if (!existsEmail) throw { code: 412, message: '초대된 사용자가 존재하지 않습니다.' };
-
-    return { code: 201, message: '사용자 초대가 완료되었습니다.' };
+    return { code: 201, message: '사용자 초대가 완료되었습니다.', result: existsEmail };
   };
 
   deleteInvite = async ({ user_id, invite_id }) => {

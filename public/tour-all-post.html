@@ -12,10 +12,15 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
     <link href="css/responsive-style.css" rel="stylesheet" />
-    <link href="css/diary.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
     <style>
+      body {
+        width: 100%;
+        height: 100vh;
+      }
       .button-container {
         float: right;
       }
@@ -38,6 +43,106 @@
 
       .dropdown:hover .dropdown-content {
         display: block;
+      }
+      .img-fluid {
+        width: 500px;
+        height: 300px;
+      }
+      .dropdown-button {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+        padding: 0;
+        margin-right: 10px;
+        margin-left: 100px;
+      }
+      #modal.modal-overlay {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transform: translate(-50%, -50%);
+      }
+      #modal .modal-window {
+        background: rgba(69, 139, 197, 0.7);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        width: 400px;
+        height: 500px;
+        padding: 10px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      #modal .title {
+        padding-left: 10px;
+        display: inline;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+      }
+      #modal .title h2 {
+        display: inline;
+      }
+      #modal .close-area {
+        display: inline;
+        float: right;
+        padding-right: 10px;
+        cursor: pointer;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+      }
+
+      #modal .content {
+        margin-top: 20px;
+        padding: 0px 10px;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+      }
+      #pagingul {
+        margin: auto;
+        text-align: center;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-right: 0;
+        padding-left: 0;
+      }
+      #pagingul li {
+        text-align: center;
+        float: left;
+        list-style: none;
+      }
+
+      #pagingul li a {
+        display: block;
+        font-size: 14px;
+        color: black;
+        padding: 9px 12px;
+        border-right: solid 1px #ccc;
+        box-sizing: border-box;
+        text-decoration-line: none;
+      }
+
+      #pagingul li.on {
+        background: #eda712;
+      }
+
+      #pagingul li.on a {
+        color: #fff;
       }
     </style>
   </head>
@@ -94,7 +199,6 @@
                           <span class="dropbtn" id="usernickname">홍길동</span>
                           <div class="dropdown-content">
                             <a href="javascript:void(0);" onclick="">회원정보</a>
-                            <a href="javascript:void(0);" onclick="popup()">채팅</a>
                             <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
                           </div>
                         </div>
@@ -124,8 +228,8 @@
 
             <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">여행 계획</a></li>
-            <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
+            <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">여행 일지</a></li>
             <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
@@ -134,37 +238,34 @@
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
           </ul>
           <!-- 검색기능 -->
-          <form class="pull-xs-right">
-            <label for="post-upload-img" class="basic-btn">파일 업로드</label>
-            <input id="post-upload-img" type="file" style="display: none" />
-            <button id="testbtn">버튼</button>
-          </form>
-          <form class="pull-xs-right">
-            <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+
+          <form class="pull-xs-right" onsubmit="return false">
+            <div style="float: right; margin-left: 50px; margin-top: 10px">
+              <select id="search_type">
+                <option value="제목">제목</option>
+                <option value="사용자">닉네임</option>
+              </select>
+            </div>
+            <div class="search" style="float: right">
+              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="searchSite-input" accept-charset="utf-8" />
+              <button type="button" class="btn btn-search" id="searchSite-button"><i class="fa fa-search"></i></button>
             </div>
           </form>
         </div>
       </div>
     </nav>
-    <!-- 왼쪽에 4개 있는 부분입니다. -->
-    <section class="banner-sec">
-      <div class="container">
-        <div class="row" id="row">
-          <!-- 여행 일지 수정하는 부분입니다. -->
-          <div class=""></div>
-          <!-- 배너부분이 들어갈 자리입니다. -->
-          <div class="col-md-6 top-slider">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-              <!-- Indicators -->
-              <ol class="carousel-indicators" id="carousel-indicators"></ol>
 
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
-            </div>
-          </div>
+    <section class="section-01">
+      <div class="container">
+        <div class="row">
+          <h3 class="heading-large">여행 계획</h3>
+          <div class="row" id="siteList"></div>
         </div>
+      </div>
+      <div style="display: flex; justify-content: center">
+        <ul id="pagingul"></ul>
+        <span id="displayCount"></span>
+        <table id="dataTableBody"></table>
       </div>
     </section>
 
@@ -236,7 +337,6 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>
-    <script src="js/main.js"></script>
-    <script src="./js/diary.js"></script>
+    <script src="js/tour-all-post.js"></script>
   </body>
 </html>
