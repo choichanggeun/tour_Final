@@ -134,10 +134,10 @@ header {
   width: 100%;
 }
 .small-top {
-  border-bottom: 1px solid #2b2b2b;
+  border-bottom: 1px solid #ff0000;
   float: left;
   width: 100%;
-  background: #000;
+  background: #d4cef6;
 }
 .small-top .social-icon {
   float: right;
@@ -161,10 +161,10 @@ header {
   float: left;
   margin-top: 4px;
   padding-left: 0;
-  color: #898989;
+  color: #fe0303;
 }
 .top-head {
-  background: #141517;
+  background: #7993f9;
   width: 100%;
   float: left;
   height: 100px;
@@ -179,7 +179,7 @@ header {
   float: left;
   width: 100%;
   font-size: 14px;
-  color: #c0c0c0;
+  color: #fdfafa;
   margin-top: 5px;
   margin-left: 5px;
 }
@@ -610,10 +610,12 @@ header {
 }
 
 footer {
-  background-color: #141517;
+  background-color: #7993f9;
   width: 100%;
   float: left;
   padding: 40px 0 20px;
+  position: fixed;
+  bottom: 0;
 }
 footer .footer-ul {
   list-style-type: none;
@@ -625,7 +627,7 @@ footer .footer-ul li {
   margin-bottom: 10px;
 }
 footer .footer-ul li a {
-  color: #a0a3a4;
+  color: #000000;
   transition: color 0.2s linear 0s, background 0.2s linear 0s;
 }
 footer .footer-ul i {
@@ -644,7 +646,7 @@ footer .social-icons i {
   margin-bottom: 10px;
 }
 footer p {
-  color: #a0a3a4;
+  color: #000000;
   font-size: 14px;
 }
 footer p span {
@@ -653,7 +655,7 @@ footer p span {
 footer .heading-footer {
   font-size: 21px;
   font-weight: 700;
-  color: #d9d6d6;
+  color: #fb0606;
   margin-bottom: 22px;
 }
 footer .post p {
@@ -669,13 +671,15 @@ footer .post p span {
 
 .copyright {
   min-height: 40px;
-  background-color: #000;
+  background-color: #d4cef6;;
   float: left;
   width: 100%;
+  position: fixed;
+  bottom: 0;
 }
 .copyright p {
   text-align: left;
-  color: #fff;
+  color: #fc0404;
   padding: 10px 0;
   margin-bottom: 0px;
   font-size: 13px;
@@ -703,6 +707,6 @@ footer .post p span {
   margin-left: 8px;
 }
 .bottom_ul li a {
-  color: #fff;
+  color: #fa0707;
   font-size: 12px;
 }
