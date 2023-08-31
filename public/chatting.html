@@ -1,43 +1,138 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Socket Tester</title>
+<html lang="en">
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="css/chatting.css"> <!-- 추가한 CSS 파일 -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
 
-    <style>
-      #messages {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      #messages li {
-        padding: 5px 10px;
-      }
-      #messages li:nth-child(odd) {
-        background: #eee;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="j-message"></div>
-    <div class="j-footer">
-      <table>
-        <tr>
-          <td width="100%">
-            <input id="message-input" type="text" />
-          </td>
-          <td width="20%">
-            <button id="message-button" type="submit">전송</button>
-          </td>
-        </tr>
-      </table>
-    </div>
+    .msger {
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      margin: auto;
+      max-width: 600px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
 
-    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-    <script src="./js/chatting.js"></script>
-  </body>
+    .msger-header {
+      background-color: #f2f2f2;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #d3d3d3;
+    }
+
+    .msger-header-title {
+      font-weight: bold;
+    }
+
+    .msger-chat {
+      flex: 1;
+      overflow: auto;
+      padding: 10px;
+    }
+
+    .msg {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .msg-img {
+      width: 50px;
+      height: 50px;
+      background-size: cover;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .msg-bubble {
+      padding: 10px;
+      background-color: #f2f2f2;
+      border-radius: 10px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .msg-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .msg-info-name {
+      font-weight: bold;
+    }
+
+    .msg-info-time {
+      color: #aaa;
+    }
+
+    .msg-text {
+      font-size: 0.9em;
+    }
+
+    .msger-inputarea {
+      display: flex;
+      background-color: #f2f2f2;
+      padding: 10px;
+      border-top: 1px solid #d3d3d3;
+    }
+
+    .msger-input {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      margin-right: 10px;
+    }
+
+    .msger-send-btn {
+      background-color: #007bff;
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+        <i class="fas fa-comment-alt"></i> Tour Project2
+      </div>
+      <div class="msger-header-options">
+        <span><i class="fas fa-cog"></i></span>
+      </div>
+    </header>
+
+    <main class="msger-chat">
+      <!-- Messages will be dynamically added here -->
+    </main>
+
+    <form class="msger-inputarea">
+      <input id="message-input" type="text" class="msger-input" placeholder="Enter your message...">
+      <button id="message-button" type="submit" class="msger-send-btn">전송</button>
+    </form>
+    
+    <!-- <div class="msger-chat"></div> -->
+  </section>
+
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=YOUR_KAKAO_APP_KEY"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="./js/chatting.js"></script>
+</body>
+
 </html>
