@@ -30,7 +30,7 @@ class UserService {
     }
 
     // 닉네임 형식 검사: 최소 3자 이상, 문자 및 숫자만 가능
-    const nicknameRegex = /^[a-zA-Z0-9]{3,}$/;
+    const nicknameRegex = /^[a-zA-Zㄱ-힣0-9-_.]{3,}$/;
     if (!nicknameRegex.test(nickname)) {
       throw new CustomError('닉네임의 형식이 일치하지 않습니다.', 400);
     }

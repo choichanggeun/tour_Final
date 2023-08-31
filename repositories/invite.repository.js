@@ -4,6 +4,7 @@ class InviteRepository {
   findInvite = async ({ tour_id }) => {
     return await Invite.findAll({
       where: { tour_id },
+      include: [{ model: User, attributes: ['nickname'] }],
     });
   };
 
@@ -20,7 +21,7 @@ class InviteRepository {
   };
 
   findByEmail = async ({ email }) => {
-    return await User.findOne({ where: { email } });
+    return await User.findOne({ where: { email: email } });
   };
 
   deleteInvite = async ({ invite_id }) => {

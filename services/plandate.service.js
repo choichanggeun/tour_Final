@@ -12,7 +12,7 @@ class PlanDateService {
 
     if (!createPlanDate) throw { code: 401, message: '여행 장소 등록이 실패하였습니다.' };
 
-    return { createPlanDate, code: 200, message: '여행 장소 작성이 완료되었습니다.' };
+    return { createPlanDate, code: 200, message: '여행 계획 작성이 완료되었습니다.' };
   };
   //여행 장소 조회
   getPlanDate = async ({ tour_id }) => {

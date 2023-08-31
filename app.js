@@ -26,6 +26,7 @@ io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
 
 // redis 클라이언트 생성
 const REDIS_PREFIX = 'CHAT_USER_';
+const REDIS_SUFFIX = 'CHAT_ROOM_';
 const client = redis.createClient();
 (async () => {
   await client.connect();
@@ -69,8 +70,8 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('user', function (data) {
-    client.RPUSH(REDIS_PREFIX + data.id, data.message);
-    client.expire(REDIS_PREFIX + data.id, 1800); // 해당 redis 유효시간 3600초
+    client.RPUSH(REDIS_PREFIX + data.id + REDIS_SUFFIX + data.room, data.message);
+    client.expire(REDIS_PREFIX + data.id + REDIS_SUFFIX + data.room, 1800); // 해당 redis 유효시간 3600초
     socket.broadcast.to(socket.room).emit('message', data);
   });
 });
@@ -86,7 +87,7 @@ async function saveChattingData(data) {
 
 async function getChattingLog(data) {
   try {
-    const loglist = await client.lRange(REDIS_PREFIX + data.id, 0, -1);
+    const loglist = await client.lRange(REDIS_PREFIX + data.id + REDIS_SUFFIX + data.room, 0, -1);
     return loglist;
   } catch (error) {
     return console.log(error);
