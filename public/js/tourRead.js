@@ -1,12 +1,28 @@
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', async function () {
   // 페이지 로드 완료 시 동작 정의
 
   // Get logged-in user's email and display it
-  fetch(`/users`)
+  await fetch(`/users`)
     .then((response) => response.json())
     .then((result) => {
-      var userNickname = document.querySelector('#user-nickname');
-      userNickname.textContent = 'User Nickname: ' + result.data.nickname;
+      var nickNameBox = document.querySelector('#nickname-box');
+
+      var nickName2 = document.createElement('div');
+      nickName2.id = 'user-nickname';
+      nickName2.textContent = `user nickname : ${result.data.nickname}`;
+
+      var button = document.createElement('button');
+      button.className = 'btn btn-primary w-100 mt-3';
+      button.id = 'updateProfileButton';
+      button.textContent = '프로필 변경';
+
+      // 버튼 클릭시 회원정보 수정 창으로 이동
+      button.addEventListener('click', function () {
+        window.open('./mypage-profile.html'); // Open the new page in a new window/tab
+      });
+
+      nickNameBox.appendChild(nickName2);
+      nickNameBox.appendChild(button);
     })
     .catch((error) => console.error('Error:', error));
 
@@ -53,15 +69,32 @@ document.addEventListener('DOMContentLoaded', function () {
     })
     .catch((error) => console.error('Error:', error));
 
-  // Update profile button event listener
-  document.querySelector('#updateProfileButton').addEventListener('click', function () {
-    var newNickname = prompt('Enter new nickname:');
-    var newPassword = prompt('Enter new password:');
+  // Fetch diary data by id (add your diary_id)
+  const diary_id = 'your_diary_id_here';
 
-    fetch('/user/update', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nickname: newNickname, password: newPassword }),
-    });
-  });
+  fetch(`/diaries/${diary_id}`)
+    .then((response) => response.json())
+    .then((result) => {
+      var mainContentDiary = document.querySelector('#main-content-diary');
+      mainContentDiary.innerHTML = '';
+
+      var diaryData = result.data;
+
+      if (Array.isArray(diaryData)) {
+        diaryData.forEach(function (item, index) {
+          if (typeof item === 'object' && item !== null) {
+            var diaryItem = document.createElement('div');
+            diaryItem.className = 'diary-item';
+
+            var titleElement = document.createElement('p');
+            titleElement.textContent = item.title;
+
+            diaryItem.appendChild(titleElement);
+
+            mainContentDiary.appendChild(diaryItem);
+          }
+        });
+      }
+    })
+    .catch((error) => console.error('Error:', error));
 });
