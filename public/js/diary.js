@@ -137,7 +137,7 @@ updateRenderDiary();
 
 // 여행 일지, 이미지 수정
 updateDiary = async function (diary_id) {
-  document.getElementById('diary-update-button').addEventListener('click', async () => {
+  document.getElementById('diary-update-button').addEventListener('click', async function () {
     const diaryTitle = document.getElementById('diary-title').value;
     const diaryContent = document.getElementById('diary-content').value;
 
