@@ -330,7 +330,7 @@ blockquote {
   margin: 0 0 1rem;
 }
 a {
-  color: #fdfdfd;
+  color: #000000;
   text-decoration: none;
 }
 a:focus,
@@ -521,8 +521,8 @@ hr {
 small {
   font-size: 80%;
   font-weight: 400;
-  color: #91a5e9;
-  margin-left: 15px;
+  color: #000000;
+  margin-left: 20px;
 }
 .mark,
 mark {
