@@ -6,7 +6,6 @@ class RedisController {
   getRedis = async (req, res, next) => {
     try {
       const { key, day } = req.params;
-
       const { status, message, result } = await this.redisService.getRedis(key, day);
       return res.status(status).json({ message, result });
     } catch (error) {
