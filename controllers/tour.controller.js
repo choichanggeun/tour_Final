@@ -23,7 +23,7 @@ class TourController {
       return res.status(500).json({ message: err.message });
     }
   };
-
+  // 단일 여행 계획 조회 (tour_id)
   getTourOne = async (req, res, next) => {
     try {
       const { tour_id } = req.params;
@@ -34,6 +34,29 @@ class TourController {
       return res.status(error.code).json({ message: error.message });
     }
   };
+  // 모든 여행 계획 조회
+  getTourList = async (req, res, next) => {
+    try {
+      const { code, message, result } = await this.tourService.getTourList();
+      return res.status(code).json({ message, result });
+    } catch (error) {
+      if (error.status) return res.status(error.status).json({ message: error.message });
+      console.log(error);
+      return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
+    }
+  };
+  searchTour = async (req, res, next) => {
+    try {
+      const { search_data, search_type } = req.params;
+      const { code, message, result } = await this.tourService.searchTour(search_data, search_type);
+      return res.status(code).json({ message, result });
+    } catch (error) {
+      if (error.status) return res.status(error.status).json({ message: error.message });
+      console.log(error);
+      return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
+    }
+  };
+
   // 여행 계획 조회
   getTour = async (req, res, next) => {
     try {

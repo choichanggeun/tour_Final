@@ -7,13 +7,14 @@ const tourController = new TourController();
 
 // 여행계획 생성
 router.post('/:tour_site_id/tours/', authMiddleware, tourController.postTour);
-
-// 여행계획 상세 조회
+// 모든 여행계획 조회
+router.get('/tours', tourController.getTourList);
+// 여행계획 조회
 router.get('/tours/:tour_id', tourController.getTourOne);
-
-// 여행 계획 전체 조회
-router.get('/tours', authMiddleware, tourController.getTour);
-
+// 여행 계획 검색
+router.get('/search_tour/:search_data/:search_type', tourController.searchTour);
+// 여행 일지 조회
+router.get('/:tour_site_id/:tour_id/tours', authMiddleware, tourController.getTour);
 // 여행 일지 수정
 router.put('/tours/:tour_id/', authMiddleware, tourController.putTour);
 
