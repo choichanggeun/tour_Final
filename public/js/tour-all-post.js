@@ -33,18 +33,18 @@ enterInput.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     const searchInput = document.getElementById('searchSite-input').value;
     const search_type = document.getElementById('search_type').value;
-    window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+    window.location.href = `tour-all-post.html?data=${searchInput}&type=${search_type}`;
   }
 });
 
 searchButton.addEventListener('click', function () {
   const searchInput = document.getElementById('searchSite-input').value;
   const search_type = document.getElementById('search_type').value;
-  window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+  window.location.href = `tour-all-post.html?data=${searchInput}&type=${search_type}`;
 });
 
 function loadSearchSiteItem(search_data, search_type) {
-  fetch(`/searchtour/${search_data}/${search_type}`, {
+  fetch(`/search_tour/${search_data}/${search_type}`, {
     method: 'GET',
   })
     .then((response) => response.json())

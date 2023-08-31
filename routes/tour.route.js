@@ -11,7 +11,8 @@ router.post('/:tour_site_id/tours/', authMiddleware, tourController.postTour);
 router.get('/tours', tourController.getTourList);
 // 여행계획 조회
 router.get('/tours/:tour_id', tourController.getTourOne);
-
+// 여행 계획 검색
+router.get('/search_tour/:search_data/:search_type', tourController.searchTour);
 // 여행 일지 조회
 router.get('/:tour_site_id/:tour_id/tours', authMiddleware, tourController.getTour);
 

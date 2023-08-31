@@ -46,6 +46,11 @@ class TourService {
     });
     return { code: 200, message: '여행계획 조회 성공', result: findTourList };
   };
+
+  searchTour = async (search_data, search_type) => {
+    const findTour = await this.tourRepository.searchTour(search_data, search_type);
+    return { code: 200, message: '여행계획 검색 성공', result: findTour };
+  };
   //여행계획 조회
   getTour = async ({ tour_site_id, tour_id }) => {
     if (!tour_id) {

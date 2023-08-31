@@ -1,4 +1,5 @@
 const { Tour, User, TourSite } = require('../models');
+const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
 const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 반드시 설정 !!
@@ -38,6 +39,13 @@ class TourRepository {
       await redisCli.set('tour', JSON.stringify(data));
       await redisCli.expire('tour', 360);
       return data;
+    }
+  };
+  searchTour = async (search_data, search_type) => {
+    if (search_type === '제목') {
+      return await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } } });
+    } else if (search_type === '사용자') {
+      return await Tour.findAll({ where: { nickname: { [Op.like]: '%' + search_data + '%' } } });
     }
   };
   // 모든 여행 계획 조회
