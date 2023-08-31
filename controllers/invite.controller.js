@@ -8,13 +8,12 @@ class InviteController {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { data, code } = await this.inviteService.findInvite({ user_id, tour_id });
-
-      return res.status(code).json({ data, code });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '초대된 사용자 조회에 실패하였습니다.' });
+      const { data, code, message } = await this.inviteService.findInvite({ user_id, tour_id });
+      return res.status(code).json({ data, message });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 
@@ -24,18 +23,16 @@ class InviteController {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
       const { email } = req.body;
-
       const { code, message } = await this.inviteService.createInvite({
         tour_id,
         email,
         user_id,
       });
-
       return res.status(code).json({ message });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '초대된 사용자 생성에 실패하였습니다.' });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 
@@ -47,12 +44,11 @@ class InviteController {
         user_id,
         invite_id,
       });
-
       return res.status(code).json({ message });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '초대된 사용자 삭제에 실패하였습니다.' });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 }
