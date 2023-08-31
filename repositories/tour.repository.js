@@ -40,9 +40,37 @@ class TourRepository {
   };
   searchTour = async (search_data, search_type) => {
     if (search_type === '제목') {
-      return await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } } });
+      const findTour = await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } }, include: [{ model: User }, { model: TourSite }] });
+      return findTour.map((tour) => {
+        return {
+          nickname: tour.User.nickname,
+          title: tour.title,
+          site_name: tour.TourSite.site_name,
+          site_img: tour.TourSite.site_img,
+        };
+      });
     } else if (search_type === '사용자') {
-      return await User.findAll({ where: { nickname: { [Op.like]: '%' + search_data + '%' } } });
+      const findUser = await User.findAll({
+        where: { nickname: { [Op.like]: '%' + search_data + '%' } },
+        include: [
+          {
+            model: Tour,
+            include: [
+              {
+                model: TourSite,
+              },
+            ],
+          },
+        ],
+      });
+      return findUser.map((user) => {
+        return {
+          nickname: user.nickname,
+          title: user.Tours[0].title,
+          site_name: user.Tours[0].TourSite.site_name,
+          site_img: user.Tours[0].TourSite.site_img,
+        };
+      });
     }
   };
   // 모든 여행 계획 조회

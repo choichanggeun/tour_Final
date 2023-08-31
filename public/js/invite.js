@@ -1,25 +1,13 @@
 const inviteUser = document.getElementById('inviteUser');
 const urlParams = new URLSearchParams(window.location.search);
 const tour_id = urlParams.get('tourId');
-
+const invitedUserList = document.getElementById('invitedUserListBox');
+const inviteBtn = document.getElementById('inviteBtn');
+const closeBtn = document.getElementById('closeBtn');
 inviteUser.addEventListener('click', function () {
   const modal = document.getElementById('invitemodal');
   modal.style.display = 'flex';
-  const inviteBtn = document.getElementById('inviteBtn');
-  const invitedUserList = document.getElementById('invitedUserListBox');
-  const closeBtn = document.getElementById('closeBtn');
-  fetch(`/invite/${tour_id}`, {
-    method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const invitedUser = data.data;
-      invitedUser.forEach((user) => {
-        const inviteCard = `<div><strong>${user.nickname}</strong></div>`;
-        invitedUserList.innerHTML += inviteCard;
-      });
-    });
-
+  document.getElementById('inviteEmail').value = '';
   inviteBtn.addEventListener('click', function () {
     const inviteEmail = document.getElementById('inviteEmail').value;
     fetch(`/invite/${tour_id}`, {
@@ -58,3 +46,17 @@ inviteUser.addEventListener('click', function () {
     }
   });
 });
+
+function checkInvitedUser() {
+  fetch(`/invite/${tour_id}`, {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const invitedUser = data.data;
+      invitedUser.forEach((user) => {
+        const inviteCard = `<div><strong>${user.nickname}</strong></div>`;
+        invitedUserList.innerHTML += inviteCard;
+      });
+    });
+}

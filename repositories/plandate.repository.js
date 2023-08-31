@@ -21,6 +21,7 @@ class PlanDateRepository {
         await Place.create({ tour_site_id: plan[j], plan_date_id: plandate.id });
       }
     }
+    await Tour.update({ status: 1 }, { where: { id: tour_id } });
     return true;
   };
 
