@@ -399,6 +399,7 @@ label {
   margin-bottom: 0.5rem;
   color: #022491;
   margin-left: 15px;
+  padding: 7px 10px;
   /* margin-top: 130px; */
 }
 button:focus {
