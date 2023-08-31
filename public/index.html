@@ -9,34 +9,32 @@
   <meta name="author" content="" />
   <title>Tour Project</title>
 
-  <!--Bootstrap core CSS-->
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/custom.css" rel="stylesheet" />
-  <link href="css/responsive-style.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/loaders.css" />
-  <style>
-    .button-container {
-      float: right;
-    }
+    <!--Bootstrap core CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link href="css/responsive-style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <style>
+      .button-container {
+        float: right;
+      }
+      .dropdown {
+        width: 60px;
+        position: relative;
+        display: inline-block;
+      }
 
-    .dropdown {
-      width: 60px;
-      position: relative;
-      display: inline-block;
-    }
+      .dropdown-content {
+        overflow: hidden;
+        display: none;
+        position: absolute;
+        z-index: 1; /*다른 요소들보다 앞에 배치*/
+      }
 
-    .dropdown-content {
-      overflow: hidden;
-      display: none;
-      position: absolute;
-      z-index: 1;
-      /*다른 요소들보다 앞에 배치*/
-    }
-
-    .dropdown-content a {
-      display: block;
-    }
+      .dropdown-content a {
+        display: block;
+      }
 
     .dropdown:hover .dropdown-content {
       display: block;
@@ -102,34 +100,31 @@
                   <span class="ping"></span>
                   <i class="fa fa-envelope-o"></i
                 ></a> -->
-              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
-              <div class="container header-container">
-                <div class="button-container right-aligned-buttons">
-                  <button type="button" class="btn btn-search " id="loginbtn"><a href="/login.html">로그인</a></button>
-                  <div id="profileimg">
-                    <a href="" class="nav-link">
-                      <div class="dropdown">
-                        <span class="dropbtn" id="usernickname">홍길동</span>
-                        <div class="dropdown-content">
-                          <a href="javascript:void(0);" onclick="">회원정보</a>
-                          <a href="javascript:void(0);" onclick="popup()">채팅</a>
-                          <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+                <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+                <div class="container header-container">
+                  <div class="button-container right-aligned-buttons">
+                    <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                    <div id="profileimg">
+                      <a href="" class="nav-link">
+                        <div class="dropdown">
+                          <span class="dropbtn" id="usernickname">홍길동</span>
+                          <div class="dropdown-content">
+                            <a href="javascript:void(0);" onclick="">회원정보</a>
+                            <a href="javascript:void(0);" onclick="popup()">채팅</a>
+                            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+                          </div>
                         </div>
-                      </div>
-                      <!-- <div class="profile-box">  로그인옆 버튼생성
-                        <button type="button" class="btn btn-search" id="myPageBtn"><a href="/myPage.html">MY페이지</a></button>
-                      </div>  -->
-                      <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
-                    </a>
+                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </nav>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
   <nav class="navbar top-nav">
     <div class="container">
@@ -145,21 +140,21 @@
             <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
           </li>
 
-          <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
-          <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">여행 계획</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">여행 일지</a></li>
-          <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
+            <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
+            <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
+            <li class="nav-item"><a class="nav-link" href="#">여행 계획</a></li>
+            <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
+            <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
-        </ul>
-        <!-- 검색기능 -->
-        <form class="pull-xs-right">
-          <label for="post-upload-img" class="basic-btn">파일 업로드
-            <input id="post-upload-img" type="file" style="display: none;" />
+          </ul>
+          <!-- 검색기능 -->
+          <form class="pull-xs-right">
+            <label for="post-upload-img" class="basic-btn">파일 업로드</label>
+            <input id="post-upload-img" type="file" style="display: none" />
             <button id="testbtn">버튼</button>
         </form>
         <form class="pull-xs-right">
