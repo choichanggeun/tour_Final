@@ -10,13 +10,10 @@ class TourRepository {
   // 여행 계획 등록
   createTour = async ({ user_id, title, start_date, end_date, tour_site_id }) => {
     const user = await User.findOne({ where: { id: user_id } });
-
-    const tourSite = await TourSite.findOne({ where: { id: tour_site_id } });
-
     if (!user) {
       throw new Error('해당하는 사용자가 없습니다.');
     }
-    const createdTourData = await Tour.create({ title, start_date, end_date, user_id, tour_site_id });
+    const createdTourData = await Tour.create({ title, start_date, end_date, user_id, tour_site_id, status: 0 });
 
     return createdTourData;
   };
@@ -67,6 +64,10 @@ class TourRepository {
   deleteTour = async ({ user_id, tour_id }) => {
     const deletedTour = await Tour.destroy({ where: { id: tour_id } });
     return deletedTour; // 삭제 성공 여부 반환
+  };
+
+  findTourInProgress = async (user_id) => {
+    return await Tour.findOne({ where: { [Op.and]: [{ user_id: user_id }, { status: '0' }] } });
   };
 }
 
