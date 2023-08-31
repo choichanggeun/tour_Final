@@ -64,72 +64,110 @@ const postDiaryImg = async function () {
   }
 };
 
-// 여행 일지 수정
-const updateDiary = function () {
+// 여행 일지 수정 페이지
+const updateRenderDiary = function () {
   const currentPageURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const diary_id = urlParams.get('diary_id');
   const targetPageURL = `http://localhost:3000/diary-update.html?diary_id=${diary_id}`;
   if (currentPageURL === targetPageURL) {
-    document.getElementById('diary-img-delete-btn').addEventListener('click', async () => {});
-    document.getElementById('diary-update-button').addEventListener('click', async () => {
-      const diaryTitle = document.getElementById('diary-title').value;
-      const diaryContent = document.getElementById('diary-content').value;
+    addEventListener('DOMContentLoaded', async function renderDiary() {
+      const row = document.getElementById('row');
 
       try {
-        const response = await fetch('/tours/3/diaries', {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            title: diaryTitle,
-            content: diaryContent,
-          }),
+        const response = await fetch(`/diaries/${Number(diary_id)}`, {
+          method: 'GET',
         });
-        const data = await response.json();
+        const response2 = await fetch(`/diaries/${Number(diary_id)}/photos`, {
+          method: 'GET',
+        });
+        const { data } = await response.json();
+        const { images } = await response2.json();
         if (response.ok) {
-          postDiaryImg();
-          deleteDiaryImg();
+          row.innerHTML += `
+            <div id='diaryBox${data.id}'>
+              <label for="title">제목: </label>
+              <input name="title" value="${data.title}"></input>
+              <label for="content">내용: </label>
+              <textarea name="content">${data.content}</textarea>
+            </div>
+            `;
+          if (images) {
+            for (let image of images) {
+              const diaryBox = document.getElementById(`diaryBox${data.id}`);
+              const img = document.createElement('img');
+              img.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
+              diaryBox.appendChild(img);
+            }
+          } else {
+            const diaryBox = document.getElementById(`diaryBox${data.id}`);
+            const img = document.createElement('img');
+            img.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png`;
+            diaryBox.appendChild(img);
+          }
+          row.innerHTML += `
+            <button id='update-cancel-btn'>취소</button>
+            <button id='diary-update-btn'>저장</button>
+          `;
+          document.getElementById('update-cancel-btn').addEventListener('click', async function () {
+            location.reload();
+          });
+          document.getElementById('diary-update-btn').addEventListener('click', async function () {
+            // updateDiary(diary_id);
+          });
         } else {
           alert(data.message);
         }
       } catch (error) {
-        alert('여행일지 작성에 실패했습니다.');
+        alert('여행일지 수정에 실패했습니다.');
         console.error(error);
       }
     });
   }
 };
-updateDiary();
+updateRenderDiary();
 
-// 이미지 삭제
-const deleteDiaryImg = async function () {
-  const uploadImg = document.getElementById('diary-image').files;
-  const formData = new FormData();
-  if (uploadImg.length !== 0) {
-    // 여러 이미지를 하나씩 formData에 할당
-    for (let i = 0; i < uploadImg.length; i++) {
-      formData.append('image', uploadImg[i]);
+// 여행 일지, 이미지 수정
+updateDiary = async function (diary_id) {
+  document.getElementById('img-delete-btn').addEventListener('click', async () => {});
+  document.getElementById('diary-update-button').addEventListener('click', async () => {
+    const diaryTitle = document.getElementById('diary-title').value;
+    const diaryContent = document.getElementById('diary-content').value;
+
+    try {
+      const response = await fetch(`/diaries/${diary_id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: diaryTitle,
+          content: diaryContent,
+        }),
+      });
+      const data = await response.json();
+      if (response.ok) {
+        alert('여행 일지를 수정했습니다.');
+        location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      alert('여행 일지 수정에 실패했습니다.');
+      console.error(error);
     }
-  }
+  });
+};
+
+// 여행 일지 이미지 삭제
+const deleteDiaryImg = async function (diary_id) {
   try {
-    // 여행 일지 id 가져오기
-    const response = await fetch('/diaries', {
-      method: 'GET',
-    });
-    const { data } = await response.json();
-    const response2 = await fetch(`/diaries/${data[data.length - 1].id}/photos`, {
-      method: 'POST',
-      body: formData,
-    });
-    const data2 = await response2.json();
-    if (response.ok) {
-      alert('여행 일지를 작성했습니다.');
-      location.reload();
-    } else {
-      alert(data2.message);
+    const response = await fetch(`/diaries/${diary_id}/photos`);
+    const { image } = await response.json();
+    if (image) {
+      await fetch(`/photos/${image.id}`, {
+        method: 'DELETE',
+      });
     }
   } catch (error) {
-    alert('여행 일지 작성에 실패했습니다.');
     console.error(error);
   }
 };
@@ -175,7 +213,7 @@ const getDiary = function () {
             diaryBox.appendChild(img);
           }
           row.innerHTML += `
-            <button><a href="http://localhost:3000/diary-update.html?diary_id=${diary_id}" id="diary-update-btn">수정</a></button>
+            <button><a href="http://localhost:3000/diary-update.html?diary_id=${diary_id}">수정</a></button>
             <button id="diary-delete-btn">삭제</button>
           `;
           document.getElementById('diary-delete-btn').addEventListener('click', async function () {
@@ -185,7 +223,7 @@ const getDiary = function () {
           alert(data.message);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error(error);
       }
     });
   }
@@ -218,7 +256,7 @@ const deleteDiary = async function (diary_id) {
       alert(data.message);
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error(error);
   }
 };
 
@@ -239,7 +277,7 @@ const getAllDiary = function () {
         const { data } = await response.json();
         const { images } = await response2.json();
         if (response.ok) {
-          const cardList = document.getElementById('cardList');
+          const cardList = document.getElementById('card-list');
           for (let diary of data) {
             let diaryImg;
             for (let image of images) {
@@ -274,7 +312,7 @@ const getAllDiary = function () {
           alert(data.message);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error(error);
       }
     });
   }
@@ -318,8 +356,8 @@ const getMyDiary = function () {
                 }
               }
             } else {
-              const diaryImgBox = document.getElementById(`diaryImgBox${diary.id}`);
-              diaryImgBox.innerHTML += `
+              const diaryBox = document.getElementById(`diaryBox${diary.id}`);
+              diaryBox.innerHTML += `
               <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="diary-img" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png" alt=""/></a>
               `;
             }
@@ -328,7 +366,7 @@ const getMyDiary = function () {
           alert(data.message);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error(error);
       }
     });
   }
@@ -372,8 +410,8 @@ const getTourDiary = function () {
                 }
               }
             } else {
-              const diaryImgBox = document.getElementById(`diaryImgBox${diary.id}`);
-              diaryImgBox.innerHTML += `
+              const diaryBox = document.getElementById(`diaryBox${diary.id}`);
+              diaryBox.innerHTML += `
               <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="diary-img" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png" alt=""/></a>
               `;
             }
@@ -382,7 +420,7 @@ const getTourDiary = function () {
           alert(data.message);
         }
       } catch (error) {
-        console.error('Error:', error);
+        console.error(error);
       }
     });
   }
