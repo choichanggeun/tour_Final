@@ -38,6 +38,7 @@ class TourService {
     const findTour = await this.tourRepository.getTourList();
     const findTourList = findTour.map((tour) => {
       return {
+        id: tour.id,
         title: tour.title,
         nickname: tour.User.nickname,
         site_name: tour.TourSite.site_name,
