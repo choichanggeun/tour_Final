@@ -610,11 +610,10 @@ header {
 }
 
 footer {
-  background-color: #7993f9;
+  background-color: #b5c4ff;
   width: 100%;
   float: left;
-  padding: 40px 0 20px;
-  position: fixed;
+  padding: 20px 0 20px;
   bottom: 0;
 }
 footer .footer-ul {
@@ -671,7 +670,7 @@ footer .post p span {
 
 .copyright {
   min-height: 40px;
-  background-color: #d4cef6;;
+  background-color: #d4cef6;
   float: left;
   width: 100%;
   position: fixed;

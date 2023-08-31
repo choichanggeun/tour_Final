@@ -8,7 +8,7 @@ class UserController {
     try {
       const { email, password, confirm, nickname, authCode } = req.body;
       const { status, message, result } = await this.userService.createUser(email, password, confirm, nickname, authCode);
-      return res.status(status).json({ message, result });
+      return res.status(status).json({ message, status });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });
       console.log(error);

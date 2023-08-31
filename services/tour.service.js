@@ -5,14 +5,17 @@ class TourService {
 
   // 여행 계획 작성
   createTour = async ({ user_id, title, start_date, end_date, tour_site_id }) => {
-    if (!user_id) throw { code: 401, message: '유저ID가 존재하지않습니다.' };
-
+    let now = new Date();
+    let year = now.getFullYear();
+    let month = now.getMonth() + 1;
+    let date = now.getDate();
     if (!title) throw { code: 401, message: 'title을 입력해주세요.' };
-
     if (!start_date) throw { code: 401, message: 'start_date 입력해주세요.' };
-
     if (!end_date) throw { code: 401, message: 'end_date 입력해주세요.' };
-
+    if (new Date(start_date) > new Date(end_date)) throw { code: 401, message: '시작 날짜는 마지막 날짜보다 이전이어야 합니다.' };
+    if (new Date(start_date).getFullYear() <= year && new Date(start_date).getMonth() + 1 <= month && new Date(start_date).getDate() < date) throw { code: 401, message: '과거의 날짜는 선택할 수 없습니다.' };
+    const valiTourInProgress = await this.tourRepository.findTourInProgress(user_id);
+    if (valiTourInProgress) throw { code: 401, message: '진행 중인 계획 작성이 존재합니다.' };
     const createTourData = await this.tourRepository.createTour({
       user_id,
       title,
@@ -29,6 +32,25 @@ class TourService {
   getTourOne = async (tour_id) => {
     const findTour = await this.tourRepository.getTourOne(tour_id);
     return { code: 200, message: '여행계획 조회 성공', result: findTour };
+  };
+
+  getTourList = async () => {
+    const findTour = await this.tourRepository.getTourList();
+    const findTourList = findTour.map((tour) => {
+      return {
+        id: tour.id,
+        title: tour.title,
+        nickname: tour.User.nickname,
+        site_name: tour.TourSite.site_name,
+        site_img: tour.TourSite.site_img,
+      };
+    });
+    return { code: 200, message: '여행계획 조회 성공', result: findTourList };
+  };
+
+  searchTour = async (search_data, search_type) => {
+    const findTour = await this.tourRepository.searchTour(search_data, search_type);
+    return { code: 200, message: '여행계획 검색 성공', result: findTour };
   };
   //여행계획 조회
   getTour = async ({ tour_site_id, tour_id }) => {

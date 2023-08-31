@@ -30,6 +30,16 @@ class PlaceController {
       if (err.code) return res.status(err.code).json({ message: err.message });
     }
   };
+  // tour_id와 날짜로 경유지 조회
+  getPlaceList = async (req, res, next) => {
+    try {
+      const { tour_id, days } = req.params;
+      const { data, code, message } = await this.placeService.getPlaceList(tour_id, days);
+      return res.status(code).json({ message, data });
+    } catch (err) {
+      if (err.code) return res.status(err.code).json({ message: err.message });
+    }
+  };
 
   //여행 경유지 수정
   putPlace = async (req, res, next) => {

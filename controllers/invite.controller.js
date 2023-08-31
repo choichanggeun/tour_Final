@@ -8,9 +8,9 @@ class InviteController {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { data, code } = await this.inviteService.findInvite({ user_id, tour_id });
+      const { code, data } = await this.inviteService.findInvite({ user_id, tour_id });
 
-      return res.status(code).json({ data, code });
+      return res.status(code).json({ code, data });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
@@ -23,15 +23,14 @@ class InviteController {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { email } = req.body;
-
-      const { code, message } = await this.inviteService.createInvite({
+      const { inviteEmail: email } = req.body;
+      const { code, message, result } = await this.inviteService.createInvite({
         tour_id,
         email,
         user_id,
       });
 
-      return res.status(code).json({ message });
+      return res.status(code).json({ message, result });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ errormessage: error.message });
       console.log(error);
