@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', function () {
   fetch(`/users`)
     .then((response) => response.json())
     .then((result) => {
-      var userEmail = document.querySelector('#user-email');
-      userEmail.textContent = 'User Email: ' + result.data.email;
+      var userNickname = document.querySelector('#user-nickname');
+      userNickname.textContent = 'User Nickname: ' + result.data.nickname;
     })
     .catch((error) => console.error('Error:', error));
 
