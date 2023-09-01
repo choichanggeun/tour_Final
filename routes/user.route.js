@@ -17,7 +17,7 @@ router.get('/users', auth, userController.getUser);
 // 사용자 정보 수정
 router.put('/users/', auth, userController.updateUser);
 // 사용자 정보 삭제(회원탈퇴)
-router.delete('/users/', auth, userController.deleteUser);
+router.delete('/users', auth, userController.deleteUser);
 // 인증 메일 생성, 해당 메일에 보내기
 router.post('/users/authemail', userController.isEmailValid);
 

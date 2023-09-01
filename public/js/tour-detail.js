@@ -14,15 +14,14 @@ const tourDays = document.getElementById('tourDays');
 const likeBtn = document.getElementById('likeBtn');
 const urlParams = new URLSearchParams(window.location.search);
 const tour_id = urlParams.get('id');
-
+const goDairy = document.getElementById('goDairy');
 window.onload = function () {
   checkLoggedInStatus();
   TourDayCheck(tour_id);
-  placesSearchCB(tour_id);
+  getplaceData(tour_id);
   checkLike();
 };
 
-// 날짜 변경시 해당 날짜에 맞는 redis 정보를 불러옴
 tourDays.addEventListener('change', function () {
   const days = document.getElementById('tourDays').value;
   fetch(`/place/${tour_id}/${days}`, {
@@ -51,6 +50,10 @@ likeBtn.addEventListener('click', function () {
   }
 });
 
+goDairy.addEventListener('click', function () {
+  window.location.href = `diary-tour.html?Id=${tour_id}`;
+});
+
 function checkLike() {
   fetch(`/tours/${tour_id}/likes`, {
     method: 'GET',
@@ -64,7 +67,7 @@ function checkLike() {
     });
 }
 
-function placesSearchCB(tour_id) {
+function getplaceData(tour_id) {
   const days = document.getElementById('tourDays').value;
   fetch(`/place/${tour_id}/${days}`, {
     method: 'GET',
