@@ -18,7 +18,14 @@ class PlaceRepository {
     });
     return places;
   };
-
+  // 여행 경로 조회 날짜와 계획에 따른
+  getPlaceList = async (tour_id, days) => {
+    const Plandate = await PlanDate.findOne({ where: { tour_id: tour_id, day: days } });
+    return await Place.findAll({
+      where: { plan_date_id: Plandate.id },
+      include: [{ model: TourSite }],
+    });
+  };
   // 여행 장소 수정
   updatePlace = async ({ plan_date_id, tour_site_id, place_id }) => {
     const updatedPlace = await Place.update(

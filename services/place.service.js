@@ -35,6 +35,24 @@ class PlaceService {
       message: '경유지 장소 조회가 완료되었습니다.',
     };
   };
+
+  getPlaceList = async (tour_id, days) => {
+    const findPlace = await this.placeRepository.getPlaceList(tour_id, days);
+    const PlaceList = findPlace.map((data) => {
+      return {
+        site_name: data.TourSite.site_name,
+        site_address: data.TourSite.site_address,
+        site_img: data.TourSite.site_img,
+        mapx: data.TourSite.mapx,
+        mapy: data.TourSite.mapy,
+      };
+    });
+    return {
+      data: PlaceList,
+      code: 200,
+      message: '경유지 장소 조회가 완료되었습니다.',
+    };
+  };
   //경유지 장소 수정
   putPlace = async ({ plan_date_id, tour_site_id, user_id, place_id }) => {
     if (!plan_date_id) throw { code: 400, message: 'plan_date_id가 필요합니다.' };

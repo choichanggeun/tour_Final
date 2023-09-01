@@ -6,8 +6,12 @@ class InviteService {
   findInvite = async ({ user_id, tour_id }) => {
     if (!user_id) throw { code: 403, message: '로그인이 필요한 기능입니다.' };
     const findInvite = await this.inviteRepository.findInvite({ tour_id });
-
-    return { code: 200, data: findInvite };
+    const findUser = findInvite.map((user) => {
+      return {
+        nickname: user.User.nickname,
+      };
+    });
+    return { code: 200, data: findUser };
   };
 
   createInvite = async ({ tour_id, email, user_id }) => {

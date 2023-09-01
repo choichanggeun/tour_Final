@@ -19,6 +19,13 @@ const postDiary = function () {
         const data = await response.json();
         if (response.ok) {
           postDiaryImg();
+          const response2 = await fetch('/diaries', {
+            method: 'GET',
+          });
+          const { data } = await response2.json();
+          const diary_id = data[data.length - 1].id;
+          alert('여행 일지를 작성했습니다.');
+          location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
         } else {
           alert(data.message);
         }
@@ -47,17 +54,10 @@ const postDiaryImg = async function () {
       method: 'GET',
     });
     const { data } = await response.json();
-    const response2 = await fetch(`/diaries/${data[data.length - 1].id}/photos`, {
+    await fetch(`/diaries/${data[data.length - 1].id}/photos`, {
       method: 'POST',
       body: formData,
     });
-    const data2 = await response2.json();
-    if (response.ok) {
-      alert('여행 일지를 작성했습니다.');
-      location.reload();
-    } else {
-      alert(data2.message);
-    }
   } catch (error) {
     alert('여행 일지 작성에 실패했습니다.');
     console.error(error);
@@ -88,8 +88,6 @@ const updateRenderDiary = function () {
             <div id='diaryBox${data.id}'>
               <label for="title">제목: </label>
               <input name="title" value="${data.title}"></input>
-              <label for="content">내용: </label>
-              <textarea name="content">${data.content}</textarea>
             </div>
             `;
           if (images) {
@@ -97,7 +95,12 @@ const updateRenderDiary = function () {
               const diaryBox = document.getElementById(`diaryBox${data.id}`);
               const img = document.createElement('img');
               img.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
+              img.id = 'img';
               diaryBox.appendChild(img);
+              const btn = document.createElement('button');
+              btn.innerText = 'X';
+              btn.id = 'img-delete-btn';
+              diaryBox.appendChild(btn);
             }
           } else {
             const diaryBox = document.getElementById(`diaryBox${data.id}`);
@@ -106,14 +109,19 @@ const updateRenderDiary = function () {
             diaryBox.appendChild(img);
           }
           row.innerHTML += `
+            <label for="content">내용: </label>
+            <textarea name="content">${data.content}</textarea>
             <button id='update-cancel-btn'>취소</button>
             <button id='diary-update-btn'>저장</button>
           `;
           document.getElementById('update-cancel-btn').addEventListener('click', async function () {
-            location.reload();
+            location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
+          });
+          document.getElementById('img-delete-btn').addEventListener('click', async function () {
+            // deleteDiaryImg(diary_id);
           });
           document.getElementById('diary-update-btn').addEventListener('click', async function () {
-            // updateDiary(diary_id);
+            updateDiary(diary_id);
           });
         } else {
           alert(data.message);
@@ -129,7 +137,6 @@ updateRenderDiary();
 
 // 여행 일지, 이미지 수정
 updateDiary = async function (diary_id) {
-  document.getElementById('img-delete-btn').addEventListener('click', async () => {});
   document.getElementById('diary-update-button').addEventListener('click', async () => {
     const diaryTitle = document.getElementById('diary-title').value;
     const diaryContent = document.getElementById('diary-content').value;
@@ -195,26 +202,28 @@ const getDiary = function () {
           row.innerHTML += `
             <div id='diaryBox${data.id}'>
               <p>제목: ${data.title}</p>
-              <p>내용: ${data.content}</p>
             </div>
-            `;
+          `;
           if (images) {
             for (let image of images) {
-              const diaryBox = document.getElementById(`diaryBox${data.id}`);
-              const img = document.createElement('img');
-              img.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
-              diaryBox.appendChild(img);
+              row.innerHTML += `
+                <div id="diaryBox${data.id}">
+                  <img src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}">
+                </div>
+              `;
             }
           } else {
-            const diaryBox = document.getElementById(`diaryBox${data.id}`);
-            const img = document.createElement('img');
-            img.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png`;
-            diaryBox.appendChild(img);
+            row.innerHTML += `
+                <div id="diaryBox${data.id}">
+                  <img src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png">
+                </div>
+              `;
           }
           row.innerHTML += `
+            <p>내용: ${data.content}</p>
             <button><a href="http://localhost:3000/diary-update.html?diary_id=${diary_id}">수정</a></button>
             <button id="diary-delete-btn">삭제</button>
-          `;
+            `;
           document.getElementById('diary-delete-btn').addEventListener('click', async function () {
             deleteDiary(diary_id);
           });
@@ -231,31 +240,34 @@ getDiary();
 
 // 여행 일지, 이미지 삭제
 const deleteDiary = async function (diary_id) {
-  try {
-    // 이미지 모두 삭제 후 여행 일지 삭제 가능
-    // 삭제할 여행 일지 이미지 목록 가져오기
-    const response = await fetch(`/diaries/${diary_id}/photos`);
-    const { images } = await response.json();
-    // 이미지 있으면 모두 삭제
-    if (images) {
-      for (let image of images) {
-        await fetch(`/photos/${image.id}`, {
-          method: 'DELETE',
-        });
+  const answer = confirm('여행 일지를 삭제하시겠습니까?');
+  if (answer) {
+    try {
+      // 이미지 모두 삭제 후 여행 일지 삭제 가능
+      // 삭제할 여행 일지 이미지 목록 가져오기
+      const response = await fetch(`/diaries/${diary_id}/photos`);
+      const { images } = await response.json();
+      // 이미지 있으면 모두 삭제
+      if (images) {
+        for (let image of images) {
+          await fetch(`/photos/${image.id}`, {
+            method: 'DELETE',
+          });
+        }
       }
+      const response2 = await fetch(`/diaries/${diary_id}`, {
+        method: 'DELETE',
+      });
+      const { data } = await response2.json();
+      if (response2.ok) {
+        alert('여행 일지를 삭제했습니다.');
+        location.href = '/';
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
     }
-    const response2 = await fetch(`/diaries/${diary_id}`, {
-      method: 'DELETE',
-    });
-    const { data } = await response2.json();
-    if (response2.ok) {
-      alert('여행 일지를 삭제했습니다.');
-      location.href = '/';
-    } else {
-      alert(data.message);
-    }
-  } catch (error) {
-    console.error(error);
   }
 };
 
@@ -340,11 +352,10 @@ const getMyDiary = function () {
         if (response.ok) {
           for (let diary of data) {
             row.innerHTML += `
-                <div id='diaryBox${diary.id}'>
-                  <p>제목: ${diary.title}</p>
-                  <p>내용: ${diary.content}</p>
-                  </div>
-                  `;
+              <div id='diaryBox${diary.id}'>
+                <p>제목: ${diary.title}</p>
+              </div>
+            `;
             if (images) {
               for (let image of images) {
                 if (diary.id === image.diary_id) {
@@ -360,6 +371,9 @@ const getMyDiary = function () {
               <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="diary-img" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png" alt=""/></a>
               `;
             }
+            row.innerHTML += `
+              <p>내용: ${diary.content}</p>
+            `;
           }
         } else {
           alert(data.message);
@@ -396,7 +410,6 @@ const getTourDiary = function () {
             row.innerHTML += `
               <div id='diaryBox${diary.id}'>
                 <p>제목: ${diary.title}</p>
-                <p>내용: ${diary.content}</p>
               </div>
               `;
             if (images) {
@@ -414,6 +427,9 @@ const getTourDiary = function () {
               <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="diary-img" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png" alt=""/></a>
               `;
             }
+            row.innerHTML += `
+                <p>내용: ${diary.content}</p>
+              `;
           }
         } else {
           alert(data.message);
