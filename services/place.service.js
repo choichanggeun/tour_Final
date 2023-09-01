@@ -40,6 +40,7 @@ class PlaceService {
     const findPlace = await this.placeRepository.getPlaceList(tour_id, days);
     const PlaceList = findPlace.map((data) => {
       return {
+        id: data.id,
         site_name: data.TourSite.site_name,
         site_address: data.TourSite.site_address,
         site_img: data.TourSite.site_img,
