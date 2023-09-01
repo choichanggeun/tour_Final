@@ -58,10 +58,10 @@ class TourService {
       throw { code: 400, message: '유저가 존재하지않습니다.' };
     }
 
-    const findTour = await this.tourRepository.getUserTour(user_id);
+    const findAllTour = await this.tourRepository.getUserTour(user_id);
 
     return {
-      data: findTour,
+      data: findAllTour,
       code: 200,
       message: '여행계획 조회가 완료되었습니다.',
     };

@@ -37,18 +37,18 @@ body {
   background-color: #007bff;
 }
 
-.tour-item {
+#main-content .tour-item {
   border: 1px solid black; /* 테두리 설정 */
   margin-bottom: 10px; /* 아래 여백 설정 */
   width: 100%;
   border-radius: 5px;
 }
 
-.tour-item img {
+#main-content .tour-item img {
   width: 30%;
   height: auto;
 }
 
-.tour-item p {
+#main-content .tour-item p {
   text-align: center; /* 제목 가운데 정렬 */
 }

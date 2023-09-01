@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   // Get logged-in user's email and display it
   await fetch(`/users`)
     .then((response) => response.json())
-    .then((result) => {
+    .then(async (result) => {
       var nickNameBox = document.querySelector('#nickname-box');
 
       var nickName2 = document.createElement('div');
@@ -23,78 +23,65 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       nickNameBox.appendChild(nickName2);
       nickNameBox.appendChild(button);
-    })
-    .catch((error) => console.error('Error:', error));
 
-  // Fetch tours data
-  fetch(`/tours`)
-    .then((response) => response.json())
-    .then((result) => {
-      // 성공 시 메인 컨텐츠 업데이트
-      var mainContent = document.querySelector('#main-content');
-      mainContent.innerHTML = ''; // 기존 내용 비우기
-      var tourData = result.data;
+      const userId = result.data.id; // assuming the user object has an 'id' field
 
-      // data가 배열인 경우 각 요소(객체)의 속성을 <p> 태그로 출력
-      if (Array.isArray(tourData)) {
-        tourData.forEach(function (item, index) {
-          if (typeof item === 'object' && item !== null) {
-            // Create a new div element for each tour item
-            var tourItem = document.createElement('div');
-            tourItem.className = 'tour-item';
+      // Fetch tours data
+      fetch(`/mytours`)
+        .then((response) => response.json())
+        .then((result) => {
+          var mainContentTour = document.querySelector('#main-content');
+          mainContentTour.innerHTML = '';
+          var tourDataList = result.data;
 
-            var imgElement = document.createElement('img');
-            imgElement.src = item.TourSite.site_img;
-            imgElement.id = 'tour-img-' + index;
-            imgElement.className = 'tour-img';
+          if (Array.isArray(tourDataList)) {
+            tourDataList.forEach(function (item, index) {
+              if (typeof item === 'object' && item !== null) {
+                /* Tour Items */
+                let tourItemElement = document.createElement('div');
+                let titleElement = document.createElement('p');
+                let imgElement = document.createElement('img');
 
-            var titleElement = document.createElement('p');
-            titleElement.textContent = item.title;
+                tourItemElement.className = 'tour-item';
 
-            // Append the image and title to the new div element
-            tourItem.appendChild(titleElement);
-            tourItem.appendChild(imgElement);
+                titleElement.textContent = item.title;
+                imgElement.src = item.TourSite.site_img;
 
-            // Append the new div element to mainContent
-            mainContent.appendChild(tourItem);
+                tourItemElement.appendChild(titleElement);
+                tourItemElement.appendChild(imgElement);
 
-            imgElement.addEventListener('click', function () {
-              alert(JSON.stringify(item, null, 2));
-              // 위 코드는 모든 데이터를 팝업으로 표시합니다.
-              // 원하는 방식으로 수정하실 수 있습니다.
+                mainContentTour.appendChild(tourItemElement);
+              }
             });
           }
-        });
-      }
-    })
-    .catch((error) => console.error('Error:', error));
+        })
+        .catch((error) => console.error('Error:', error));
 
-  // Fetch diary data by id (add your diary_id)
-  const diary_id = 'your_diary_id_here';
+      /* Fetch diary data by id */
+      fetch(`/diaries/${userId}`)
+        .then((response) => response.json())
+        .then((result) => {
+          var mainContentDiary = document.querySelector('#main-content-diary');
+          mainContentDiary.innerHTML = '';
+          let diaryDataList = result.data;
 
-  fetch(`/diaries/${diary_id}`)
-    .then((response) => response.json())
-    .then((result) => {
-      var mainContentDiary = document.querySelector('#main-content-diary');
-      mainContentDiary.innerHTML = '';
+          if (Array.isArray(diaryDataList)) {
+            diaryDataList.forEach(function (item, index) {
+              if (typeof item === 'object' && item !== null) {
+                /* Diary Items */
+                let diaryItemElement = document.createElement('div');
+                let titleElement = document.createElement('p');
 
-      var diaryData = result.data;
+                titleElement.textContent = item.title;
 
-      if (Array.isArray(diaryData)) {
-        diaryData.forEach(function (item, index) {
-          if (typeof item === 'object' && item !== null) {
-            var diaryItem = document.createElement('div');
-            diaryItem.className = 'diary-item';
+                diaryItemElement.appendChild(titleElement);
 
-            var titleElement = document.createElement('p');
-            titleElement.textContent = item.title;
-
-            diaryItem.appendChild(titleElement);
-
-            mainContentDiary.appendChild(diaryItem);
+                mainContentDiary.appendChild(diaryItemElement);
+              }
+            });
           }
-        });
-      }
+        })
+        .catch((error) => console.error('Error:', error));
     })
     .catch((error) => console.error('Error:', error));
 });

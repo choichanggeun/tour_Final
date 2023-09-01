@@ -10,7 +10,6 @@ class CommentController {
       const { code, data } = await this.commentService.findComment({ diary_id });
 
       res.status(code).json({ data });
-      return res.status(code).json({ message });
     } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });
       console.log(err);

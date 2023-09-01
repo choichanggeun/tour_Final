@@ -57,7 +57,7 @@ class TourController {
     }
   };
 
-  // 여행 계획 조회
+  // 로그인한 유저의 여행 계획 조회
   getTour = async (req, res, next) => {
     try {
       const { id: user_id } = res.locals.user;
