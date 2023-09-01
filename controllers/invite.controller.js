@@ -11,10 +11,10 @@ class InviteController {
       const { code, data } = await this.inviteService.findInvite({ user_id, tour_id });
 
       return res.status(code).json({ code, data });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '초대된 사용자 조회에 실패하였습니다.' });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 
@@ -32,9 +32,9 @@ class InviteController {
 
       return res.status(code).json({ message, result });
     } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '초대된 사용자 생성에 실패하였습니다.' });
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      throw res.status(500).json({ message: err.message });
     }
   };
 
@@ -46,12 +46,11 @@ class InviteController {
         user_id,
         invite_id,
       });
-
       return res.status(code).json({ message });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '초대된 사용자 삭제에 실패하였습니다.' });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 }

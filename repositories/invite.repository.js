@@ -24,6 +24,10 @@ class InviteRepository {
     return await User.findOne({ where: { email: email } });
   };
 
+  findByUserId = async ({ tour_id, user_id }) => {
+    return await Invite.findOne({ where: { tour_id, user_id } });
+  };
+
   deleteInvite = async ({ invite_id }) => {
     return await Invite.destroy({
       where: { id: invite_id },
