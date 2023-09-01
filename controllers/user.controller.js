@@ -79,8 +79,6 @@ class UserController {
     } catch (error) {
       console.error(error);
       res.status(500).json({ errorMessage: '회원탈퇴에 실패하였습니다.' });
-      console.error(error);
-      res.status(500).json({ errorMessage: '회원탈퇴에 실패하였습니다.' });
     }
   };
 
