@@ -10,11 +10,14 @@ var markers = [];
 
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-const tourDays = document.getElementById('tourDays');
-const likeBtn = document.getElementById('likeBtn');
 const urlParams = new URLSearchParams(window.location.search);
 const tour_id = urlParams.get('id');
+
 const goDairy = document.getElementById('goDairy');
+const createDairy = document.getElementById('createDairy');
+const updateTour = document.getElementById('updateTour');
+const tourDays = document.getElementById('tourDays');
+const likeBtn = document.getElementById('likeBtn');
 window.onload = function () {
   checkLoggedInStatus();
   TourDayCheck(tour_id);
@@ -53,7 +56,12 @@ likeBtn.addEventListener('click', function () {
 goDairy.addEventListener('click', function () {
   window.location.href = `diary-tour.html?Id=${tour_id}`;
 });
-
+createDairy.addEventListener('click', function () {
+  window.location.href = `diary-post.html?Id=${tour_id}`;
+});
+updateTour.addEventListener('click', function () {
+  window.location.href = `tour-update.html?id=${tour_id}`;
+});
 function checkLike() {
   fetch(`/tours/${tour_id}/likes`, {
     method: 'GET',
