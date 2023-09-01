@@ -58,13 +58,13 @@ document.addEventListener('DOMContentLoaded', async function () {
         .catch((error) => console.error('Error:', error));
 
       /* Fetch diary data by id */
-      fetch(`/diaries/${userId}`)
+      fetch(`/my_diaries`)
         .then((response) => response.json())
         .then((result) => {
           var mainContentDiary = document.querySelector('#main-content-diary');
           mainContentDiary.innerHTML = '';
           let diaryDataList = result.data;
-
+          console.log(diaryDataList);
           if (Array.isArray(diaryDataList)) {
             diaryDataList.forEach(function (item, index) {
               if (typeof item === 'object' && item !== null) {
