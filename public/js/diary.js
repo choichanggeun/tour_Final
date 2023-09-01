@@ -1,8 +1,9 @@
 // 여행 일지 작성, 사진 여러 장 업로드
 const postDiary = function () {
-  const tour_id = 1;
+  const urlParams = new URLSearchParams(window.location.search);
+  const tour_id = urlParams.get('Id');
   const currentPageURL = window.location.href;
-  const targetPageURL = `http://localhost:3000/diary-post.html?tour_id=${tour_id}`;
+  const targetPageURL = `http://localhost:3000/diary-post.html?Id=${tour_id}`;
   if (currentPageURL === targetPageURL) {
     document.getElementById('diary-post-button').addEventListener('click', async () => {
       const diaryTitle = document.getElementById('diary-title').value;
