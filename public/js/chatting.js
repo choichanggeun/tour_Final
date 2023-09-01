@@ -2,6 +2,7 @@ let serverURL = 'localhost:3000';
 const urlParams = new URLSearchParams(window.location.search);
 const roomNumber = urlParams.get('tourId');
 document.getElementById('RoomTitle').innerHTML = `방 번호 : ${roomNumber}`;
+
 $(document).ready(function () {
   fetch('/users', {
     method: 'GET',
@@ -37,6 +38,7 @@ $(document).ready(function () {
       $('#message-input').keyup(function (event) {
         if (event.which === 13) {
           $('#message-button').click();
+          evt.preventDefault();
         }
       });
 
