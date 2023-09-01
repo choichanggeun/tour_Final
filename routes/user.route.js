@@ -15,7 +15,7 @@ router.post('/logout', userController.logout);
 // 사용자 정보 조회
 router.get('/users', auth, userController.getUser);
 // 사용자 정보 수정
-router.put('/users/:user_id', auth, userController.updateUser);
+router.put('/users/', auth, userController.updateUser);
 // 사용자 정보 삭제(회원탈퇴)
 router.delete('/users', auth, userController.deleteUser);
 // 인증 메일 생성, 해당 메일에 보내기
@@ -29,6 +29,5 @@ router.get('/users/me', auth, async (req, res) => {
 
   return res.status(200).json({ data: user });
 });
-
 
 module.exports = router;

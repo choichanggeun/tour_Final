@@ -57,11 +57,11 @@ class TourController {
     }
   };
 
-  // 여행 계획 조회
+  // 로그인한 유저의 여행 계획 조회
   getTour = async (req, res, next) => {
     try {
-      const { tour_site_id, tour_id } = req.params;
-      const { data, code, message } = await this.tourService.getTour({ tour_site_id, tour_id });
+      const { id: user_id } = res.locals.user;
+      const { data, code, message } = await this.tourService.getTourData({ user_id });
       return res.status(code).json({ message, data });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });

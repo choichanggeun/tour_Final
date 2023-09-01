@@ -1,7 +1,4 @@
 {
-    "cSpell.words": [
-        "exportslike",
-        "Valemail",
-        "Validauth"
-    ]
+  "cSpell.words": ["exportslike", "Valemail", "Validauth"],
+  "liveServer.settings.port": 5501
 }
