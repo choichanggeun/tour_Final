@@ -17,11 +17,14 @@ loginBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert('로그인이 완료되었습니다.');
-      window.location.href = '/';
+      if (data.status === 200) {
+        alert(data.message);
+        window.location.href = '/';
+      }
+      alert(data.message);
     })
     .catch((error) => {
       console.error('로그인 실패:', error);
-      alert('로그인 실패하였습니다.');
+      alert(error.message);
     });
 });
