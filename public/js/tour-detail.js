@@ -51,7 +51,7 @@ likeBtn.addEventListener('click', function () {
 });
 
 goDairy.addEventListener('click', function () {
-  window.onload.href = '';
+  window.location.href = `diary-tour.html?Id=${tour_id}`;
 });
 
 function checkLike() {
