@@ -14,7 +14,6 @@ createBtn.addEventListener('click', function () {
     nickname: nickname,
     authCode: authCode,
   };
-  console.log(formData);
   fetch('/signup', {
     method: 'POST',
     headers: {
@@ -25,7 +24,6 @@ createBtn.addEventListener('click', function () {
     .then((response) => response.json())
     .then((data) => {
       alert(data.message);
-      console.log(data.status);
       if (data.status === 200) {
         window.location.href = '/login.html';
       }
