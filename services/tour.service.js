@@ -53,18 +53,15 @@ class TourService {
     return { code: 200, message: '여행계획 검색 성공', result: findTour };
   };
   //여행계획 조회
-  getTour = async ({ tour_site_id, tour_id }) => {
-    if (!tour_id) {
-      throw { code: 400, message: '실패하였습니다.' };
+  getTourData = async ({ user_id }) => {
+    if (!user_id) {
+      throw { code: 400, message: '유저가 존재하지않습니다.' };
     }
 
-    if (!tour_site_id) {
-      throw { code: 400, message: '실패하였습니다.' };
-    }
-    const findTour = await this.tourRepository.getTour(tour_site_id, tour_id);
+    const findAllTour = await this.tourRepository.getUserTour(user_id);
 
     return {
-      data: findTour,
+      data: findAllTour,
       code: 200,
       message: '여행계획 조회가 완료되었습니다.',
     };

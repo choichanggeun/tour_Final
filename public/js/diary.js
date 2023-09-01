@@ -197,7 +197,6 @@ const getDiary = function () {
   if (currentPageURL === targetPageURL) {
     addEventListener('DOMContentLoaded', async function renderDiary() {
       const row = document.getElementById('row');
-
       try {
         const response = await fetch(`/diaries/${Number(diary_id)}`, {
           method: 'GET',
@@ -295,15 +294,18 @@ const getAllDiary = function () {
           method: 'GET',
         });
         const { data } = await response.json();
+
         const { images } = await response2.json();
         if (response.ok) {
           const cardList = document.getElementById('card-list');
           for (let diary of data) {
             let diaryImg;
-            for (let image of images) {
-              if (diary.id === image.diary_id) {
-                diaryImg = image;
-                break;
+            if (images) {
+              for (let image of images) {
+                if (diary.id === image.diary_id) {
+                  diaryImg = image;
+                  break;
+                }
               }
             }
             cardList.innerHTML += `

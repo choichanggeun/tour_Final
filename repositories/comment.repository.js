@@ -1,4 +1,4 @@
-const { Comment } = require('../models');
+const { Comment, User } = require('../models');
 const { Op } = require('sequelize');
 
 class CommentRepository {
@@ -6,6 +6,7 @@ class CommentRepository {
   findComment = async ({ diary_id }) => {
     return await Comment.findAll({
       where: { diary_id },
+      include: [{ model: User, attributes: ['nickname'] }],
     });
   };
 
