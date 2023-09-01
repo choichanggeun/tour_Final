@@ -426,6 +426,7 @@ const getTourDiary = function () {
 };
 getTourDiary();
 
+// 댓글
 const loadComments = function () {
   document.addEventListener('DOMContentLoaded', () => {
     const commentForm = document.getElementById('comment-form');
@@ -482,6 +483,7 @@ const loadComments = function () {
       commentList.innerHTML = comments
         .map(
           (comment) =>
+            //name 어떻게 처리?
             `<li class="list-group-item" data-comment-id="${comment.comment_id}">
     ${comment.name}: ${comment.content}
     <span class="text-muted">${formatDate(comment.updatedAt)}</span>
