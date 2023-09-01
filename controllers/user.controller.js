@@ -19,7 +19,7 @@ class UserController {
   login = async (req, res) => {
     const { email, password } = req.body;
     try {
-      const token = await this.userService.loginUser(email, password);
+      const { message, status, result } = await this.userService.loginUser(email, password);
       const cookieConfig = {
         //cookieConfig는 키, 밸류 외에 설정을 보낼 수 있다.
         maxAge: 60000 * 60,
@@ -28,11 +28,12 @@ class UserController {
         httpOnly: true,
         //통신할때만 접속할 수 있다. 기본값은 false임
       };
-      res.cookie('authorization', `Bearer ${token}`, cookieConfig);
-      res.status(200).json({ message: '로그인 성공.' });
+      res.cookie('authorization', `Bearer ${result}`, cookieConfig);
+      res.status(status).json({ message, status });
     } catch (error) {
-      console.error(error.stack);
-      res.status(401).json({ message: error.message });
+      if (error.status) return res.status(error.status).json({ message: error.message });
+      console.log(error);
+      return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
     }
   };
   // 로그아웃

@@ -35,6 +35,7 @@ class UserRepository {
   // 사용자 정보 삭제(회원탈퇴)
   deleteUser = async (user_id) => {
     const result = await User.destroy({ where: { id: user_id } });
+
     return result;
   };
 

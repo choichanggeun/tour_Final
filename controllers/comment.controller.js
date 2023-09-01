@@ -10,10 +10,10 @@ class CommentController {
       const { code, data } = await this.commentService.findComment({ diary_id });
 
       res.status(code).json({ data });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '댓글 조회에 실패하였습니다.' });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 
@@ -30,11 +30,11 @@ class CommentController {
         content,
       });
 
-      res.status(code).json({ message });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '댓글 생성에 실패하였습니다.' });
+      return res.status(code).json({ message });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 
@@ -50,11 +50,11 @@ class CommentController {
         comment_id,
         content,
       });
-      res.status(code).json({ message });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '댓글 수정에 실패하였습니다.' });
+      return res.status(code).json({ message });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 
@@ -68,11 +68,11 @@ class CommentController {
         user_id,
         comment_id,
       });
-      res.status(code).json({ message });
-    } catch (error) {
-      if (error.status) return res.status(error.status).json({ errormessage: error.message });
-      console.log(error);
-      throw res.status(500).json({ errormessage: '댓글 삭제에 실패하였습니다.' });
+      return res.status(code).json({ message });
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
     }
   };
 }
