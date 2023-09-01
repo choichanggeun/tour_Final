@@ -1,14 +1,15 @@
 // 여행 일지 작성, 사진 여러 장 업로드
 const postDiary = function () {
+  const tour_id = 1;
   const currentPageURL = window.location.href;
-  const targetPageURL = 'http://localhost:3000/diary-post.html';
+  const targetPageURL = `http://localhost:3000/diary-post.html?tour_id=${tour_id}`;
   if (currentPageURL === targetPageURL) {
     document.getElementById('diary-post-button').addEventListener('click', async () => {
       const diaryTitle = document.getElementById('diary-title').value;
       const diaryContent = document.getElementById('diary-content').value;
 
       try {
-        const response = await fetch('/tours/3/diaries', {
+        const response = await fetch(`/tours/${tour_id}/diaries`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -87,7 +88,7 @@ const updateRenderDiary = function () {
           row.innerHTML += `
             <div id='diaryBox${data.id}'>
               <label for="title">제목: </label>
-              <input name="title" value="${data.title}"></input>
+              <input name="title" value="${data.title}" id="diary-title"></input>
             </div>
             `;
           if (images) {
@@ -110,19 +111,28 @@ const updateRenderDiary = function () {
           }
           row.innerHTML += `
             <label for="content">내용: </label>
-            <textarea name="content">${data.content}</textarea>
+            <textarea name="content" id="diary-content">${data.content}</textarea>
             <button id='update-cancel-btn'>취소</button>
             <button id='diary-update-btn'>저장</button>
           `;
-          document.getElementById('update-cancel-btn').addEventListener('click', async function () {
-            location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
-          });
-          document.getElementById('img-delete-btn').addEventListener('click', async function () {
-            // deleteDiaryImg(diary_id);
-          });
-          document.getElementById('diary-update-btn').addEventListener('click', async function () {
-            updateDiary(diary_id);
-          });
+          const updateCancelBtn = document.getElementById('update-cancel-btn');
+          if (updateCancelBtn) {
+            updateCancelBtn.addEventListener('click', async function () {
+              location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
+            });
+          }
+          const imgDeleteBtn = document.getElementById('img-delete-btn');
+          if (imgDeleteBtn) {
+            imgDeleteBtn.addEventListener('click', async function () {
+              deleteDiaryImg(diary_id);
+            });
+          }
+          const diaryUpdateBtn = document.getElementById('diary-update-btn');
+          if (diaryUpdateBtn) {
+            diaryUpdateBtn.addEventListener('click', async function () {
+              updateDiary(diary_id);
+            });
+          }
         } else {
           alert(data.message);
         }
@@ -137,31 +147,29 @@ updateRenderDiary();
 
 // 여행 일지, 이미지 수정
 updateDiary = async function (diary_id) {
-  document.getElementById('diary-update-button').addEventListener('click', async () => {
-    const diaryTitle = document.getElementById('diary-title').value;
-    const diaryContent = document.getElementById('diary-content').value;
+  const diaryTitle = document.getElementById('diary-title').value;
+  const diaryContent = document.getElementById('diary-content').value;
 
-    try {
-      const response = await fetch(`/diaries/${diary_id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          title: diaryTitle,
-          content: diaryContent,
-        }),
-      });
-      const data = await response.json();
-      if (response.ok) {
-        alert('여행 일지를 수정했습니다.');
-        location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
-      } else {
-        alert(data.message);
-      }
-    } catch (error) {
-      alert('여행 일지 수정에 실패했습니다.');
-      console.error(error);
+  try {
+    const response = await fetch(`/diaries/${diary_id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        title: diaryTitle,
+        content: diaryContent,
+      }),
+    });
+    const data = await response.json();
+    if (response.ok) {
+      alert('여행 일지를 수정했습니다.');
+      location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
+    } else {
+      alert(data.message);
     }
-  });
+  } catch (error) {
+    alert('여행 일지 수정에 실패했습니다.');
+    console.error(error);
+  }
 };
 
 // 여행 일지 이미지 삭제
