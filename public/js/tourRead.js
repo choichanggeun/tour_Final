@@ -57,31 +57,75 @@ document.addEventListener('DOMContentLoaded', async function () {
         })
         .catch((error) => console.error('Error:', error));
 
-      /* Fetch diary data by id */
-      fetch(`/my_diaries`)
-        .then((response) => response.json())
-        .then((result) => {
-          var mainContentDiary = document.querySelector('#main-content-diary');
-          mainContentDiary.innerHTML = '';
-          let diaryDataList = result.data;
-          console.log(diaryDataList);
-          if (Array.isArray(diaryDataList)) {
-            diaryDataList.forEach(function (item, index) {
-              if (typeof item === 'object' && item !== null) {
-                /* Diary Items */
-                let diaryItemElement = document.createElement('div');
-                let titleElement = document.createElement('p');
+      // 내 여행 일지, 이미지 조회
+      const getMyDiary = async function () {
+        try {
+          const response = await fetch('/my_diaries', {
+            method: 'GET',
+            credentials: 'include', // 인증 정보 포함
+          });
+          const { data } = await response.json();
 
-                titleElement.textContent = item.title;
+          if (response.ok) {
+            var mainContentDiary = document.getElementById('main-content-diary');
+            mainContentDiary.innerHTML = '';
 
-                diaryItemElement.appendChild(titleElement);
+            for (let diary of data) {
+              // 다이어리 박스 생성
 
-                mainContentDiary.appendChild(diaryItemElement);
+              let diaryBoxElement = document.createElement('div');
+              diaryBoxElement.className = 'diary-item';
+
+              // 다이어리 제목 추가
+              let titleElement = document.createElement('p');
+              titleElement.textContent = `제목: ${diary.title}`;
+              diaryBoxElement.appendChild(titleElement);
+
+              // 이미지 가져오기
+              try {
+                const imageResponse = await fetch(`/diaries/${diary.id}/photos`, {
+                  method: 'GET',
+                  credentials: 'include', // 인증 정보 포함
+                });
+
+                if (imageResponse.ok) {
+                  const { images } = await imageResponse.json();
+
+                  if (images.length > 0) {
+                    for (let image of images) {
+                      let imgElement = document.createElement('img');
+                      imgElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
+
+                      diaryBoxElement.appendChild(imgElement);
+                    }
+                  } else {
+                    let defaultImgElement = document.createElement('img');
+                    defaultImgElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+
+                    diaryBoxElement.appendChild(defaultImgElement);
+                  }
+                }
+
+                // 다이어리 내용 추가
+                let contentParagraph = document.createElement('p');
+                contentParagraph.textContent = `내용: ${diary.content}`;
+
+                diaryBoxElement.appendChild(contentParagraph);
+
+                mainContentDiary.appendChild(diaryBoxElement);
+              } catch (error) {
+                console.error('Error fetching images:', error);
               }
-            });
+            }
+          } else {
+            alert(data.message);
           }
-        })
-        .catch((error) => console.error('Error:', error));
+        } catch (error) {
+          console.error('Error fetching diaries:', error);
+        }
+      };
+
+      getMyDiary();
     })
     .catch((error) => console.error('Error:', error));
 });

@@ -1,4 +1,4 @@
-const { Tour, Diary } = require('../models');
+const { Tour, Diary, DiaryPhoto } = require('../models');
 
 class DiaryRepository {
   // 여행 일지 작성
