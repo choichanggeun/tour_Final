@@ -44,17 +44,11 @@ class PlaceController {
   //여행 경유지 수정
   putPlace = async (req, res, next) => {
     try {
-      const { user_id } = res.locals.user;
       const { place_id } = req.params;
-      const { plan_date_id, tour_site_id } = req.body; //
-      const { code, message } = await this.placeService.putPlace({
-        plan_date_id,
-        tour_site_id,
-        user_id,
-        place_id,
-      });
+      const { id } = req.body;
+      const { code, message } = await this.placeService.putPlace(id, place_id);
 
-      return res.status(code).json({ message });
+      return res.status(code).json({ message, code });
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러 발생');

@@ -78,6 +78,7 @@ function loadSearchSiteItem(search_data, search_type) {
       });
     });
 }
+
 //검색 창에 나온 카드들 클릭하면 이벤트 발생
 function siteApi(siteId, day) {
   console.log(typeof siteId, typeof day);
@@ -105,6 +106,7 @@ function siteApi(siteId, day) {
       });
   });
 }
+
 //계획 작성전에 tour테이블에 생성함
 function createTour(tour_site_id) {
   const modal = document.getElementById('modal');

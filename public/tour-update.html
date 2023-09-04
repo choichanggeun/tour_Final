@@ -93,6 +93,40 @@
         font-size: 12px;
         border-radius: 10px;
       }
+      #menu_wrap2 {
+        display: none;
+        position: absolute;
+        top: 13%;
+        left: 410px;
+        bottom: 0;
+        width: 400px;
+        margin: 10px 0 30px 10px;
+        padding: 5px;
+        overflow-y: scroll;
+        background: rgba(255, 255, 255, 0.7);
+        z-index: 1;
+        font-size: 12px;
+        border-radius: 10px;
+      }
+      .bg_white {
+        background: #fff;
+      }
+      #menu_wrap2 hr {
+        display: block;
+        height: 1px;
+        border: 0;
+        border-top: 2px solid #5f5f5f;
+        margin: 3px 0;
+      }
+      #menu_wrap2 .option {
+        text-align: center;
+      }
+      #menu_wrap2 .option p {
+        margin: 10px 0;
+      }
+      #menu_wrap2 .option button {
+        margin-left: 5px;
+      }
       .bg_white {
         background: #fff;
       }
@@ -195,6 +229,14 @@
       #placesList .item .marker_15 {
         background-position: 0 -654px;
       }
+      .close-area {
+        cursor: pointer;
+        font-size: 15px;
+        float: right;
+        margin-right: 10px;
+        text-shadow: 1px 1px 2px gray;
+        color: black;
+      }
     </style>
   </head>
   <body>
@@ -230,10 +272,26 @@
         <hr />
         <ul id="placesList"></ul>
       </div>
+      <div id="menu_wrap2" class="bg_white">
+        <div class="option">
+          <div>
+            <select id="search_type" style="float: left; margin-left: 30px">
+              <option value="주소">주소</option>
+              <option value="제목">제목</option>
+            </select>
+            <div class="close-area" id="tourcloseBtn">X</div>
+            <div>키워드 : <input type="text" value="" id="keyword" size="15" /></div>
+          </div>
+        </div>
+        <hr />
+        <ul id="updateSiteList"></ul>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
-  <script type="module" src="./js/tour-update.js"></script>
+  <script type="module" src="./js/go-home.js"></script>
+  <script type="module" src="./js/tour-update-site.js"></script>
+  <script type="module" src="./js/tour-update-date.js"></script>
 </html>

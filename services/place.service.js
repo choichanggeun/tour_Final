@@ -55,17 +55,8 @@ class PlaceService {
     };
   };
   //경유지 장소 수정
-  putPlace = async ({ plan_date_id, tour_site_id, user_id, place_id }) => {
-    if (!plan_date_id) throw { code: 400, message: 'plan_date_id가 필요합니다.' };
-
-    if (!tour_site_id) throw { code: 400, message: 'tour_site_id가 필요합니다.' };
-
-    const updatedPlace = await this.placeRepository.updatePlace({
-      plan_date_id,
-      tour_site_id,
-      user_id,
-      place_id,
-    });
+  putPlace = async (id, place_id) => {
+    const updatedPlace = await this.placeRepository.updatePlace(id, place_id);
 
     if (!updatedPlace) throw { code: 400, message: '경유지 장소 수정에 실패했습니다.' };
 
