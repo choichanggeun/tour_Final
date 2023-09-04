@@ -39,26 +39,6 @@
       .dropdown:hover .dropdown-content {
         display: block;
       }
-
-      * {
-        font-family: 'Jua', sans-serif;
-      }
-      header {
-        margin: 100px 20px 0px 20px;
-        height: 120px;
-      }
-      .diaryTitle {
-        font-size: 60px;
-        text-align: center;
-      }
-      .diaryInfo {
-        font-size: 17px;
-        text-align: center;
-      }
-      .diaryContent {
-        font-size: 19px;
-        text-align: center;
-      }
     </style>
   </head>
 
@@ -144,7 +124,7 @@
 
             <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">여행 계획</a></li>
+            <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
             <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
@@ -172,7 +152,7 @@
     <section class="banner-sec">
       <div class="container">
         <!-- 여행 일지 조회하는 부분입니다. -->
-        <div class="row" id="row">
+        <div class="row" id="row" style="text-align: center">
           <!-- 배너부분이 들어갈 자리입니다. -->
           <div class="col-md-6 top-slider">
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
@@ -185,25 +165,27 @@
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="container my-4">
-        <div class="row">
+    <!-- 댓글 부분 입니다. -->
+    <div class="container my-4">
+      <div class="row">
         <div class="col">
-        <div class="card" data-card-id="1">
-        <ul class="list-group list-group-item" id="comment-list"></ul>
-        <div class="card-body">
-        <form id="comment-form">
-        <div class="mb-3">
-        <label for="comment-input" class="form-label">댓글</label>
-        <input type="text" class="form-control" id="comment-input" placeholder="댓글을 입력해주세요" />
+          <div class="card" data-card-id="1">
+            <ul class="list-group list-group-item" id="comment-list"></ul>
+            <div class="card-body">
+              <form id="comment-form">
+                <div class="mb-3">
+                  <label for="comment-input" class="form-label">댓글</label>
+                  <input type="text" class="form-control" id="comment-input" placeholder="댓글을 입력해주세요" />
+                </div>
+                <button type="submit" class="btn btn-primary">댓글 추가</button>
+              </form>
+            </div>
+          </div>
         </div>
-        <button type="submit" class="btn btn-primary">댓글 추가</button>
-        </form>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
+      </div>
+    </div>
 
     <footer>
       <div class="container">
