@@ -156,6 +156,8 @@ function checkLoggedInStatus() {
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        document.getElementById('createDairy').style.display = 'block';
+        document.getElementById('updateTour').style.display = 'block';
       }
     });
 }
