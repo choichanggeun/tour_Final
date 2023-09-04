@@ -40,7 +40,7 @@ class UserService {
       throw new CustomError('중복된 이메일입니다.', 403);
     }
     const isEmailValemail = await this.userRepository.findOneIsEmailValid(email);
-    if (!isEmailValemail) {
+    if (isEmailValemail.length === 0) {
       throw new CustomError('이메일을 인증을 먼저 해주세요.', 402);
     }
     const isEmailValidauthCode = isEmailValemail[0]?.auth_code == authCode;
