@@ -20,7 +20,13 @@ class PlaceService {
 
     return { createPlaceData, code: 200, message: '경유지 경유지 등록이 완료되었습니다.' };
   };
+  // 경유지 작성
+  createPlaceBytourId = async (user_id, tour_id, days, tour_site_id) => {
+    const createPlaceData = await this.placeRepository.createPlaceBytourId(tour_id, days, tour_site_id);
+    if (!createPlaceData) throw { code: 401, message: '경유지 경유지 등록이 실패하였습니다. 않습니다.' };
 
+    return { code: 200, message: '경유지 등록이 완료되었습니다.' };
+  };
   //경유지 장소 조회
   getPlace = async ({ plan_date_id, tour_site_id }) => {
     if (!plan_date_id || !tour_site_id) {
@@ -38,6 +44,7 @@ class PlaceService {
 
   getPlaceList = async (tour_id, days) => {
     const findPlace = await this.placeRepository.getPlaceList(tour_id, days);
+    if (!findPlace) throw { data: null, code: 400, message: '존재하지 않습니다.' };
     const PlaceList = findPlace.map((data) => {
       return {
         id: data.id,

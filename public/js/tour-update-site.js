@@ -16,6 +16,7 @@ const tourDays = document.getElementById('tourDays');
 const keyword = document.getElementById('keyword');
 const searchBtn = document.getElementById('searchBtn');
 const tourcloseBtn = document.getElementById('tourcloseBtn');
+const siteCreateBtn = document.getElementById('siteCreateBtn');
 window.onload = function () {
   checkLoggedInStatus();
   TourDayCheck(tour_id);
@@ -30,6 +31,7 @@ tourDays.addEventListener('change', function () {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.data;
+      infowindow.close();
       displayPlaces(tourlist);
     })
     .catch((error) => {
@@ -97,43 +99,44 @@ function displayPlaces(places) {
 
   // 지도에 표시되고 있는 마커를 제거합니다
   removeMarker();
+  if (places !== undefined) {
+    for (var i = 0; i < places.length; i++) {
+      // 마커를 생성하고 지도에 표시합니다
+      var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
+        marker = addMarker(placePosition, i),
+        itemEl = getListItem(i, places[i]);
 
-  for (var i = 0; i < places.length; i++) {
-    // 마커를 생성하고 지도에 표시합니다
-    var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
-      marker = addMarker(placePosition, i),
-      itemEl = getListItem(i, places[i]);
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+      // LatLngBounds 객체에 좌표를 추가합니다
+      bounds.extend(placePosition);
 
-    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
-    // LatLngBounds 객체에 좌표를 추가합니다
-    bounds.extend(placePosition);
+      // 마커와 검색결과 항목에 mouseover 했을때
+      // 해당 장소에 인포윈도우에 장소명을 표시합니다
+      // mouseout 했을 때는 인포윈도우를 닫습니다
+      (function (marker, places) {
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+          displayInfowindow(marker, places.site_name);
+        });
 
-    // 마커와 검색결과 항목에 mouseover 했을때
-    // 해당 장소에 인포윈도우에 장소명을 표시합니다
-    // mouseout 했을 때는 인포윈도우를 닫습니다
-    (function (marker, places) {
-      kakao.maps.event.addListener(marker, 'mouseover', function () {
-        displayInfowindow(marker, places.site_name);
-      });
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+          infowindow.close();
+        });
 
-      kakao.maps.event.addListener(marker, 'mouseout', function () {
-        infowindow.close();
-      });
+        itemEl.onmouseover = function () {
+          displayInfowindow(marker, places.site_name);
+        };
 
-      itemEl.onmouseover = function () {
-        displayInfowindow(marker, places.site_name);
-      };
+        itemEl.onmouseout = function () {
+          infowindow.close();
+        };
 
-      itemEl.onmouseout = function () {
-        infowindow.close();
-      };
+        itemEl.onclick = function () {
+          openUpdateMenu(places);
+        };
+      })(marker, places[i]);
 
-      itemEl.onclick = function () {
-        openUpdateMenu(places);
-      };
-    })(marker, places[i]);
-
-    fragment.appendChild(itemEl);
+      fragment.appendChild(itemEl);
+    }
   }
 
   // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
@@ -210,7 +213,6 @@ function openUpdateMenu(places) {
     if (e.keyCode === 13) {
       let search_data = keyword.value;
       let search_type = document.getElementById('search_type').value;
-      console.log(places);
       searchPlaces(search_data, search_type, places.id, places.site_name);
     }
   });
@@ -236,7 +238,6 @@ function displaySearchData(places, id, oldData) {
     fragment = document.createDocumentFragment(),
     bounds = new kakao.maps.LatLngBounds(),
     listStr = '';
-
   // 검색 결과 목록에 추가된 항목들을 제거합니다
   removeAllChildNods(listEl);
 
@@ -273,9 +274,15 @@ function displaySearchData(places, id, oldData) {
         infowindow.close();
       };
 
-      itemEl.onclick = function () {
-        updateSite(places, oldData, id);
-      };
+      if (oldData) {
+        itemEl.onclick = function () {
+          updateSite(places, oldData, id);
+        };
+      } else {
+        itemEl.onclick = function () {
+          createSite(places);
+        };
+      }
     })(marker, places[i], i);
 
     fragment.appendChild(itemEl);
@@ -304,7 +311,6 @@ function updateSite(newData, oldData, place_id) {
           alert(data.message);
           window.location.reload();
         }
-        alert(data.message);
       });
   } else {
     alert('취소되었습니다.');
@@ -315,3 +321,42 @@ tourcloseBtn.addEventListener('click', function () {
   document.getElementById('menu_wrap2').style.display = 'none';
   getplaceData(tour_id);
 });
+
+siteCreateBtn.addEventListener('click', function () {
+  document.getElementById('menu_wrap2').style.display = 'block';
+  const keyword = document.getElementById('keyword');
+  keyword.addEventListener('keydown', function (e) {
+    if (e.keyCode === 13) {
+      let search_data = keyword.value;
+      let search_type = document.getElementById('search_type').value;
+      searchPlaces(search_data, search_type);
+    }
+  });
+});
+
+function createSite(places) {
+  const days = document.getElementById('tourDays').value;
+  const tour_site_id = places.id;
+  const formData = {
+    days: days,
+    tour_site_id: tour_site_id,
+  };
+  fetch(`/place/${tour_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.code === 200) {
+        alert(data.message);
+        getplaceData(tour_id);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}

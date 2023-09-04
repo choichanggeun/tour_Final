@@ -20,6 +20,21 @@ class PlaceController {
       return res.status(500).json({ message: err.message });
     }
   };
+  //여행 경유지 등록 tour_id, day, tour_site_id
+  createPlace = async (req, res, next) => {
+    try {
+      const { user_id } = res.locals.user;
+      const { tour_id } = req.params;
+      const { days, tour_site_id } = req.body;
+      const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id);
+      console.log(code, message);
+      return res.status(code).json({ code, message });
+    } catch (err) {
+      if (err.code) return res.status(err.code).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
+    }
+  };
   // 여행 경유지 조회
   getPlace = async (req, res, next) => {
     try {

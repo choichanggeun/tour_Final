@@ -322,8 +322,13 @@ createTourBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
-      window.location.href = '/';
+      if (data.code === 200) {
+        alert(data.message);
+        window.location.href = '/';
+      }
+      if (data.code === 400) {
+        alert(data.message);
+      }
     })
     .catch((error) => {
       console.log(error);

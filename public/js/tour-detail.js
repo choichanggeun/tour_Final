@@ -33,6 +33,7 @@ tourDays.addEventListener('change', function () {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.data;
+      infowindow.close();
       displayPlaces(tourlist);
     })
     .catch((error) => {

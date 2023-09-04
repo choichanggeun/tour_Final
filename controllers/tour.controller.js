@@ -73,15 +73,9 @@ class TourController {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
       const { title, start_date, end_date } = req.body;
-      const { code, message } = await this.tourService.putTour({
-        user_id,
-        tour_id,
-        title,
-        start_date,
-        end_date,
-      });
+      const { code, message } = await this.tourService.putTour(user_id, tour_id, title, start_date, end_date);
 
-      return res.status(code).json({ message });
+      return res.status(code).json({ message, code });
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러 발생');

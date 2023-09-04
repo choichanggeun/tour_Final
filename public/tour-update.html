@@ -237,6 +237,65 @@
         text-shadow: 1px 1px 2px gray;
         color: black;
       }
+      .modal-overlay {
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.25);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        transform: translate(-50%, -50%);
+      }
+      .modal-window {
+        z-index: 9999;
+        background: rgba(69, 139, 197, 0.7);
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        backdrop-filter: blur(13.5px);
+        -webkit-backdrop-filter: blur(13.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        width: 400px;
+        height: 500px;
+        padding: 10px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .modal-title {
+        padding-left: 10px;
+        display: inline;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+      }
+      .modal-title h2 {
+        display: inline;
+      }
+      .modal-close-area {
+        display: inline;
+        float: right;
+        padding-right: 10px;
+        cursor: pointer;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+      }
+
+      .modal-content {
+        margin-top: 20px;
+        padding: 0px 10px;
+        text-shadow: 1px 1px 2px gray;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -246,6 +305,7 @@
           <div class="col-md-6 col-lg-4">
             <h1 id="Title">Tour ProJect</h1>
           </div>
+          <button class="header-button" id="updateDate">제목 & 날짜 수정</button>
           <div class="dropdown" style="float: right">
             <span class="dropbtn" id="usernickname">홍길동</span>
             <div class="dropdown-content">
@@ -267,6 +327,7 @@
             <select id="tourDays">
               <option value="1">JavaScript</option>
             </select>
+            <button style="float: right" id="siteCreateBtn">경로 추가하기</button>
           </div>
         </div>
         <hr />
@@ -287,7 +348,24 @@
         <ul id="updateSiteList"></ul>
       </div>
     </div>
+
+    <div id="modal" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-title">
+          <h2 id="siteModalTitle">여행 계획 수정</h2>
+        </div>
+        <div class="modal-close-area" id="modalCloseBtn">X</div>
+        <div class="modal-content">
+          <label for="updateTitle" class="form-label">여행 계획 제목 : </label>
+          <input type="text" class="form-control" id="updateTitle" required />
+          <input type="date" value="" id="updateStartDate" style="margin-top: 20px; margin-right: 10px" />
+          <input type="date" value="" id="updateEndDate" />
+        </div>
+        <button id="tourUpdateBtn" style="margin-top: 30px">여행 계획 수정!</button>
+      </div>
+    </div>
   </body>
+
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
