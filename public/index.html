@@ -15,31 +15,70 @@
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <style>
-        .button-container {
+    .button-container {
           float: right;
         }
         .dropdown {
-          width: auto;
-          position: relative;
-          display: inline-block;
-        }
+  width: auto;              /* 너비를 자동으로 설정 */
+  position: relative;       /* 위치를 상대적으로 설정 */
+  display: inline-block;    /* 인라인 블록 형태로 표시 */
+}
 
-        .dropdown-content {
-          overflow: hidden;
-          display: none;
-          position: absolute;
-          z-index: 1; /*다른 요소들보다 앞에 배치*/
-        }
+.dropdown-content {
+  overflow: hidden;         /* 내용이 넘칠 경우 숨김 처리 */
+  display: none;            /* 기본적으로 숨김 상태 */
 
-        .dropdown-content a {
-          display: block;
-          float: right;
-        }
+  position: absolute;       /* 위치를 절대값으로 설정 */
+  z-index: 1;               /* 다른 요소들보다 앞에 배치 */
 
-        .dropdown:hover .dropdown-content {
-        display: block;
-      }
+   /* 이미지 바로 아래에 위치 */
+   top: calc(100% + 5px);   /* 프로필 이미지의 높이 + 원하는 간격 */
 
+   /* 테두리 추가 */
+   border: 1px solid #000;    /* 원하는 색상과 두께로 조정 가능한 테두리 추가 */
+   border-radius:5px;         /* 필요한 경우 테두리 모서리를 둥글게 만듦 */ 
+
+   width :150px;              /* 드롭다운 메뉴의 너비 설정 */
+   background-color :white; /* 배경색을 흰색으로 설정 */
+
+    left :50%;                /* 부모 요소(.dropdown) 대비 왼쪽에서부터 거리 비율 */
+    transform :translateX(-30%); /* 자신(.dropdown-content) 대비 왼쪽에서부터 거리 비율 */
+}
+
+.dropdown-content a {
+    display:block;
+
+    padding-left :10px;     /* 드롭다운 메뉴 안쪽 여백을 주기 위해 사용합니다. */
+    padding-right :10px;
+    padding-top :5px;
+    padding-bottom :5px;
+
+    text-align:center;      /* 가로 방향으로 중앙 정렬 */
+}
+
+.dropdown:hover .dropdown-content {
+display:block;
+}
+
+/* 로그인한 유저 닉네임 명 폰트 및 크기 */
+#profileimg {
+  display: flex;
+  align-items: center;
+}
+.nav-link {
+  display: flex;
+  align-items: center;
+}
+
+#usernickname {
+  font-size: 20px; /* 원하는 글자 크기로 변경 */
+}
+/* 메인 로고 크기 조절*/
+#headerImage { 
+  width: 200px; /* 원하는 너비로 변경 */
+  margin-left:-23px;
+  height: auto; /* 높이는 자동으로 조절 */
+}
       /* .profile-box {
         width: 20px;
         height: 20px;
@@ -88,7 +127,10 @@
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-lg-4">
-              <h1>Tour ProJect<small>여행 계획을 알차게!</small></h1>
+              <h1>
+                <a href="/index.html">  
+                <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+                <small>여행 계획을 알차게!</small></h1>
             </div>
             <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
               <!-- 사용자 부분 -->
@@ -102,18 +144,22 @@
                 <div class="container header-container">
                   <div class="button-container right-aligned-buttons">
                     <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                    <div id="profileimg">
-                      <a href="" class="nav-link">
-                        <div class="dropdown">
-                          <span class="dropbtn" id="usernickname">홍길동</span>
-                          <div class="dropdown-content">
-                            <a href="javascript:void(0);" onclick="">회원정보</a>
-                            <a href="javascript:void(0);" onclick="popup()">채팅</a>
-                            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
-                          </div>
+                    <div id="profileimg" class="dropdown" style='display: none;'>
+                      <div class='nav-link'>
+                        <span id='usernickname'>홍길동</span>
+                        <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
+                      </div>
+                        <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
+                          <a href="./mypage.html">마이페이지</a>
+                          <a href="#" onclick="">채팅</a>
+                          <a href="#" onclick="">로그아웃</a>
+                      </div> 
+                    </div> 
+                  </div> 
+                </div> 
+                     </div>
                         </div>
-                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
-                      </a>
+                     
                     </div>
                   </div>
                 </div>
@@ -140,7 +186,7 @@
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
             <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
-            <li class="nav-item"><a class="nav-link" href="./mypage.html">myPage</a></li>
+          
             <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
@@ -374,6 +420,7 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/index.js"></script>
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>

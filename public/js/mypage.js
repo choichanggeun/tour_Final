@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', async function () {
   // 페이지 로드 완료 시 동작 정의
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const tour_id = urlParams.get('id');
   // Get logged-in user's email and display it
   await fetch(`/users`)
     .then((response) => response.json())
@@ -26,8 +28,9 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       const userId = result.data.id; // assuming the user object has an 'id' field
 
-      // Fetch tours data
-      fetch(`/mytours`)
+      // 여행계획 불러오기
+
+      fetch('/mytours')
         .then((response) => response.json())
         .then((result) => {
           var mainContentTour = document.querySelector('#main-content');
@@ -41,6 +44,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                 let tourItemElement = document.createElement('div');
                 let titleElement = document.createElement('p');
                 let imgElement = document.createElement('img');
+                //이미지 클릭시 여행계획 상세조회 화면으로 이동
+                imgElement.addEventListener('click', function () {
+                  window.location.href = `tour-detail.html?id=${item.id}`;
+                });
 
                 tourItemElement.className = 'tour-item';
 
@@ -56,7 +63,6 @@ document.addEventListener('DOMContentLoaded', async function () {
           }
         })
         .catch((error) => console.error('Error:', error));
-
       // 내 여행 일지, 이미지 조회
       const getMyDiary = async function () {
         try {

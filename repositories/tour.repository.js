@@ -81,7 +81,7 @@ class TourRepository {
       where: {
         user_id: user_id,
       },
-      attributes: ['title', 'start_date', 'end_date', 'user_id', 'tour_site_id'],
+      attributes: ['id', 'title', 'start_date', 'end_date', 'user_id', 'tour_site_id'],
       include: [
         {
           model: TourSite,
