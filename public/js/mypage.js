@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       // 버튼 클릭시 회원정보 수정 창으로 이동
       button.addEventListener('click', function () {
-        window.open('./mypage-profile.html'); // Open the new page in a new window/tab
+        window.location.href = './mypage-profile.html'; // Open the new page in a new window/tab
       });
 
       nickNameBox.appendChild(nickName2);
@@ -46,6 +46,40 @@ document.addEventListener('DOMContentLoaded', async function () {
                 let imgElement = document.createElement('img');
                 //이미지 클릭시 여행계획 상세조회 화면으로 이동
                 imgElement.addEventListener('click', function () {
+                  // 여행계획 불러오기
+
+                  fetch('/mytours')
+                    .then((response) => response.json())
+                    .then((result) => {
+                      var mainContentTour = document.querySelector('#main-content');
+                      mainContentTour.innerHTML = '';
+                      var tourDataList = result.data;
+
+                      if (Array.isArray(tourDataList)) {
+                        tourDataList.forEach(function (item, index) {
+                          if (typeof item === 'object' && item !== null) {
+                            /* Tour Items */
+                            let tourItemElement = document.createElement('div');
+                            let titleElement = document.createElement('p');
+                            let imgElement = document.createElement('img');
+                            //이미지 클릭시 여행계획 상세조회 화면으로 이동
+                            imgElement.addEventListener('click', function () {
+                              window.location.href = `tour-detail.html?id=${item.id}`;
+                            });
+
+                            tourItemElement.className = 'tour-item';
+
+                            titleElement.textContent = item.title;
+                            imgElement.src = item.TourSite.site_img;
+
+                            tourItemElement.appendChild(titleElement);
+                            tourItemElement.appendChild(imgElement);
+
+                            mainContentTour.appendChild(tourItemElement);
+                          }
+                        });
+                      }
+                    });
                   window.location.href = `tour-detail.html?id=${item.id}`;
                 });
 
@@ -82,6 +116,10 @@ document.addEventListener('DOMContentLoaded', async function () {
               let diaryBoxElement = document.createElement('div');
               diaryBoxElement.className = 'diary-item';
 
+              // 다이어리 박스에 클릭 이벤트 리스너 추가
+              diaryBoxElement.addEventListener('click', function () {
+                window.location.href = `/diary-detail.html?diary_id=${diary.id}`;
+              });
               // 다이어리 제목 추가
               let titleElement = document.createElement('p');
               titleElement.textContent = `제목: ${diary.title}`;
