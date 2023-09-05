@@ -33,6 +33,7 @@ tourDays.addEventListener('change', function () {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.data;
+      infowindow.close();
       displayPlaces(tourlist);
     })
     .catch((error) => {
@@ -155,6 +156,9 @@ function checkLoggedInStatus() {
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        document.getElementById('createDairy').style.display = 'block';
+        document.getElementById('updateTour').style.display = 'block';
+        document.getElementById('likeBtn').style.display = 'block';
       }
     });
 }

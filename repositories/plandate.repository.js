@@ -22,7 +22,7 @@ class PlanDateRepository {
       }
     }
     await Tour.update({ status: 1 }, { where: { id: tour_id } });
-    return true;
+    return { code: 200, message: '여행 계획 생성 완료' };
   };
 
   // 모든 여행 일자 조회
