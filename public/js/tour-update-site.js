@@ -133,6 +133,10 @@ function displayPlaces(places) {
         itemEl.onclick = function () {
           openUpdateMenu(places);
         };
+
+        itemEl.ondblclick = function () {
+          deletePlace(places);
+        };
       })(marker, places[i]);
 
       fragment.appendChild(itemEl);
@@ -207,6 +211,7 @@ function openUpdateMenu(places) {
   document.getElementById('menu_wrap2').style.display = 'block';
   const keyword = document.getElementById('keyword');
   keyword.setAttribute('value', places.site_name);
+
   searchPlaces(places.site_name, '제목', places.id, places.site_name);
 
   keyword.addEventListener('keydown', function (e) {
@@ -359,4 +364,19 @@ function createSite(places) {
     .catch((error) => {
       console.log(error);
     });
+}
+
+function deletePlace(places) {
+  if (confirm('정말로 삭제하시겠습니까?')) {
+    fetch(`/${places.id}/place`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+        getplaceData(tour_id);
+      });
+  } else {
+    alert('취소되었습니다');
+  }
 }

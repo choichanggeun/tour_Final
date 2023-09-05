@@ -74,7 +74,6 @@ class PlaceService {
     if (!place_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
 
     const deletedTour = await this.placeRepository.deletePlace({ place_id });
-    console.log(deletedTour);
     if (!deletedTour) throw { code: 400, message: '경유지 장소 삭제에 실패했습니다.' };
 
     return { code: 200, message: '경유지 장소가 성공적으로 삭제되었습니다.' };
