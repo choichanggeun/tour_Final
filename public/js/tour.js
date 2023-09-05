@@ -10,7 +10,6 @@ window.onload = function () {
   if (tour_id) {
     let day = document.getElementById('tourDays').value;
     TourDayCheck(tour_id);
-    firstSite(tour_site_id, day);
     restartTour(tour_id, day);
   }
 };
@@ -131,8 +130,15 @@ function createTour(tour_site_id) {
     })
       .then((response) => response.json())
       .then((data) => {
-        alert(data.message);
-        window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
+        console.log(data);
+        if (data.code === 405) {
+          alert(data.message);
+          window.location.href = `tour-update.html?id=${data.result.id}`;
+        }
+        if (data.code === 200) {
+          alert(data.message);
+          window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
+        }
       })
       .catch((error) => {
         console.error('여행계획 생성 실패:', error);
@@ -343,27 +349,4 @@ function setMarkers(map) {
 
 function checkday() {
   return document.getElementById('tourDays').value;
-}
-
-function firstSite(tour_site_id, day) {
-  const formData = {
-    site_id: Number(tour_site_id),
-    day: day,
-  };
-  fetch(`/redis/${tour_id}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      panTo(tour_site_id, i);
-      i++;
-      siteListBox.innerHTML = '';
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 }

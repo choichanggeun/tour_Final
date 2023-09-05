@@ -17,6 +17,9 @@ const keyword = document.getElementById('keyword');
 const searchBtn = document.getElementById('searchBtn');
 const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
+const createTour = document.getElementById('createTour');
+const deleteTour = document.getElementById('deleteTour');
+
 window.onload = function () {
   checkLoggedInStatus();
   TourDayCheck(tour_id);
@@ -380,3 +383,29 @@ function deletePlace(places) {
     alert('취소되었습니다');
   }
 }
+
+deleteTour.addEventListener('click', function () {
+  if (confirm('정말로 삭제하시겠습니까?')) {
+    fetch(`/tours/${tour_id}`, {
+      method: 'DELETE',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+        window.location.href = '/';
+      });
+  } else {
+    alert('취소되었습니다.');
+  }
+});
+
+createTour.addEventListener('click', function () {
+  fetch(`/tours/status/${tour_id}`, {
+    method: 'PUT',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      alert(data.message);
+      window.location.href = '/';
+    });
+});

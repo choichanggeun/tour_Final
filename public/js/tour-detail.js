@@ -158,6 +158,7 @@ function checkLoggedInStatus() {
         usernickname.innerHTML = data.data.nickname;
         document.getElementById('createDairy').style.display = 'block';
         document.getElementById('updateTour').style.display = 'block';
+        document.getElementById('likeBtn').style.display = 'block';
       }
     });
 }

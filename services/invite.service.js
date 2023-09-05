@@ -14,7 +14,7 @@ class InviteService {
     return { code: 200, data: findUser };
   };
 
-  createInvite = async ({ tour_id, email, user_id }) => {
+  inviteEmail = async ({ tour_id, email, user_id }) => {
     const existsEmail = await this.inviteRepository.findByEmail({ email });
     const existsUserId = await this.inviteRepository.findByUserId({ tour_id, user_id });
 
@@ -22,9 +22,17 @@ class InviteService {
     if (existsUserId) throw { code: 412, message: '이미 초대된 사용자입니다.' };
     if (!existsEmail) throw { code: 412, message: '초대된 사용자가 존재하지 않습니다.' };
 
-    await this.inviteRepository.createInvite({
+    await this.inviteRepository.inviteEmail({
       tour_id,
       email,
+      user_id,
+    });
+    return { code: 201, message: '사용자 초대가 완료되었습니다.' };
+  };
+
+  createInvite = async ({ tour_id, user_id }) => {
+    await this.inviteRepository.createInvite({
+      tour_id,
       user_id,
     });
     return { code: 201, message: '사용자 초대가 완료되었습니다.' };

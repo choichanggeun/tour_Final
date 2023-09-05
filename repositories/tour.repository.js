@@ -30,6 +30,7 @@ class TourRepository {
       return JSON.parse(value);
     } else {
       let data = await Tour.findAll({
+        where: { status: 1 },
         include: [
           { model: User, attributes: ['nickname'] },
           { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
@@ -118,6 +119,10 @@ class TourRepository {
 
   findTourInProgress = async (user_id) => {
     return await Tour.findOne({ where: { [Op.and]: [{ user_id: user_id }, { status: '0' }] } });
+  };
+
+  updateStatus = async (tour_id) => {
+    return await Tour.update({ status: 1 }, { where: { id: tour_id } });
   };
 }
 
