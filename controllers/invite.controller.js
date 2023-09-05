@@ -57,6 +57,7 @@ class InviteController {
       throw res.status(500).json({ message: err.message });
     }
   };
+
   deleteInvite = async (req, res) => {
     try {
       const { id: user_id } = res.locals.user;
