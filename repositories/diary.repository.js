@@ -2,8 +2,8 @@ const { Tour, Diary, DiaryPhoto } = require('../models');
 
 class DiaryRepository {
   // 여행 일지 작성
-  postDiary = async (user_id, tour_id, title, content) => {
-    await Diary.create({ user_id, tour_id, title, content });
+  postDiary = async (user_id, tour_id, title, content, status) => {
+    await Diary.create({ user_id, tour_id, title, content, status });
   };
 
   // 여행 일지 조회
@@ -18,17 +18,17 @@ class DiaryRepository {
 
   // 여행 계획 여행 일지 조회
   getTourDiaries = async (tour_id) => {
-    return await Diary.findAll({ where: { tour_id } });
+    return await Diary.findAll({ where: { tour_id, status: 0 } });
   };
 
   // 모든 여행 일지 조회
   getDiaries = async () => {
-    return await Diary.findAll();
+    return await Diary.findAll({ where: { status: 0 } });
   };
 
   // 여행 일지 수정
-  putDiary = async (diary_id, title, content) => {
-    await Diary.update({ title, content }, { where: { id: diary_id } });
+  putDiary = async (diary_id, title, content, status) => {
+    await Diary.update({ title, content, status }, { where: { id: diary_id } });
   };
 
   // 여행 일지 삭제
