@@ -33,17 +33,22 @@ class ToursiteRepository {
   };
 
   createTourSite = async (startNumber) => {
-    var i = startNumber; // max = 127503, min = 125701
+    var i = startNumber; // max = 7, min = 1
     let Code = sigunguCode[i - 1];
-    for (let h = 1; h < Code + 1; h++) {
+    let h = 0;
+    const interval = setInterval(async function () {
+      h++;
+      console.log(h);
+      if (h > Code - 1) {
+        clearInterval(interval);
+      }
       const result = await axios({
         url: `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?serviceKey=hrod6tZP0dYmxXU3PQEgldYC6jxh0vc0sCpDTi5/o/AGn86x5kYA7nzJhu0l0uUWM/ks/OozWsCz8H74FkGKEQ==&numOfRows=200&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&showflag=1&listYN=Y&arrange=A&contentTypeId=12&areaCode=${i}&sigunguCode=${h}`,
         method: 'get', // 통신할 방식
       });
-      i++;
       const list = result.data.response.body.items.item;
-      console.log(list.length);
       if (list !== undefined) {
+        console.log(list.length);
         for (let j = 0; j < list.length; j++) {
           if (list[j].firstimage !== '') {
             const site_name = list[j].title;
@@ -55,7 +60,7 @@ class ToursiteRepository {
           }
         }
       }
-    }
+    }, 5000);
   };
 
   initTourSite = async () => {
