@@ -1,28 +1,14 @@
-//창이 열리면 실행되는 목록
-window.onload = function () {
-  const urlParams = new URLSearchParams(window.location.search);
-  const tour_site_id = urlParams.get('id');
-  const tour_id = urlParams.get('tourId');
-  checkLoggedInStatus();
-  if (tour_site_id && !tour_id) {
-    createTour(tour_site_id);
-  }
-  if (tour_id) {
-    let day = document.getElementById('tourDays').value;
-    TourDayCheck(tour_id);
-    restartTour(tour_id, day);
-  }
-};
-
 const urlParams = new URLSearchParams(window.location.search);
 const tour_id = urlParams.get('tourId');
+const tour_site_id = urlParams.get('id');
 const startChatting = document.getElementById('startChatting');
-const siteListBox = document.getElementById('siteCardBox');
-const searchInput = document.getElementById('search-input');
-const searchBtn = document.getElementById('search-button');
+const keyword = document.getElementById('keyword');
 const tourDays = document.getElementById('tourDays');
 const createTourBtn = document.getElementById('createTour');
 const closeBtn = document.getElementById('tourcloseBtn');
+const tourcloseBtn = document.getElementById('tourcloseBtn');
+const siteCreateBtn = document.getElementById('siteCreateBtn');
+
 var markers = [];
 let i = 0;
 let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
@@ -32,22 +18,162 @@ let options = {
   level: 3, //지도의 레벨(확대, 축소 정도)
 };
 let map = new kakao.maps.Map(container, options);
+var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
-searchBtn.addEventListener('click', function () {
-  const searchInputValue = document.getElementById('search-input').value;
-  const searchType = document.getElementById('search_type').value;
-  loadSearchSiteItem(searchInputValue, searchType);
-});
-searchInput.addEventListener('keyup', function (event) {
-  if (event.keyCode === 13) {
-    const searchInputValue = document.getElementById('search-input').value;
-    const searchType = document.getElementById('search_type').value;
-    loadSearchSiteItem(searchInputValue, searchType);
+//창이 열리면 실행되는 목록
+window.onload = function () {
+  checkLoggedInStatus();
+  if (tour_site_id && !tour_id) {
+    createTour(tour_site_id);
   }
+  if (tour_id) {
+    TourDayCheck(tour_id);
+    getplaceData(tour_id);
+    setCenter(tour_site_id);
+  }
+};
+
+function displayPlaces(places) {
+  var listEl = document.getElementById('placesList'),
+    menuEl = document.getElementById('menu_wrap'),
+    fragment = document.createDocumentFragment(),
+    bounds = new kakao.maps.LatLngBounds(),
+    listStr = '';
+
+  // 검색 결과 목록에 추가된 항목들을 제거합니다
+  removeAllChildNods(listEl);
+
+  // 지도에 표시되고 있는 마커를 제거합니다
+  removeMarker();
+  if (places !== undefined) {
+    for (var i = 0; i < places.length; i++) {
+      // 마커를 생성하고 지도에 표시합니다
+      var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
+        marker = addMarker(placePosition, i),
+        itemEl = getListItem(i, places[i]);
+
+      // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+      // LatLngBounds 객체에 좌표를 추가합니다
+      bounds.extend(placePosition);
+
+      // 마커와 검색결과 항목에 mouseover 했을때
+      // 해당 장소에 인포윈도우에 장소명을 표시합니다
+      // mouseout 했을 때는 인포윈도우를 닫습니다
+      (function (marker, places) {
+        kakao.maps.event.addListener(marker, 'mouseover', function () {
+          displayInfowindow(marker, places.site_name);
+        });
+
+        kakao.maps.event.addListener(marker, 'mouseout', function () {
+          infowindow.close();
+        });
+
+        itemEl.onmouseover = function () {
+          displayInfowindow(marker, places.site_name);
+        };
+
+        itemEl.onmouseout = function () {
+          infowindow.close();
+        };
+
+        itemEl.ondblclick = function () {
+          deletePlace();
+        };
+      })(marker, places[i]);
+
+      fragment.appendChild(itemEl);
+    }
+  }
+
+  // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+  listEl.appendChild(fragment);
+  menuEl.scrollTop = 0;
+
+  // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+  map.setBounds(bounds);
+}
+
+function removeMarker() {
+  for (var i = 0; i < markers.length; i++) {
+    markers[i].setMap(null);
+  }
+  markers = [];
+}
+
+// 검색결과 목록의 자식 Element를 제거하는 함수입니다
+function removeAllChildNods(el) {
+  while (el.hasChildNodes()) {
+    el.removeChild(el.lastChild);
+  }
+}
+
+function displayInfowindow(marker, title) {
+  var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+
+  infowindow.setContent(content);
+  infowindow.open(map, marker);
+}
+
+function getListItem(index, places) {
+  var el = document.createElement('li'),
+    itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' + '<div class="info">' + '   <h1><strong>' + places.site_name + '</strong></h1>';
+
+  if (places.site_address) {
+    itemStr += '<span class="jibun gray">' + places.site_address + '</span>';
+  }
+  if (places.site_img) {
+    itemStr += `<img class="img-fluid" src=${places.site_img} alt="" />`;
+  }
+  el.innerHTML = itemStr;
+  el.className = 'item';
+
+  return el;
+}
+
+function addMarker(position, idx, title) {
+  var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+    imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
+    imgOptions = {
+      spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
+      spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
+      offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
+    },
+    markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions),
+    marker = new kakao.maps.Marker({
+      position: position, // 마커의 위치
+      image: markerImage,
+    });
+
+  marker.setMap(map); // 지도 위에 마커를 표출합니다
+  markers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+  return marker;
+}
+
+function addsearchMarker(position) {
+  var marker = new kakao.maps.Marker({
+    position: position,
+  });
+
+  marker.setMap(map); // 지도 위에 마커를 표출합니다
+  markers.push(marker); // 배열에 생성된 마커를 추가합니다
+
+  return marker;
+}
+
+siteCreateBtn.addEventListener('click', function () {
+  document.getElementById('menu_wrap2').style.display = 'block';
+  const keyword = document.getElementById('keyword');
+  keyword.addEventListener('keydown', function (e) {
+    if (e.keyCode === 13) {
+      let search_data = keyword.value;
+      let search_type = document.getElementById('search_type').value;
+      searchPlaces(search_data, search_type);
+    }
+  });
 });
 
-//검색 기능
-function loadSearchSiteItem(search_data, search_type) {
+function searchPlaces(search_data, search_type, id) {
   fetch(`/searchtour/${search_data}/${search_type}`, {
     method: 'GET',
     headers: {
@@ -56,54 +182,99 @@ function loadSearchSiteItem(search_data, search_type) {
   })
     .then((response) => response.json())
     .then((data) => {
-      let day = checkday();
-      siteListBox.innerHTML = '';
-      data.result.forEach((site) => {
-        const siteCard = `<div id="card" width="300" height="400" value="${site.id}">
-                                <div class="info" id=${site.id} >
-                                    <div class="body">
-                                    <div class="img">
-                                        <img src="${site.site_img}" width="100%" height="auto" />
-                                    </div>
-                                    <div class="title"><strong><p3>${site.site_name}</p3></strong></div>
-                                    <div class="ellipsis">${site.site_address}</div>
-                                    </div>
-                                </div>
-                            </div>`;
-        siteListBox.innerHTML += siteCard;
-      });
-      data.result.forEach((sites) => {
-        siteApi(sites.id, day);
-      });
+      displaySearchData(data.result, id);
     });
+  // 장소검색 객체를 통해 키워드로 장소검색을 요청합니다
 }
 
-//검색 창에 나온 카드들 클릭하면 이벤트 발생
-function siteApi(siteId, day) {
-  console.log(typeof siteId, typeof day);
-  const card = document.getElementById(`${siteId}`);
-  const formData = {
-    site_id: siteId,
-    day: day,
-  };
-  card.addEventListener('click', function () {
-    fetch(`/redis/${tour_id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        panTo(siteId, i);
-        i++;
-        siteListBox.innerHTML = '';
-      })
-      .catch((error) => {
-        console.error(error);
+function displaySearchData(places, id) {
+  var listEl = document.getElementById('updateSiteList'),
+    menuEl = document.getElementById('menu_wrap2'),
+    fragment = document.createDocumentFragment(),
+    bounds = new kakao.maps.LatLngBounds(),
+    listStr = '';
+  // 검색 결과 목록에 추가된 항목들을 제거합니다
+  removeAllChildNods(listEl);
+
+  // 지도에 표시되고 있는 마커를 제거합니다
+  removeMarker();
+
+  for (var i = 0; i < places.length; i++) {
+    // 마커를 생성하고 지도에 표시합니다
+    var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
+      marker = addsearchMarker(placePosition, i),
+      itemEl = getListItem(i, places[i]);
+
+    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+    // LatLngBounds 객체에 좌표를 추가합니다
+    bounds.extend(placePosition);
+
+    // 마커와 검색결과 항목에 mouseover 했을때
+    // 해당 장소에 인포윈도우에 장소명을 표시합니다
+    // mouseout 했을 때는 인포윈도우를 닫습니다
+    (function (marker, places, i) {
+      kakao.maps.event.addListener(marker, 'mouseover', function () {
+        displayInfowindow(marker, places.site_name);
       });
-  });
+
+      kakao.maps.event.addListener(marker, 'mouseout', function () {
+        infowindow.close();
+      });
+
+      itemEl.onmouseover = function () {
+        displayInfowindow(marker, places.site_name);
+      };
+
+      itemEl.onmouseout = function () {
+        infowindow.close();
+      };
+
+      itemEl.onclick = function () {
+        createSite(places);
+      };
+    })(marker, places[i], i);
+
+    fragment.appendChild(itemEl);
+  }
+
+  // 검색결과 항목들을 검색결과 목록 Element에 추가합니다
+  listEl.appendChild(fragment);
+  menuEl.scrollTop = 0;
+
+  // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+  map.setBounds(bounds);
+}
+
+tourcloseBtn.addEventListener('click', function () {
+  document.getElementById('menu_wrap2').style.display = 'none';
+  getplaceData(tour_id);
+});
+
+function createSite(places) {
+  const days = document.getElementById('tourDays').value;
+  const formData = {
+    site_id: places.id,
+    day: days,
+  };
+  console.log(formData);
+  fetch(`/redis/${tour_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.status === 201) {
+        alert(data.message);
+        getplaceData(tour_id);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 //계획 작성전에 tour테이블에 생성함
@@ -178,52 +349,6 @@ function checkLoggedInStatus() {
     });
 }
 
-//지도에 이벤트 생성하기 위도, 경도, 이미지, 이름, 주소순으로 받아서 멥에 표시
-function panTo(site_id, i) {
-  fetch(`/toursite/${site_id}`, {
-    method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      const tour = data.result;
-      //지도 이동
-      let moveLatLon = new kakao.maps.LatLng(tour.mapy, tour.mapx);
-      map.panTo(moveLatLon);
-      //마커 생성
-      let markerPosition = new kakao.maps.LatLng(tour.mapy, tour.mapx);
-
-      let marker = addMarker(markerPosition, i);
-      marker.setMap(map);
-      markers.push(marker);
-      //생성된 마커에 이벤트 부여
-      let iwContent = `
-      <div class="wrap" width="300" height="400">
-          <div class="info">
-              <div class="title">
-                  ${tour.site_name}
-                  <div class="close" onclick="closeOverlay()" title="닫기"></div>
-              </div>
-              <div class="body">
-                  <div class="img">
-                      <img src="${tour.site_img}" width="300" height="250">
-                 </div>
-                      <div class="ellipsis">${tour.site_address}</div>
-              </div>
-          </div>
-      </div>`, //이 부분이 클릭했을 때 나오는 div
-        iwRemoveable = true;
-
-      let infowindow = new kakao.maps.InfoWindow({
-        content: iwContent,
-        removable: iwRemoveable,
-      });
-
-      kakao.maps.event.addListener(marker, 'click', function () {
-        infowindow.open(map, marker);
-      });
-    });
-}
-
 function logout() {
   fetch('/logout', {
     method: 'POST',
@@ -241,6 +366,7 @@ function logout() {
 startChatting.addEventListener('click', function () {
   window.open(`chatting.html?tourId=${tour_id}`, 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
 });
+
 //드랍박스에 날짜 수만큼 생성 23~24 여행간다고하면 1일차 2일차 생김
 function TourDayCheck(tour_id) {
   fetch(`/tours/${tour_id}`, {
@@ -261,56 +387,35 @@ function TourDayCheck(tour_id) {
     });
 }
 
-//마커 숫자 만들어줌
-function addMarker(position, idx, type) {
-  var imageSrc = 'http://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png'; // 마커 이미지 url, 스프라이트 이미지를 씁니다
-  var imageSize = new kakao.maps.Size(36, 37); // 예제 사이트 마커 이미지의 크기
-  var imgOptions = {
-    spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
-    spriteOrigin: new kakao.maps.Point(0, idx * 46 + 10), // 스프라이트 이미지 중 사용할 영역의 좌상단 좌표
-    offset: new kakao.maps.Point(13, 37), // 마커 좌표에 일치시킬 이미지 내에서의 좌표
-  };
-  var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize, imgOptions);
-
-  let marker = new kakao.maps.Marker({
-    position: position, // 마커의 위치
-    image: markerImage,
-  });
-
-  marker.setMap(map); // 지도 위에 마커를 표출합니다
-
-  return marker;
-}
 //새로고침하거나 뒤로갔다가 다시오면 redis에서 불러옴
-function restartTour(tour_id, day) {
-  fetch(`/redis/${tour_id}/${day}`, {
+function getplaceData(tour_id) {
+  const days = document.getElementById('tourDays').value;
+  fetch(`/redis/${tour_id}/${days}`, {
     method: 'GET',
   })
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.result;
-      for (i = 0; i < tourlist.length; i++) {
-        panTo(tourlist[i], i);
+      if (tourlist.length !== 0) {
+        console.log(tourlist);
+        displayPlaces(tourlist);
       }
     })
     .catch((error) => {
       console.error(error);
     });
 }
-// 날짜 변경시 해당 날짜에 맞는 redis 정보를 불러옴
+
 tourDays.addEventListener('change', function () {
-  siteListBox.innerHTML = '';
-  let day = checkday();
-  fetch(`/redis/${tour_id}/${day}`, {
+  const days = document.getElementById('tourDays').value;
+  fetch(`/redis/${tour_id}/${days}`, {
     method: 'GET',
   })
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.result;
-      setMarkers(null);
-      for (i = 0; i < tourlist.length; i++) {
-        panTo(tourlist[i], i);
-      }
+      infowindow.close();
+      displayPlaces(tourlist);
     })
     .catch((error) => {
       console.error(error);
@@ -341,12 +446,35 @@ createTourBtn.addEventListener('click', function () {
     });
 });
 
-function setMarkers(map) {
-  for (var i = 0; i < markers.length; i++) {
-    markers[i].setMap(map);
+function deletePlace() {
+  if (confirm('정말로 삭제하시겠습니까?')) {
+    const day = document.getElementById('tourDays').value;
+    fetch(`/redis/${tour_id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ day }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        alert(data.message);
+        getplaceData(tour_id);
+      });
+  } else {
+    alert('취소되었습니다.');
   }
 }
 
-function checkday() {
-  return document.getElementById('tourDays').value;
+function setCenter() {
+  fetch(`/toursite/${tour_site_id}`, {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const site = data.result;
+      var moveLatLon = new kakao.maps.LatLng(site.mapy, site.mapx);
+      map.setCenter(moveLatLon);
+    });
 }
