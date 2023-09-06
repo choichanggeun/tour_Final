@@ -1,0 +1,5 @@
+#main-content .tour-item img,
+#main-content-diary .diary-item img {
+  width: 300px; /* 너비 설정 */
+  height: auto; /* 높이 설정: 원본 비율 유지 */
+}

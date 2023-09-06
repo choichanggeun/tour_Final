@@ -161,8 +161,6 @@ document.addEventListener('DOMContentLoaded', async function () {
                 console.error('Error fetching images:', error);
               }
             }
-          } else {
-            alert(data.message);
           }
         } catch (error) {
           console.error('Error fetching diaries:', error);

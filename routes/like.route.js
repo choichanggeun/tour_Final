@@ -10,6 +10,8 @@ router.put('/tours/:tour_id/likes', auth, likeController.createLike);
 
 router.get('/tours/:tour_id/likes', auth, likeController.getLikeUser);
 
+router.get('/tours/:tour_id/likes', auth, likeController.getLikeUser);
+
 router.get('/likes', auth, likeController.getLikes);
 
 module.exports = router;

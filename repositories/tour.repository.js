@@ -1,4 +1,4 @@
-const { Tour, User, TourSite } = require('../models');
+const { Tour, User, TourSite, Like } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
@@ -40,6 +40,34 @@ class TourRepository {
       return data;
     }
   };
+
+  //좋아요 순으로 여행계획 전체 조회
+  getLikeList = async () => {
+    let value = await redisCli.get('tour', 0, -1);
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      let data = await Tour.findAll({
+        include: [{ model: User, attributes: ['nickname'] }, { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] }, { model: Like }],
+      });
+
+      // 각 여행계획(Tour)이 가진 좋아요(Like)의 개수를 계산합니다.
+      await Promise.all(
+        data.map(async (tour) => {
+          tour.dataValues.likeCount = await Like.count({ where: { tour_id: tour.id } });
+        })
+      );
+
+      // 좋아요 많은 순서대로 정렬합니다.
+      data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
+
+      await redisCli.set('tour', JSON.stringify(data));
+      await redisCli.expire('tour', 360);
+
+      return data;
+    }
+  };
+
   searchTour = async (search_data, search_type) => {
     if (search_type === '제목') {
       const findTour = await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } }, include: [{ model: User }, { model: TourSite }] });
