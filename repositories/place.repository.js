@@ -8,10 +8,10 @@ class PlaceRepository {
   };
   // 여행 경로 조회
 
-  createPlaceBytourId = async (tour_id, days, tour_site_id) => {
-    console.log(tour_id, days, tour_site_id);
+  createPlaceBytourId = async (tour_id, days, tour_site_id, start_time, end_time) => {
+    console.log(tour_id, days, tour_site_id, start_time, end_time);
     const findPlanDate = await PlanDate.findOne({ where: { [Op.and]: [{ tour_id: tour_id }, { day: days }] } });
-    return await Place.create({ tour_site_id, plan_date_id: findPlanDate.id });
+    return await Place.create({ tour_site_id, plan_date_id: findPlanDate.id, start_time, end_time });
   };
 
   getPlace = async ({ plan_date_id, tour_site_id }) => {

@@ -7,11 +7,13 @@ class PlaceController {
   postPlace = async (req, res, next) => {
     try {
       const { user_id } = res.locals.user;
-      const { plan_date_id, tour_site_id } = req.params;
+      const { plan_date_id, tour_site_id, start_time, end_time } = req.params;
       const { code, message } = await this.placeService.createPlace({
         user_id,
         plan_date_id,
         tour_site_id,
+        start_time,
+        end_time,
       });
       return res.status(code).json({ message });
     } catch (err) {
@@ -25,7 +27,7 @@ class PlaceController {
     try {
       const { user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { days, tour_site_id , start_time, end_time } = req.body;
+      const { days, tour_site_id, start_time, end_time } = req.body;
       const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id, start_time, end_time);
       console.log(code, message);
       return res.status(code).json({ code, message });
@@ -60,7 +62,6 @@ class PlaceController {
   putPlace = async (req, res, next) => {
     try {
       const { place_id } = req.params;
-<<<<<<< HEAD
       const { plan_date_id, tour_site_id, start_time, end_time } = req.body; //
       const { code, message } = await this.placeService.putPlace({
         plan_date_id,
@@ -70,10 +71,6 @@ class PlaceController {
         start_time,
         end_time,
       });
-=======
-      const { id } = req.body;
-      const { code, message } = await this.placeService.putPlace(id, place_id);
->>>>>>> 1d06a1cdee985ca8651cee41b411703ca7b81aaf
 
       return res.status(code).json({ message, code });
     } catch (err) {
