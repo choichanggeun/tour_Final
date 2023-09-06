@@ -47,6 +47,7 @@
         clear: left;
         margin-right: 10px;
       }
+
     </style>
   </head>
 
@@ -145,7 +146,7 @@
           <form class="pull-xs-right">
             <label for="post-upload-img" class="basic-btn">파일 업로드</label>
             <input id="post-upload-img" type="file" style="display: none" />
-            <button id="testbtn">버튼</button>
+            <button id="testbtn" style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px;margin-top: 7px;">업로드</button>
           </form>
           <form class="pull-xs-right">
             <div class="search">
@@ -172,17 +173,26 @@
           </div>
 
           <!-- 여행 일지 작성하는 부분입니다. -->
-          <div class="col-md-6" style="margin-right: 50px">
+          <div class="col-md-6" style="margin-right: 50px; background-color: #d4ecff; padding: 20px; border-radius: 50px;">
             <div class="diary-input">
-              <label for="diary-title">제목: </label>
-              <input type="text" name="diary-title" id="diary-title" />
-              <label for="diary-content"> </label>
-              <!-- 위에 내용이라는 텍스터가들어가야하지만 임시로뺌 -->
-              <textarea name="diary-content" id="diary-content" cols="50" rows="10"></textarea>
-              <input type="file" id="diary-image" multiple />
-              <label for="private">비공개: </label>
-              <input type="checkbox" name="private" id="private-checkbox" />
-              <button id="diary-post-button">여행 일지 작성</button>
+              <h2 style="text-align: center; margin-bottom: 20px; color: #000000;">여행 일지 작성</h2>
+              <form>
+                <div class="form-group">
+                  <label for="diary-title"></label>
+                  <input type="text" class="form-control" id="diary-title" placeholder="일지 제목을 입력하세요" />
+                </div>
+                <div class="form-group">
+                  <label for="diary-content"></label>
+                  <textarea class="form-control" id="diary-content" rows="5" placeholder="일지 내용을 입력하세요"></textarea>
+                </div>
+                <div class="form-group">
+                  <label for="diary-image">사진 업로드:</label>
+                  <input type="file" class="form-control-file" id="diary-image" multiple />
+                </div>
+                <div style="text-align: center;">
+                  <button type="button" class="btn btn-primary" style="border-radius: 50px; background-color: #000000; color: #fff;" id="diary-post-button">여행 일지 작성</button>
+                </div>
+              </form>
             </div>
           </div>
         </div>

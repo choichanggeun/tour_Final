@@ -29,8 +29,8 @@ a:hover,
   outline: none !important;
 }
 .btn-search {
-  background: #fd3a13;
-  border-color: #fd3a13;
+  background: #fd7a16;
+  border-color: #000000;
   color: #020202;
   padding: 7px 10px;
   margin-right: 30px;
@@ -118,7 +118,8 @@ section {
 .banner-sec {
   float: left;
   width: 100%;
-  background: #ebebeb;
+  background: #ffffff;
+  border-bottom: 2px solid #000000;
 }
 .card-block {
   padding: 0 10px 10px;
@@ -142,7 +143,7 @@ header {
   width: 100%;
 }
 .small-top {
-  border-bottom: 1px solid #ff0000;
+  border-bottom: 1px solid #000000;
   float: left;
   width: 100%;
   background: #d4cef6;
@@ -152,7 +153,7 @@ header {
 }
 .small-top .social-icon a {
   border-left: 1px solid #2b2b2b;
-  color: #ca1b1b;
+  color: #000000;
   float: left;
   padding: 6px 13px;
 }
@@ -169,7 +170,7 @@ header {
   float: left;
   margin-top: 4px;
   padding-left: 0;
-  color: #fe0303;
+  color: #000000;
 }
 .top-head {
   background: #7993f9;
@@ -224,7 +225,7 @@ header {
   margin-left: 18px;
 }
 .top-nav {
-  background: #fff;
+  background: #c5d9ff;
   padding: 0;
   border-bottom: 1px solid #dbdbdb;
 }
@@ -371,8 +372,9 @@ header {
 .section-01 {
   float: left;
   width: 100%;
-  border-top: 1px solid #d5d5d5;
-  border-bottom: 1px solid #d5d5d5;
+  background: #ffffff;
+  border-top: 2px solid #000000;
+  border-bottom: 2px solid #000000;
 }
 .section-01 .heading-large {
   border-bottom: 2px solid #222;
@@ -662,7 +664,7 @@ footer p span {
 footer .heading-footer {
   font-size: 21px;
   font-weight: 700;
-  color: #fb0606;
+  color: #fb6a06;
   margin-bottom: 22px;
 }
 footer .post p {
@@ -686,7 +688,7 @@ footer .post p span {
 }
 .copyright p {
   text-align: left;
-  color: #fc0404;
+  color: #000000;
   padding: 10px 0;
   margin-bottom: 0px;
   font-size: 13px;
@@ -714,6 +716,6 @@ footer .post p span {
   margin-left: 8px;
 }
 .bottom_ul li a {
-  color: #fa0707;
+  color: #000000;
   font-size: 12px;
 }
