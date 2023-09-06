@@ -402,7 +402,6 @@ getMyDiary();
 
 // 여행 계획 여행 일지, 이미지 조회
 const getTourDiary = function () {
-  // 특정 페이지에 있을 때 실행
   const currentPageURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const tour_id = urlParams.get('Id');
@@ -421,38 +420,62 @@ const getTourDiary = function () {
         const { images } = await response2.json();
         if (response.ok) {
           for (let diary of data) {
-            row.innerHTML += `
-              <div id='diaryBox${diary.id}'>
-                <p>제목: ${diary.title}</p>
-              </div>
-              `;
+            // 다이어리 카드 컨테이너 만들기
+            const diaryCard = document.createElement('div');
+            diaryCard.className = 'diary-card'; // class추가
+
+            // 요소생성
+            const titleElement = document.createElement('p');
+            titleElement.textContent = `제목: ${diary.title}`;
+            diaryCard.appendChild(titleElement);
+            //위에 닉네임불러오게 넣기
+
             let count = 0;
             if (images) {
               for (let image of images) {
                 if (diary.id === image.diary_id) {
-                  const diaryBox = document.getElementById(`diaryBox${diary.id}`);
-                  diaryBox.innerHTML += `
-                    <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}"></a>
-                    `;
+                  // 이미지 생성
+                  const imageElement = document.createElement('img');
+                  imageElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
+                  // 이미지 링크로 래핑함
+                  const imageLink = document.createElement('a');
+                  imageLink.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+                  imageLink.appendChild(imageElement);
+                  diaryCard.appendChild(imageLink);
                   count++;
                 }
               }
               if (count === 0) {
-                const diaryBox = document.getElementById(`diaryBox${diary.id}`);
-                diaryBox.innerHTML += `
-                <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="diary-img" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png" alt=""/></a>
-                `;
+                // 기본 이미지 요소 만들기
+                const defaultImageElement = document.createElement('img');
+                defaultImageElement.className = 'diary-img';
+                defaultImageElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+                // Wrap the default image with a link
+                const defaultImageLink = document.createElement('a');
+                defaultImageLink.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+                defaultImageLink.appendChild(defaultImageElement);
+                diaryCard.appendChild(defaultImageLink);
               }
             } else {
-              const diaryBox = document.getElementById(`diaryBox${diary.id}`);
-              diaryBox.innerHTML += `
-              <a href="http://localhost:3000/diary-detail.html?diary_id=${diary.id}"><img class="diary-img" src="https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png" alt=""/></a>
-              `;
+              // 기본 이미지 요소 만들기
+              const defaultImageElement = document.createElement('img');
+              defaultImageElement.className = 'diary-img';
+              defaultImageElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+              // 기본 이미지 링크로 래핑함
+              const defaultImageLink = document.createElement('a');
+              defaultImageLink.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+              defaultImageLink.appendChild(defaultImageElement);
+              diaryCard.appendChild(defaultImageLink);
             }
-            const diaryBox = document.getElementById(`diaryBox${diary.id}`);
-            diaryBox.innerHTML += `
-                <p>내용: ${diary.content}</p>
-              `;
+
+            // 내용 요소 생성
+            const contentElement = document.createElement('p');
+            contentElement.textContent = `내용: ${diary.content}`;
+            contentElement.style.textAlign = 'center';
+            diaryCard.appendChild(contentElement);
+
+            // 행에 일지 카드 추가
+            row.appendChild(diaryCard);
           }
         } else {
           alert(data.message);
