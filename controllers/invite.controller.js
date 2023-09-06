@@ -1,4 +1,7 @@
 const InviteService = require('../services/invite.service');
+require('dotenv').config(); //환경변수를 관리하는 구성패키지
+const { ACCESS_SECRET } = process.env;
+const jwt = require('jsonwebtoken');
 
 class InviteController {
   inviteService = new InviteService();
@@ -19,19 +22,36 @@ class InviteController {
   };
 
   // 투어에 사용자 초대
-  createInvite = async (req, res) => {
+  inviteEmail = async (req, res) => {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
       const { inviteEmail: email } = req.body;
-      const { code, message, result } = await this.inviteService.createInvite({
+      const { code, message, result } = await this.inviteService.inviteEmail({
         tour_id,
         email,
         user_id,
       });
 
       return res.status(code).json({ message, result });
-    } catch (error) {
+    } catch (err) {
+      if (err.status) return res.status(err.status).json({ message: err.message });
+      console.log(err);
+      throw res.status(500).json({ message: err.message });
+    }
+  };
+
+  createInvite = async (req, res) => {
+    try {
+      const inviteToken = req.query.token;
+      const inviteData = jwt.verify(inviteToken, ACCESS_SECRET);
+      console.log(inviteData);
+      const { code, message } = await this.inviteService.createInvite({
+        tour_id: inviteData.tour_id,
+        user_id: inviteData.id,
+      });
+      return res.status(code).json({ code, message });
+    } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });
       console.log(err);
       throw res.status(500).json({ message: err.message });

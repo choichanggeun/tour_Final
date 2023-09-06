@@ -5,6 +5,7 @@ const invitedUserList = document.getElementById('invitedUserListBox');
 const inviteBtn = document.getElementById('inviteBtn');
 const closeBtn = document.getElementById('closeBtn');
 inviteUser.addEventListener('click', function () {
+  checkInvitedUser();
   const modal = document.getElementById('invitemodal');
   modal.style.display = 'flex';
   document.getElementById('inviteEmail').value = '';

@@ -7,6 +7,7 @@ const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 �
 redisClient.connect().then(); // redis v4 연결 (비동기)
 const redisCli = redisClient.v4;
 
+const sigunguCode = [25, 10, 5, 9, 5, 16, 5, 1];
 class ToursiteRepository {
   getTourSiteList = async () => {
     let value = await redisCli.get('toursite', 0, -1);
@@ -33,38 +34,28 @@ class ToursiteRepository {
 
   createTourSite = async (startNumber) => {
     var i = startNumber; // max = 127503, min = 125701
-    var timer = setInterval(async function () {
-      if (i > 125740) {
-        clearInterval(timer);
-      } else {
-        const result = await axios({
-          url: `https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=testApp&_type=json&contentId=${i}&contentTypeId=12&defaultYN=Y&firstImageYN=Y&areacodeYN=N&catcodeYN=N&addrinfoYN=Y&mapinfoYN=Y&overviewYN=N&numOfRows=10&pageNo=1&serviceKey=hrod6tZP0dYmxXU3PQEgldYC6jxh0vc0sCpDTi5%2Fo%2FAGn86x5kYA7nzJhu0l0uUWM%2Fks%2FOozWsCz8H74FkGKEQ%3D%3D`, // 통신할 웹문서
-          method: 'get', // 통신할 방식
-        });
-
-        if (result.data && result.data.response && result.data.response.body && result.data.response.body.items !== '') {
-          const site_name = result.data.response.body.items.item[0].title;
-          if (site_name) {
-            if (result.data.response.body.items.item[0].firstimage === '') {
-              const site_address = result.data.response.body.items.item[0].addr1;
-              const site_img = '/img/Oops-error.jpg';
-              const mapx = result.data.response.body.items.item[0].mapx;
-              const mapy = result.data.response.body.items.item[0].mapy;
-              await TourSite.create({ site_name, site_address, site_img, mapx, mapy });
-            } else {
-              const site_address = result.data.response.body.items.item[0].addr1;
-              const site_img = result.data.response.body.items.item[0].firstimage;
-              const mapx = result.data.response.body.items.item[0].mapx;
-              const mapy = result.data.response.body.items.item[0].mapy;
-              await TourSite.create({ site_name, site_address, site_img, mapx, mapy });
-            }
+    let Code = sigunguCode[i - 1];
+    for (let h = 1; h < Code + 1; h++) {
+      const result = await axios({
+        url: `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?serviceKey=hrod6tZP0dYmxXU3PQEgldYC6jxh0vc0sCpDTi5/o/AGn86x5kYA7nzJhu0l0uUWM/ks/OozWsCz8H74FkGKEQ==&numOfRows=200&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&showflag=1&listYN=Y&arrange=A&contentTypeId=12&areaCode=${i}&sigunguCode=${h}`,
+        method: 'get', // 통신할 방식
+      });
+      i++;
+      const list = result.data.response.body.items.item;
+      console.log(list.length);
+      if (list !== undefined) {
+        for (let j = 0; j < list.length; j++) {
+          if (list[j].firstimage !== '') {
+            const site_name = list[j].title;
+            const site_address = list[j].addr1;
+            const site_img = list[j].firstimage;
+            const mapx = list[j].mapx;
+            const mapy = list[j].mapy;
+            await TourSite.create({ site_name, site_address, site_img, mapx, mapy });
           }
-          i++;
-        } else {
-          i++;
         }
       }
-    }, 1000);
+    }
   };
 
   initTourSite = async () => {
