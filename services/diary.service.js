@@ -6,6 +6,7 @@ class DiaryService {
 
   // 여행 일지 작성
   postDiary = async (user_id, tour_id, title, content, status) => {
+    if (!user_id) throw new CustomError('로그인이 필요한 기능입니다.', 401);
     if (!title) throw new CustomError('제목을 입력해주세요.', 400);
     if (!content) throw new CustomError('내용을 입력해주세요.', 400);
     const tour = await this.diaryRepository.getTour(tour_id);

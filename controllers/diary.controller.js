@@ -13,7 +13,7 @@ class DiaryController {
       return res.status(201).json({ message: '여행 일지가 작성되었습니다.' });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -26,7 +26,7 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -39,7 +39,7 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -52,7 +52,7 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -63,7 +63,7 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -77,7 +77,7 @@ class DiaryController {
       return res.status(200).json({ message: '여행 일지가 수정되었습니다.' });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 

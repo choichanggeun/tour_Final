@@ -32,7 +32,7 @@ const postDiary = function () {
           alert(data.message);
           location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
         } else {
-          alert(data.errorMessage);
+          alert(data.message);
         }
       } catch (error) {
         alert('여행일지 작성에 실패했습니다.');
@@ -179,7 +179,7 @@ updateDiary = async function (diary_id) {
       alert(data.message);
       location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
     } else {
-      alert(data.errorMessage);
+      alert(data.message);
     }
   } catch (error) {
     alert('여행 일지 수정에 실패했습니다.');
@@ -224,7 +224,7 @@ const deleteDiaryImg = async function (photo_id) {
       imgDeleteBtn.style.display = 'none';
       alert(data.message);
     } else {
-      alert(data.errorMessage);
+      alert(data.message);
     }
   } catch (error) {
     console.error(error);
@@ -339,7 +339,7 @@ const getAllDiary = function () {
           method: 'GET',
         });
         const { data } = await response.json();
-
+        console.log(data);
         const { images } = await response2.json();
         if (response.ok) {
           const cardList = document.getElementById('card-list');
@@ -359,6 +359,7 @@ const getAllDiary = function () {
                 <div class="card-block">
                   <div class="diary-title">
                     <h2 class="title-small">${diary.title}</h2>
+                    <h2 class="title-small">${diary.User.nickname}</h2>
                   </div>
                 </div>
               </div>
@@ -404,6 +405,7 @@ const getTourDiary = function () {
           method: 'GET',
         });
         const { data } = await response.json();
+        console.log(data);
         const { images } = await response2.json();
         if (response.ok) {
           for (let diary of data) {
