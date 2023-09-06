@@ -18,7 +18,7 @@ class RedisController {
       const { key } = req.params;
       const { site_id, day } = req.body;
       const { status, message, result } = await this.redisService.createRedis(key, site_id, day);
-      return res.status(status).json({ message, result });
+      return res.status(status).json({ status, message, result });
     } catch (error) {
       console.log(error);
     }

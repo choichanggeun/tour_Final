@@ -123,6 +123,28 @@ function logout() {
     });
 }
 
-function popup() {
-  window.open('chatting.html', 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
+function getSiteData() {
+  fetch('/first_toursite', {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const site = data.result;
+      siteCardBox.innerHTML = '';
+      site.forEach((sites) => {
+        const siteCard = `<div class="col-md-3" style="border-radius: 20px"> 
+                              <a href="tour.html?id=${sites.id}">
+                              <div class="card" style="border-radius: 20px">
+                              <img class="img-fluid" style="width: 270px; height: 300px; border-radius: 20px" src=${sites.site_img} alt="" />
+                              <div class="card-img-overlay"><span class="tag tag-pill tag-success">${sites.site_name}</span></div>
+                              <div>
+                                <div class="news-title">
+                                </div>
+                              </div>
+                            </div>
+                            </a>
+                          </div>`;
+        siteCardBox.innerHTML += siteCard;
+      });
+    });
 }

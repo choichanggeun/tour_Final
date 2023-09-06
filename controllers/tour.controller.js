@@ -16,9 +16,9 @@ class TourController {
         end_date,
         tour_site_id,
       });
-      return res.status(code).json({ result, message });
+      return res.status(code).json({ result, code, message });
     } catch (err) {
-      if (err.code) return res.status(err.code).json({ message: err.message });
+      if (err.code) return res.status(err.code).json({ result: err.result, code: err.code, message: err.message });
       console.log(err);
       return res.status(500).json({ message: err.message });
     }
@@ -86,15 +86,9 @@ class TourController {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
       const { title, start_date, end_date } = req.body;
-      const { code, message } = await this.tourService.putTour({
-        user_id,
-        tour_id,
-        title,
-        start_date,
-        end_date,
-      });
+      const { code, message } = await this.tourService.putTour(user_id, tour_id, title, start_date, end_date);
 
-      return res.status(code).json({ message });
+      return res.status(code).json({ message, code });
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러 발생');
@@ -113,6 +107,29 @@ class TourController {
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러가 발생');
+    }
+  };
+
+  updateStatus = async (req, res, next) => {
+    try {
+      const { id: user_id } = res.locals.user;
+      const { tour_id } = req.params;
+      const { code, message } = await this.tourService.updateStatus(user_id, tour_id);
+      return res.status(code).json({ code, message });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send('알 수 없는 에러가 발생');
+    }
+  };
+
+  getVerifyTour = async (req, res, next) => {
+    try {
+      const { id: user_id } = res.locals.user;
+      const { tour_id } = req.params;
+      const { data, code, message } = await this.tourService.getVerifyTour(user_id, tour_id);
+      return res.status(code).json({ message, data });
+    } catch (err) {
+      if (err.code) return res.status(err.code).json({ message: err.message });
     }
   };
 }

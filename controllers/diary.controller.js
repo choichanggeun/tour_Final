@@ -8,13 +8,12 @@ class DiaryController {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { title, content } = req.body;
-
-      await this.diaryService.postDiary(user_id, tour_id, title, content);
+      const { title, content, status } = req.body;
+      await this.diaryService.postDiary(user_id, tour_id, title, content, status);
       return res.status(201).json({ message: '여행 일지가 작성되었습니다.' });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -27,7 +26,7 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -40,7 +39,7 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -53,18 +52,18 @@ class DiaryController {
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
-  // 모든 여행 일지 조회
+  // 모든 여행 일지 조회 (공개 일지만)
   getDiaries = async (_, res) => {
     try {
       const data = await this.diaryService.getDiaries();
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 
@@ -72,13 +71,13 @@ class DiaryController {
   putDiary = async (req, res) => {
     try {
       const { diary_id } = req.params;
-      const { title, content } = req.body;
+      const { title, content, status } = req.body;
 
-      await this.diaryService.putDiary(diary_id, title, content);
+      await this.diaryService.putDiary(diary_id, title, content, status);
       return res.status(200).json({ message: '여행 일지가 수정되었습니다.' });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
+      return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
 

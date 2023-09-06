@@ -1,4 +1,4 @@
-const { Tour, User, TourSite, Like } = require('../models');
+const { Tour, User, TourSite, Like, PlanDate } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
@@ -30,6 +30,7 @@ class TourRepository {
       return JSON.parse(value);
     } else {
       let data = await Tour.findAll({
+        where: { status: 1 },
         include: [
           { model: User, attributes: ['nickname'] },
           { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
@@ -120,9 +121,21 @@ class TourRepository {
     return tours;
   };
   // 여행 계획 수정
-  updateTour = async ({ user_id, tour_id, title, content, start_date, end_date }) => {
-    const updatedTour = await Tour.update({ title, content, start_date, end_date }, { where: { id: tour_id } });
-
+  updateTour = async (tour_id, title, start_date, end_date) => {
+    const updatedTour = await Tour.update({ title, start_date, end_date }, { where: { id: tour_id } });
+    if (updatedTour) {
+      const oldDate = new Date(start_date);
+      const newDate = new Date(end_date);
+      let diff = Math.abs(newDate.getTime() - oldDate.getTime());
+      diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+      const countDate = await PlanDate.count({ where: { tour_id: tour_id } });
+      const necessaryDate = diff + 1 - countDate;
+      if (necessaryDate > 0) {
+        for (let i = 1; i < necessaryDate + 1; i++) {
+          await PlanDate.create({ tour_id, day: countDate + i });
+        }
+      }
+    }
     return updatedTour; // 업데이트 성공 여부 반환
   };
 
@@ -134,6 +147,14 @@ class TourRepository {
 
   findTourInProgress = async (user_id) => {
     return await Tour.findOne({ where: { [Op.and]: [{ user_id: user_id }, { status: '0' }] } });
+  };
+
+  updateStatus = async (tour_id) => {
+    return await Tour.update({ status: 1 }, { where: { id: tour_id } });
+  };
+
+  getVerifyTour = async (user_id, tour_id) => {
+    return await Tour.findOne({ where: { user_id, id: tour_id } });
   };
 }
 
