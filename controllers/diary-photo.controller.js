@@ -12,7 +12,7 @@ class DiaryPhotoController {
       return res.status(200).json({ message: '여행 일지 사진을 업로드했습니다.' });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ message: `${error.message}` });
+      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
     }
   };
 
@@ -24,7 +24,7 @@ class DiaryPhotoController {
       return res.status(200).json({ images });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ message: `${error.message}` });
+      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
     }
   };
 
@@ -34,7 +34,7 @@ class DiaryPhotoController {
       return res.status(200).json({ images });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ message: `${error.message}` });
+      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
     }
   };
 
@@ -46,7 +46,7 @@ class DiaryPhotoController {
       return res.status(200).json({ message: '여행 일지 사진을 삭제했습니다.' });
     } catch (error) {
       console.log(error.stack);
-      return res.status(error.status || 500).send({ message: `${error.message}` });
+      return res.status(error.status || 500).send({ errorMessage: `${error.message}` });
     }
   };
 }

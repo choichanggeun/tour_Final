@@ -21,5 +21,7 @@ router.put('/tours/:tour_id/', authMiddleware, tourController.putTour);
 router.delete('/tours/:tour_id/', authMiddleware, tourController.deleteTour);
 // 여행 계획 status 0 -> 1 변경 api
 router.put('/tours/status/:tour_id', authMiddleware, tourController.updateStatus);
+// 로그인한 유저의 여행 계획인지 확인
+router.get('/verify_tours/:tour_id', authMiddleware, tourController.getVerifyTour);
 
 module.exports = router;

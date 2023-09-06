@@ -124,6 +124,10 @@ class TourRepository {
   updateStatus = async (tour_id) => {
     return await Tour.update({ status: 1 }, { where: { id: tour_id } });
   };
+
+  getVerifyTour = async (user_id, tour_id) => {
+    return await Tour.findOne({ where: { user_id, id: tour_id } });
+  };
 }
 
 module.exports = TourRepository;
