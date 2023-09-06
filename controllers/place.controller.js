@@ -12,6 +12,8 @@ class PlaceController {
         user_id,
         plan_date_id,
         tour_site_id,
+        start_time,
+        end_time,
       });
       return res.status(code).json({ message });
     } catch (err) {
@@ -46,12 +48,14 @@ class PlaceController {
     try {
       const { user_id } = res.locals.user;
       const { place_id } = req.params;
-      const { plan_date_id, tour_site_id } = req.body; //
+      const { plan_date_id, tour_site_id, start_time, end_time } = req.body; //
       const { code, message } = await this.placeService.putPlace({
         plan_date_id,
         tour_site_id,
         user_id,
         place_id,
+        start_time,
+        end_time,
       });
 
       return res.status(code).json({ message });

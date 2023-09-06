@@ -2,8 +2,8 @@ const { Place, TourSite, PlanDate } = require('../models');
 
 class PlaceRepository {
   //여행 경로 등록
-  createPlace = async ({ user_id, plan_date_id, tour_site_id }) => {
-    const createdPlaceData = await Place.create({ user_id, plan_date_id, tour_site_id });
+  createPlace = async ({ user_id, plan_date_id, tour_site_id, start_time, end_time }) => {
+    const createdPlaceData = await Place.create({ user_id, plan_date_id, tour_site_id, start_time, end_time });
     return createdPlaceData;
   };
   // 여행 경로 조회
@@ -27,11 +27,13 @@ class PlaceRepository {
     });
   };
   // 여행 장소 수정
-  updatePlace = async ({ plan_date_id, tour_site_id, place_id }) => {
+  updatePlace = async ({ plan_date_id, tour_site_id, place_id, start_time, end_time }) => {
     const updatedPlace = await Place.update(
       {
         plan_date_id,
         tour_site_id,
+        start_time,
+        end_time,
       },
       { where: { id: place_id } }
     );
