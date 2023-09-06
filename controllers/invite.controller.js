@@ -45,7 +45,6 @@ class InviteController {
     try {
       const inviteToken = req.query.token;
       const inviteData = jwt.verify(inviteToken, ACCESS_SECRET);
-      console.log(inviteData);
       const { code, message } = await this.inviteService.createInvite({
         tour_id: inviteData.tour_id,
         user_id: inviteData.id,
