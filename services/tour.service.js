@@ -15,7 +15,7 @@ class TourService {
     if (new Date(start_date) > new Date(end_date)) throw { code: 401, message: '시작 날짜는 마지막 날짜보다 이전이어야 합니다.' };
     if (new Date(start_date).getFullYear() <= year && new Date(start_date).getMonth() + 1 <= month && new Date(start_date).getDate() < date) throw { code: 401, message: '과거의 날짜는 선택할 수 없습니다.' };
     const valiTourInProgress = await this.tourRepository.findTourInProgress(user_id);
-    if (valiTourInProgress) throw { code: 401, message: '진행 중인 계획 작성이 존재합니다.' };
+    if (valiTourInProgress) throw { result: valiTourInProgress, code: 405, message: '진행 중인 계획 작성이 존재합니다.' };
     const createTourData = await this.tourRepository.createTour({
       user_id,
       title,
@@ -67,17 +67,16 @@ class TourService {
     };
   };
   //여행계획 수정
-  putTour = async ({ user_id, tour_id, title, start_date, end_date }) => {
+  putTour = async (user_id, tour_id, title, start_date, end_date) => {
     if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
 
-    const updatedTour = await this.tourRepository.updateTour({
-      user_id,
-      tour_id,
-      title,
-      start_date,
-      end_date,
-    });
+    const oldDate = new Date(start_date);
+    const newDate = new Date(end_date);
+    let diff = Math.abs(newDate.getTime() - oldDate.getTime());
+    diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+    if (diff - 1 <= 0) throw { code: 400, message: '기존 날짜보다 짧게 수정은 불가능합니다.' };
 
+    const updatedTour = await this.tourRepository.updateTour(tour_id, title, start_date, end_date);
     if (!updatedTour) throw { code: 400, message: '여행 계획 수정에 실패했습니다.' };
 
     return { code: 200, message: '여행 계획이 성공적으로 수정되었습니다.' };
@@ -91,6 +90,16 @@ class TourService {
     if (!deletedTour) throw { code: 400, message: '여행 계획 삭제에 실패했습니다.' };
 
     return { code: 200, message: '여행 계획이 성공적으로 삭제되었습니다.' };
+  };
+
+  updateStatus = async (user_id, tour_id) => {
+    await this.tourRepository.updateStatus(tour_id);
+    return { code: 200, message: '게시 완료' };
+  };
+
+  getVerifyTour = async (user_id, tour_id) => {
+    const findTour = await this.tourRepository.getVerifyTour(user_id, tour_id);
+    return { code: 200, message: '여행계획 조회 성공', data: findTour };
   };
 }
 

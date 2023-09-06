@@ -1,5 +1,5 @@
 const { Place, TourSite, PlanDate } = require('../models');
-
+const { Op } = require('sequelize');
 class PlaceRepository {
   //여행 경로 등록
   createPlace = async ({ user_id, plan_date_id, tour_site_id, start_time, end_time }) => {
@@ -7,6 +7,13 @@ class PlaceRepository {
     return createdPlaceData;
   };
   // 여행 경로 조회
+
+  createPlaceBytourId = async (tour_id, days, tour_site_id) => {
+    console.log(tour_id, days, tour_site_id);
+    const findPlanDate = await PlanDate.findOne({ where: { [Op.and]: [{ tour_id: tour_id }, { day: days }] } });
+    return await Place.create({ tour_site_id, plan_date_id: findPlanDate.id });
+  };
+
   getPlace = async ({ plan_date_id, tour_site_id }) => {
     const places = await Place.findAll({
       where: {
@@ -20,18 +27,18 @@ class PlaceRepository {
   };
   // 여행 경로 조회 날짜와 계획에 따른
   getPlaceList = async (tour_id, days) => {
-    const Plandate = await PlanDate.findOne({ where: { tour_id: tour_id, day: days } });
+    const Plandate = await PlanDate.findOne({ where: { [Op.and]: [{ tour_id: tour_id }, { day: days }] } });
+    if (!Plandate) return false;
     return await Place.findAll({
       where: { plan_date_id: Plandate.id },
       include: [{ model: TourSite }],
     });
   };
   // 여행 장소 수정
-  updatePlace = async ({ plan_date_id, tour_site_id, place_id, start_time, end_time }) => {
+  updatePlace = async (id, place_id, start_time, end_time) => {
     const updatedPlace = await Place.update(
       {
-        plan_date_id,
-        tour_site_id,
+        tour_site_id: id,
         start_time,
         end_time,
       },

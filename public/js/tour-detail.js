@@ -33,6 +33,7 @@ tourDays.addEventListener('change', function () {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.data;
+      infowindow.close();
       displayPlaces(tourlist);
     })
     .catch((error) => {
@@ -56,8 +57,25 @@ likeBtn.addEventListener('click', function () {
 goDairy.addEventListener('click', function () {
   window.location.href = `diary-tour.html?Id=${tour_id}`;
 });
-createDairy.addEventListener('click', function () {
-  window.location.href = `diary-post.html?Id=${tour_id}`;
+createDairy.addEventListener('click', async function () {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tour_id = urlParams.get('id');
+    const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
+    const data = await response.json();
+    const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
+    const data2 = await response2.json();
+    // 초대된 유저이거나 여행 계획 만든 유저일 때
+    if (data.data.length !== 0 || data2.data) {
+      window.location.href = `diary-post.html?Id=${tour_id}`;
+    } else {
+      alert('여행 일지를 생성할 권한이 없습니다.');
+    }
+  } catch (error) {
+    console.log(error);
+    alert('여행 일지를 생성할 권한이 없습니다.');
+  }
+  // window.location.href = `diary-post.html?Id=${tour_id}`;
 });
 updateTour.addEventListener('click', function () {
   window.location.href = `tour-update.html?id=${tour_id}`;
@@ -145,16 +163,42 @@ function displayPlaces(places) {
   map.setBounds(bounds);
 }
 
+async function checkMember() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tour_id = urlParams.get('id');
+    const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
+    const data = await response.json();
+    const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
+    const data2 = await response2.json();
+    // 초대된 유저이거나 여행 계획 만든 유저일 때
+    if (data.data.length !== 0 || data2.data) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}
+
 function checkLoggedInStatus() {
   fetch('/users/me', {
     method: 'GET',
   })
     .then((response) => response.json())
-    .then((data) => {
+    .then(async (data) => {
       // 응답 처리
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        const isMember = await checkMember();
+        if (isMember) {
+          document.getElementById('createDairy').style.display = 'block';
+        }
+        document.getElementById('updateTour').style.display = 'block';
+        document.getElementById('likeBtn').style.display = 'block';
       }
     });
 }

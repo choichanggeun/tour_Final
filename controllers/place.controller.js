@@ -12,10 +12,23 @@ class PlaceController {
         user_id,
         plan_date_id,
         tour_site_id,
-        start_time,
-        end_time,
       });
       return res.status(code).json({ message });
+    } catch (err) {
+      if (err.code) return res.status(err.code).json({ message: err.message });
+      console.log(err);
+      return res.status(500).json({ message: err.message });
+    }
+  };
+  //여행 경유지 등록 tour_id, day, tour_site_id
+  createPlace = async (req, res, next) => {
+    try {
+      const { user_id } = res.locals.user;
+      const { tour_id } = req.params;
+      const { days, tour_site_id , start_time, end_time } = req.body;
+      const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id, start_time, end_time);
+      console.log(code, message);
+      return res.status(code).json({ code, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
       console.log(err);
@@ -46,8 +59,8 @@ class PlaceController {
   //여행 경유지 수정
   putPlace = async (req, res, next) => {
     try {
-      const { user_id } = res.locals.user;
       const { place_id } = req.params;
+<<<<<<< HEAD
       const { plan_date_id, tour_site_id, start_time, end_time } = req.body; //
       const { code, message } = await this.placeService.putPlace({
         plan_date_id,
@@ -57,8 +70,12 @@ class PlaceController {
         start_time,
         end_time,
       });
+=======
+      const { id } = req.body;
+      const { code, message } = await this.placeService.putPlace(id, place_id);
+>>>>>>> 1d06a1cdee985ca8651cee41b411703ca7b81aaf
 
-      return res.status(code).json({ message });
+      return res.status(code).json({ message, code });
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러 발생');

@@ -22,7 +22,6 @@ document.addEventListener('DOMContentLoaded', () => {
   commentList.addEventListener('click', async (e) => {
     if (e.target.classList.contains('edit-comment-btn') || e.target.classList.contains('delete-comment-btn')) {
       const commentId = e.target.closest('li.list-group-item').getAttribute('data-comment-id');
-      console.log(`Clicked comment ID: ${commentId}`);
 
       if (e.target.classList.contains('edit-comment-btn')) {
         const content = prompt('수정할 내용을 입력해주세요');
@@ -68,14 +67,11 @@ document.addEventListener('DOMContentLoaded', () => {
     </li>`
       )
       .join('');
-
-    console.log('Generated HTML:', commentList.innerHTML);
   };
 
   const getComments = async () => {
     const response = await fetch(`/diaries/${diary_id}/comments`);
     const data = await response.json();
-    console.log('Received comments:', data.data);
     return data.data;
   };
 

@@ -10,7 +10,6 @@ window.onload = function () {
   if (tour_id) {
     let day = document.getElementById('tourDays').value;
     TourDayCheck(tour_id);
-    firstSite(tour_site_id, day);
     restartTour(tour_id, day);
   }
 };
@@ -78,6 +77,7 @@ function loadSearchSiteItem(search_data, search_type) {
       });
     });
 }
+
 //검색 창에 나온 카드들 클릭하면 이벤트 발생
 function siteApi(siteId, day) {
   console.log(typeof siteId, typeof day);
@@ -105,6 +105,7 @@ function siteApi(siteId, day) {
       });
   });
 }
+
 //계획 작성전에 tour테이블에 생성함
 function createTour(tour_site_id) {
   const modal = document.getElementById('modal');
@@ -129,8 +130,15 @@ function createTour(tour_site_id) {
     })
       .then((response) => response.json())
       .then((data) => {
-        alert(data.message);
-        window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
+        console.log(data);
+        if (data.code === 405) {
+          alert(data.message);
+          window.location.href = `tour-update.html?id=${data.result.id}`;
+        }
+        if (data.code === 200) {
+          alert(data.message);
+          window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
+        }
       })
       .catch((error) => {
         console.error('여행계획 생성 실패:', error);
@@ -320,8 +328,13 @@ createTourBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
-      window.location.href = '/';
+      if (data.code === 200) {
+        alert(data.message);
+        window.location.href = '/';
+      }
+      if (data.code === 400) {
+        alert(data.message);
+      }
     })
     .catch((error) => {
       console.log(error);
@@ -336,27 +349,4 @@ function setMarkers(map) {
 
 function checkday() {
   return document.getElementById('tourDays').value;
-}
-
-function firstSite(tour_site_id, day) {
-  const formData = {
-    site_id: Number(tour_site_id),
-    day: day,
-  };
-  fetch(`/redis/${tour_id}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      panTo(tour_site_id, i);
-      i++;
-      siteListBox.innerHTML = '';
-    })
-    .catch((error) => {
-      console.error(error);
-    });
 }

@@ -17,6 +17,11 @@ module.exports = (sequelize, DataTypes) => {
         // 1:N 관계 설정을 합니다.
         foreignKey: 'diary_id',
       });
+
+      this.belongsTo(models.User, {
+        targetKey: 'id',
+        foreignKey: 'user_id',
+      });
     }
   }
   Diary.init(
@@ -48,6 +53,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
       },
       content: {
+        allowNull: false,
+        type: DataTypes.STRING,
+      },
+      status: {
         allowNull: false,
         type: DataTypes.STRING,
       },

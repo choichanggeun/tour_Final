@@ -10,7 +10,7 @@ class PlanDateController {
       const { tour_id } = req.params;
       const { days } = req.body;
       const { code, message } = await this.planDateService.postPlanDate({ user_id, tour_id, days });
-      return res.status(code).json({ message });
+      return res.status(code).json({ code, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
       console.log(err);
