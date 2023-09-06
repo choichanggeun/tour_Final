@@ -9,7 +9,6 @@ class PlaceRepository {
   // 여행 경로 조회
 
   createPlaceBytourId = async (tour_id, days, tour_site_id) => {
-    console.log(tour_id, days, tour_site_id);
     const findPlanDate = await PlanDate.findOne({ where: { [Op.and]: [{ tour_id: tour_id }, { day: days }] } });
     return await Place.create({ tour_site_id, plan_date_id: findPlanDate.id });
   };
