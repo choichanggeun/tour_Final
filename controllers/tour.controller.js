@@ -108,6 +108,17 @@ class TourController {
       res.status(500).send('알 수 없는 에러가 발생');
     }
   };
+
+  getVerifyTour = async (req, res, next) => {
+    try {
+      const { id: user_id } = res.locals.user;
+      const { tour_id } = req.params;
+      const { data, code, message } = await this.tourService.getVerifyTour(user_id, tour_id);
+      return res.status(code).json({ message, data });
+    } catch (err) {
+      if (err.code) return res.status(err.code).json({ message: err.message });
+    }
+  };
 }
 
 module.exports = TourController;

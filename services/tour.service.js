@@ -96,6 +96,11 @@ class TourService {
     await this.tourRepository.updateStatus(tour_id);
     return { code: 200, message: '게시 완료' };
   };
+
+  getVerifyTour = async (user_id, tour_id) => {
+    const findTour = await this.tourRepository.getVerifyTour(user_id, tour_id);
+    return { code: 200, message: '여행계획 조회 성공', data: findTour };
+  };
 }
 
 module.exports = TourService;
