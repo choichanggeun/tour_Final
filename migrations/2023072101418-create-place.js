@@ -16,6 +16,7 @@ module.exports = {
           model: 'TourSites',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       plan_date_id: {
         allowNull: false,
@@ -24,6 +25,7 @@ module.exports = {
           model: 'PlanDates',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       createdAt: {
         allowNull: false,

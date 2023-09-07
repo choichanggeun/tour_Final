@@ -12,7 +12,7 @@ class DiaryController {
       await this.diaryService.postDiary(user_id, tour_id, title, content, status);
       return res.status(201).json({ message: '여행 일지가 작성되었습니다.' });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
@@ -25,7 +25,7 @@ class DiaryController {
       const data = await this.diaryService.getDiary(diary_id);
       return res.status(200).json({ data });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
@@ -38,7 +38,7 @@ class DiaryController {
       const data = await this.diaryService.getMyDiaries(user_id);
       return res.status(200).json({ data });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
@@ -51,7 +51,7 @@ class DiaryController {
       const data = await this.diaryService.getTourDiaries(tour_id);
       return res.status(200).json({ data });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
@@ -63,7 +63,7 @@ class DiaryController {
       const data = await this.diaryService.getDiaries(cursor);
       return res.status(200).json({ data });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
@@ -77,7 +77,7 @@ class DiaryController {
       await this.diaryService.putDiary(diary_id, title, content, status);
       return res.status(200).json({ message: '여행 일지가 수정되었습니다.' });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };
@@ -90,7 +90,7 @@ class DiaryController {
       await this.diaryService.deleteDiary(diary_id);
       return res.status(200).json({ message: '여행 일지가 삭제되었습니다.' });
     } catch (error) {
-      console.log(error.stack);
+      console.log(error);
       return res.status(error.status || 500).send({ message: `${error.message}` });
     }
   };

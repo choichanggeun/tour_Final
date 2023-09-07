@@ -72,7 +72,6 @@ addEventListener('scroll', function () {
         timer = null;
         // 데이터 없으면 조회 멈추기
         if (cursor > 1) getAllDiary();
-        console.log(cursor);
       }, 100);
     }
   }

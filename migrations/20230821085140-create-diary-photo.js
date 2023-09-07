@@ -16,6 +16,7 @@ module.exports = {
           model: 'Diaries',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       diary_img: {
         type: Sequelize.STRING,

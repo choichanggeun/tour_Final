@@ -32,7 +32,13 @@ class DiaryService {
 
   // 모든 여행 일지 조회
   getDiaries = async (cursor) => {
-    return await this.diaryRepository.getDiaries(cursor);
+    // 조회 확인용
+    if (!cursor) {
+      return await this.diaryRepository.getDiaries();
+    } else {
+      // 커서 페이지 네이션
+      return await this.diaryRepository.getDiariesCursor(cursor);
+    }
   };
 
   // 여행 일지 수정

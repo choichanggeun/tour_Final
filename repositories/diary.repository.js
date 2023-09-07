@@ -22,8 +22,13 @@ class DiaryRepository {
     return await Diary.findAll({ where: { tour_id, status: 0 }, include: [{ model: User, attributes: ['nickname'] }] });
   };
 
-  // 모든 여행 일지 조회 (커서)
-  getDiaries = async (cursor) => {
+  // 모든 여행 일지 조회
+  getDiaries = async () => {
+    return await Diary.findAll({ where: { status: 0 }, include: [{ model: User, attributes: ['nickname'] }] });
+  };
+
+  // 모든 여행 일지 조회(커서)
+  getDiariesCursor = async (cursor) => {
     const queryOptions = {
       where: {
         status: 0,
@@ -41,7 +46,6 @@ class DiaryRepository {
     }
     return await Diary.findAll(queryOptions);
   };
-
   // 여행 일지 수정
   putDiary = async (diary_id, title, content, status) => {
     await Diary.update({ title, content, status }, { where: { id: diary_id } });
