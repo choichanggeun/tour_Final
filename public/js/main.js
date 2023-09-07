@@ -17,53 +17,54 @@
 //   }
 // });
 
-// const indicators = document.getElementById('carousel-indicators');
-// const bannerListbox = document.getElementById('bannerlistbox');
-// window.onload = function () {
-//   checkLoggedInStatus();
-//   fetch('/banner', {
-//     method: 'GET',
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       const banner = data.result;
-//       bannerListbox.innerHTML = '';
-//       indicators.innerHTML = '';
-//       let i = 0;
-//       banner.forEach((banner) => {
-//         const indicatorslist = `<li data-target="#carousel-example-generic" data-slide-to="${i}" class="active"></li>`;
-//         if (i === 0) {
-//           const bannerList = `<div class="carousel-item active">
-//                                 <div class="news-block">
-//                                     <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
-//                                         <div class="news-title">
-//                                             <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
-//                                         </div>
-//                                     <div class="news-des">말도 안듣고 밥만 먹고 잠만 자는 이상한 아이...</div>
-//                                     <div class="time-text"><strong>${banner.time}분 전</strong></div>
-//                                     <div></div>
-//                                 </div>
-//                             </div>`;
-//           bannerListbox.innerHTML += bannerList;
-//         } else {
-//           const bannerList = `<div class="carousel-item">
-//                                 <div class="news-block">
-//                                     <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
-//                                             <div class="news-title">
-//                                             <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
-//                                         </div>
-//                                     <div class="news-des">말도 안듣고 밥만 먹고 잠만 자는 이상한 아이...</div>
-//                                     <div class="time-text"><strong>${banner.time}분 전</strong></div>
-//                                     <div></div>
-//                                 </div>
-//                             </div>`;
-//           bannerListbox.innerHTML += bannerList;
-//         }
-//         indicators.innerHTML += indicatorslist;
-//         i++;
-//       });
-//     });
-// };
+const indicators = document.getElementById('carousel-indicators');
+const bannerListbox = document.getElementById('bannerlistbox');
+window.onload = function () {
+  checkLoggedInStatus();
+  getSiteData();
+  fetch('/banner', {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const banner = data.result;
+      bannerListbox.innerHTML = '';
+      indicators.innerHTML = '';
+      let i = 0;
+      banner.forEach((banner) => {
+        const indicatorslist = `<li data-target="#carousel-example-generic" data-slide-to="${i}" class="active"></li>`;
+        if (i === 0) {
+          const bannerList = `<div class="carousel-item active">
+                                <div class="news-block">
+                                    <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
+                                        <div class="news-title">
+                                            <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
+                                        </div>
+                                    <div class="news-des">말도 안듣고 밥만 먹고 잠만 자는 이상한 아이...</div>
+                                    <div class="time-text"><strong>${banner.time}분 전</strong></div>
+                                    <div></div>
+                                </div>
+                            </div>`;
+          bannerListbox.innerHTML += bannerList;
+        } else {
+          const bannerList = `<div class="carousel-item">
+                                <div class="news-block">
+                                    <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
+                                            <div class="news-title">
+                                            <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
+                                        </div>
+                                    <div class="news-des">말도 안듣고 밥만 먹고 잠만 자는 이상한 아이...</div>
+                                    <div class="time-text"><strong>${banner.time}분 전</strong></div>
+                                    <div></div>
+                                </div>
+                            </div>`;
+          bannerListbox.innerHTML += bannerList;
+        }
+        indicators.innerHTML += indicatorslist;
+        i++;
+      });
+    });
+};
 // 사용자 정보 확인하여 로그인 상태에 따라 버튼 표시
 
 function checkLoggedInStatus() {
