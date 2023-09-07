@@ -58,6 +58,7 @@ class TourService {
         nickname: tour.User.nickname,
         site_name: tour.TourSite.site_name,
         site_img: tour.TourSite.site_img,
+        likeCount: tour.likeCount,
       };
     });
     return { code: 200, message: '좋아요 여행계획 조회 성공', result: findTourList };

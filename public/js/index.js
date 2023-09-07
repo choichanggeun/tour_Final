@@ -1,41 +1,64 @@
-// 서버에서 여행계획들의 데이터 가져오기
 fetch('/like_tours')
   .then((response) => response.json())
-  .then((result) => {
+  .then((data) => {
     var mainContentTour = document.querySelector('#main-content');
     if (!mainContentTour) {
       console.error('Error: Element with id "main-content" not found.');
       return;
     }
-    mainContentTour.innerHTML = '';
-    var tourDataList = result.result; // 응답 결과의 result 배열을 사용
+
+    mainContentTour.innerHTML = ''; // 기존 내용 초기화
+
+    var tourDataList = data.result;
 
     if (Array.isArray(tourDataList)) {
       tourDataList.forEach(function (item, index) {
-        if (typeof item === 'object' && item !== null && Array.isArray(item.likes)) {
-          // likes 속성이 배열인지 확인
-          /* Tour Items */
-          let tourItemElement = document.createElement('div');
-          let titleElement = document.createElement('p');
-          let userElement = document.createElement('p');
-          let likesElement = document.createElement('p');
-          let imgElement = document.createElement('img');
+        /* Tour Items */
+        let tourItemElement = document.createElement('div');
+        tourItemElement.className = 'tour-card';
+        tourItemElement.style.cursor = 'pointer'; // 카드에 마우스 커서 올렸을때 커서모양 변하게 함
+        let titleElement = document.createElement('p');
+        let userElement = document.createElement('p');
 
-          titleElement.textContent = `제목: ${item.title}`;
-          userElement.textContent = `작성자: ${item.nickname}`;
+        // 좋아요 이미지와 텍스트 요소 생성
+        let likesElement = document.createElement('span');
+        let likesImageElement = document.createElement('img');
 
-          const likeCount = item.likes.length;
-          likesElement.textContent = `좋아요: ${likeCount}개`;
+        likesImageElement.src = 'img/likeimg.png'; // 여기에 실제 이미지 경로 입력 img/media-8.jpg
+        likesImageElement.className = 'like-img';
 
-          imgElement.src = item.site_img;
+        // 사이트 이름 요소 생성
+        let siteNameElement = document.createElement('p');
 
-          tourItemElement.appendChild(titleEllement); // 수정된 부분
-          tourItemEllement.appendChild(userEllement);
-          tourItemEllement.appendChild(likesEllement);
-          tourItemEllement.appendChild(imgEllement);
+        // 좋아요 개수 텍스트 요소 생성
+        let likeCountText = item.likeCount ? ` : ${item.likeCount}` : ' : 0';
+        let likeCountTextNode = document.createTextNode(likeCountText);
 
-          mainContentTour.appendChild(tourItemEllement);
-        }
+        // 좋아요 요소에 이미지와 텍스트 추가
+        likesElement.appendChild(likesImageElement);
+        likesElement.appendChild(likeCountTextNode);
+
+        let img_element = document.createElement('img');
+
+        titleElement.textContent = `제목: ${item.title}`;
+        userElement.textContent = `작성자: ${item.nickname}`;
+
+        img_element.src = item.site_img;
+
+        siteNameElement.textContent = ` ${item.site_name}`;
+
+        // 카드 클릭시 여행계획 상세조회 화면으로 이동
+        tourItemElement.addEventListener('click', function () {
+          window.location.href = `tour-detail.html?id=${item.id}`;
+        });
+
+        tourItemElement.appendChild(siteNameElement);
+        tourItemElement.appendChild(titleElement);
+        tourItemElement.appendChild(userElement);
+        tourItemElement.appendChild(likesElement);
+        tourItemElement.appendChild(img_element);
+
+        mainContentTour.appendChild(tourItemElement);
       });
     }
   })

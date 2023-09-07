@@ -41,69 +41,39 @@ class TourRepository {
       return data;
     }
   };
-
-  //좋아요 순으로 여행계획 전체 조회
+  //좋아요 순으로 여행계획 조회하기
   getLikeList = async () => {
-    let value = await redisCli.get('tour', 0, -1);
+    let value = await redisCli.get('tour');
     if (value) {
       return JSON.parse(value);
     } else {
       let data = await Tour.findAll({
-        include: [{ model: User, attributes: ['nickname'] }, { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] }, { model: Like }],
+        include: [
+          { model: User, attributes: ['nickname'] },
+          { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
+        ],
+        attributes: ['id', 'title'], // 필요한 속성만 선택하여 가져옴
       });
 
-      // 각 여행계획(Tour)이 가진 좋아요(Like)의 개수를 계산합니다.
-      await Promise.all(
-        data.map(async (tour) => {
-          tour.dataValues.likeCount = await Like.count({ where: { tour_id: tour.id } });
-        })
-      );
+      for (let i = 0; i < data.length; i++) {
+        let likeCount = await Like.count({ where: { tour_id: data[i].id } });
+        console.log(`Tour ID: ${data[i].id}, Like Count: ${likeCount}`);
+        data[i].dataValues.likeCount = likeCount;
+      }
 
       // 좋아요 많은 순서대로 정렬합니다.
       data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
+      // Convert each Sequelize instance into a plain JavaScript object and include the likeCount property
+      data = data.map((tour) => {
+        return { ...tour.get(), likeCount: tour.dataValues.likeCount };
+      });
 
       await redisCli.set('tour', JSON.stringify(data));
-      await redisCli.expire('tour', 360);
 
       return data;
     }
   };
 
-  searchTour = async (search_data, search_type) => {
-    if (search_type === '제목') {
-      const findTour = await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } }, include: [{ model: User }, { model: TourSite }] });
-      return findTour.map((tour) => {
-        return {
-          nickname: tour.User.nickname,
-          title: tour.title,
-          site_name: tour.TourSite.site_name,
-          site_img: tour.TourSite.site_img,
-        };
-      });
-    } else if (search_type === '사용자') {
-      const findUser = await User.findAll({
-        where: { nickname: { [Op.like]: '%' + search_data + '%' } },
-        include: [
-          {
-            model: Tour,
-            include: [
-              {
-                model: TourSite,
-              },
-            ],
-          },
-        ],
-      });
-      return findUser.map((user) => {
-        return {
-          nickname: user.nickname,
-          title: user.Tours[0].title,
-          site_name: user.Tours[0].TourSite.site_name,
-          site_img: user.Tours[0].TourSite.site_img,
-        };
-      });
-    }
-  };
   // 모든 여행 계획 조회
   getUserTour = async (user_id) => {
     const tours = await Tour.findAll({
