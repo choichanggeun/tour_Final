@@ -14,46 +14,11 @@
     <link href="css/responsive-style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
-    <style>
-        .button-container {
-          float: right;
-        }
-        .dropdown {
-          width: auto;
-          position: relative;
-          display: inline-block;
-        }
+    <link rel="stylesheet" type="text/css" href="css/mainpage.css" />
+    
 
-        .dropdown-content {
-          overflow: hidden;
-          display: none;
-          position: absolute;
-          z-index: 1; /*다른 요소들보다 앞에 배치*/
-        }
-
-        .dropdown-content a {
-          display: block;
-          float: right;
-        }
-
-        .dropdown:hover .dropdown-content {
-        display: block;
-      }
-
-      /* .profile-box {
-        width: 20px;
-        height: 20px;
-        background-color: #ccc;
-        display: inline-block;
-        margin-left: 5px;
-        /* 원하는 간격으로 조정 */
-      /* }
-      .profile-box button {
-        background-color: transparent;
-        border: none;
-        color: rgb(237, 16, 16);
-      } */ */
-    </style>
+    <!--메인로고 및 드롭박스 CSS-->
+    <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
   </head>
 
   <body>
@@ -83,12 +48,15 @@
           </div>
         </div>
       </div>
-
+      <!-- 메인페이지 로고 및 드롭박스-->
       <div class="top-head left">
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-lg-4">
-              <h1>Tour ProJect<small>여행 계획을 알차게!</small></h1>
+              <h1>
+                <a href="/index.html">  
+                <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+                <small>여행 계획을 알차게!</small></h1>
             </div>
             <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
               <!-- 사용자 부분 -->
@@ -102,18 +70,22 @@
                 <div class="container header-container">
                   <div class="button-container right-aligned-buttons">
                     <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                    <div id="profileimg">
-                      <a href="" class="nav-link">
-                        <div class="dropdown">
-                          <span class="dropbtn" id="usernickname">홍길동</span>
-                          <div class="dropdown-content">
-                            <a href="javascript:void(0);" onclick="">회원정보</a>
-                            <a href="javascript:void(0);" onclick="popup()">채팅</a>
-                            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
-                          </div>
+                    <div id="profileimg" class="dropdown" style='display: none;'>
+                      <div class='nav-link'>
+                        <span id='usernickname'>홍길동</span>
+                        <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
+                      </div>
+                        <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
+                          <a href="./mypage.html">마이페이지</a>
+                          <a href="#" onclick="">채팅</a>
+                          <a href="#" onclick="">로그아웃</a>
+                      </div> 
+                    </div> 
+                  </div> 
+                </div> 
+                     </div>
                         </div>
-                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
-                      </a>
+                     
                     </div>
                   </div>
                 </div>
@@ -140,13 +112,8 @@
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
             <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
-            <li class="nav-item"><a class="nav-link" href="./mypage.html">myPage</a></li>
-            <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
+          
+         
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
@@ -162,63 +129,18 @@
           </form>
         </div>
       </div>
-    </nav>
-    <!-- 왼쪽에 4개 있는 부분입니다. -->
-    <section class="banner-sec">
+    
+    </nav><!-- 좋아요 top6 여행지 -->
+    <section class="likeplan-sec">
       <div class="container">
         <div class="row">
-          <div class="col-md-3">
-            <div class="card">
-              <img class="img-fluid" src="img/media-1.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-danger">News</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Syria war: Why the battle for Aleppo matters</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-            <div class="card">
-              <img class="img-fluid" src="img/media-3.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-info">Politics</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Key Republicans sign letter warning against candidate</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
+          <div id="main-content"> <!-- 이 div 안에 카드들을 동적으로 추가 -->
+            <!-- 카드들이 동적으로 추가될 위치입니다 -->
           </div>
-          <div class="col-md-3">
-            <div class="card">
-              <img class="img-fluid" src="img/media-2.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-success">Travel</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">Obamacare Appears to Be Making People Healthier</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-            <div class="card">
-              <img class="img-fluid" src="img/media-4.jpg" alt="" />
-              <div class="card-img-overlay"><span class="tag tag-pill tag-danger">News</span></div>
-              <div class="card-block">
-                <div class="news-title">
-                  <h2 class="title-small"><a href="#">‘S.N.L.’ to Lose Two Longtime Cast Members</a></h2>
-                </div>
-                <p class="card-text">
-                  <small class="text-time"><em>3 mins ago</em></small>
-                </p>
-              </div>
-            </div>
-          </div>
+        </div>
+      </div>
+    </section>
+    
 
           <!-- 배너부분이 들어갈 자리입니다. -->
           <div class="col-md-6 top-slider">
@@ -374,10 +296,12 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/index.js"></script>
     <!-- <script src="/js/main.js"></script>  -->
   </body>
 </html>
