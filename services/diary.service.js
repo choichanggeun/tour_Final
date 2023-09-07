@@ -31,8 +31,8 @@ class DiaryService {
   };
 
   // 모든 여행 일지 조회
-  getDiaries = async () => {
-    return await this.diaryRepository.getDiaries();
+  getDiaries = async (cursor) => {
+    return await this.diaryRepository.getDiaries(cursor);
   };
 
   // 여행 일지 수정

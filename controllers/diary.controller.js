@@ -57,9 +57,10 @@ class DiaryController {
   };
 
   // 모든 여행 일지 조회 (공개 일지만)
-  getDiaries = async (_, res) => {
+  getDiaries = async (req, res) => {
     try {
-      const data = await this.diaryService.getDiaries();
+      const cursor = req.query.cursor;
+      const data = await this.diaryService.getDiaries(cursor);
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error.stack);

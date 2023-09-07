@@ -75,7 +75,6 @@ createDairy.addEventListener('click', async function () {
     console.log(error);
     alert('여행 일지를 생성할 권한이 없습니다.');
   }
-  // window.location.href = `diary-post.html?Id=${tour_id}`;
 });
 updateTour.addEventListener('click', function () {
   window.location.href = `tour-update.html?id=${tour_id}`;
