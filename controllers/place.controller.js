@@ -27,7 +27,6 @@ class PlaceController {
       const { tour_id } = req.params;
       const { days, tour_site_id } = req.body;
       const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id);
-      console.log(code, message);
       return res.status(code).json({ code, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
@@ -79,7 +78,7 @@ class PlaceController {
         user_id,
         place_id,
       });
-      return res.status(code).json({ message });
+      return res.status(code).json({ code, message });
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러가 발생');

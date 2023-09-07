@@ -112,13 +112,14 @@ class ToursiteRepository {
   getFirstSite = async () => {
     return await TourSite.findAll({ limit: 9 });
   };
+  //이거 먼저 실행해야함
   firstTourSite = async () => {
     for (let i = 0; i < 9; i++) {
       await TourSite.create(list[i]);
     }
   };
   createTourSite = async (startNumber) => {
-    var i = startNumber; // max = 8, min = 1
+    var i = startNumber; // max = 8, min = 1(서울) 2(인천)
     let Code = sigunguCode[i - 1];
     let h = 0;
     const interval = setInterval(async function () {

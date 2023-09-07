@@ -7,10 +7,14 @@ const tourController = new TourController();
 
 // 여행계획 생성
 router.post('/:tour_site_id/tours/', authMiddleware, tourController.postTour);
+// 좋아요 많은 순으로 모든 여행계획 조회
+router.get('/like_tours', tourController.getLikeList);
+
 // 모든 여행계획 조회
 router.get('/tours', tourController.getTourList);
 // 여행계획 조회
 router.get('/tours/:tour_id', tourController.getTourOne);
+
 // 여행 계획 검색
 router.get('/search_tour/:search_data/:search_type', tourController.searchTour);
 // 로그인한 유저의 여행 계획 조회
