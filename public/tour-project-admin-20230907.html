@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="kr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tour Project</title>
+
+    <!--Bootstrap core CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link href="css/responsive-style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <style>
+      .button-container {
+        float: right;
+      }
+      /* #userEmail {
+        margin-top: 150px;  
+      } */
+      #userEmail,
+      #userPassword {
+        width: 50%;
+        margin-left: 15px;
+        border-radius: 10px;
+        /* margin-top: 50px; */
+      }
+      #loginBtn {
+        width: 20% !important;
+        height: 30px;
+        display: block;
+        margin-top: 10px;
+        color: #03207f;
+        margin-left: 15px;
+        border-radius: 30px;
+        /* margin: auto; */
+      }
+      @keyframes blink {
+        0% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      #loginBtn:hover {
+        animation: blink 1s infinite;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
+    <div class="loader loader-bg">
+      <div class="loader-inner ball-pulse-rise">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <header>
+      <div class="small-top">
+        <div class="container">
+          <!-- 시간 가져오는 부분 -->
+          <div class="col-lg-4 date-sec hidden-sm-down">
+            <div id="Date"></div>
+          </div>
+
+          <div class="col-lg-3 offset-lg-5">
+            <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
+            <div class="social-icon">
+              <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="top-head left">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <h1>Tour ProJect<small>여행 계획을 알차게!</small></h1>
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
+              <!-- 사용자 부분 -->
+              <nav class="nav nav-inline">
+                <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
+                        <a href="#" class="nav-link">
+                  <span class="ping"></span>
+                  <i class="fa fa-envelope-o"></i
+                ></a> -->
+                <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <nav class="navbar top-nav">
+      <div class="container">
+        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="card-body">
+        <div class="row g-3 needs-validation">
+          <div class="col-12">
+            <label for="userEmail" class="form-label">이메일</label>
+            <div class="input-group has-validation">
+              <span class="input-group-text" id="inputGroupPrepend"></span>
+              <input type="text" name="username" class="form-control" id="userEmail" required />
+            </div>
+          </div>
+          <div class="col-12">
+            <label for="yourPassword" class="form-label">패스워드</label>
+            <input type="password" name="password" class="form-control" id="userPassword" required />
+          </div>
+          <div class="col-12">
+            <button class="btn btn-dark w-100" id="loginBtn">Login</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 col-md-12">
+            <h6 class="heading-footer">ABOUT US</h6>
+            <p>나만의 여행 코스를 만들고 함께 만드는 "투어 플래너"</p>
+            <p><i class="fa fa-phone"></i> <span>전화번호 :</span>내배캠-119</p>
+            <p><i class="fa fa-envelope"></i> <span>github :</span>https://github.com/choichanggeun/tour_Final</p>
+          </div>
+          <div class="col-lg-2 col-md-4">
+            <h6 class="heading-footer">QUICK LINKS</h6>
+            <ul class="footer-ul">
+              <li><a href="#"> 최창근</a></li>
+              <li><a href="#"> 이예진</a></li>
+              <li><a href="#"> 이수현</a></li>
+              <li><a href="#"> 정희윤</a></li>
+              <li><a href="#"> 최원빈</a></li>
+              <li><a href="#"> 마님과 돌쇠들(2조)</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-4 col-md-4">
+            <h6 class="heading-footer">LATEST NEWS</h6>
+            <li><a href="#" style="color: #ffffff"> https://github.com/choichanggeun</a></li>
+            <li><a href="#" style="color: #ffffff"> https://github.com/dldPwls03</a></li>
+            <li><a href="#" style="color: #ffffff"> https://github.com/jrmun</a></li>
+            <li><a href="#" style="color: #ffffff"> https://github.com/yuni416</a></li>
+            <li><a href="#" style="color: #ffffff"> https://github.com/wonbinchoi2353</a></li>
+          </div>
+          <div class="col-lg-2 col-md-4 social-icons">
+            <h6 class="heading-footer">FOLLOW</h6>
+            <ul class="footer-ul">
+              <li>
+                <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-google-plus"></i> Google+</a>
+              </li>
+              <li>
+                <a href="#"><i class="fa fa-linkedin"></i> Linkedin</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--footer start from here-->
+
+    <div class="copyright">
+      <div class="container">
+        <div class="col-lg-6 col-md-4">
+          <p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a></p>
+        </div>
+        <div class="col-lg-6 col-md-8">
+          <ul class="bottom_ul">
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Faq's</a></li>
+            <li><a href="#">Contact us</a></li>
+            <li><a href="#">Site Map</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/adminlogin.js"></script>
+  </body>
+</html>

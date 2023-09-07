@@ -6,7 +6,9 @@ let options = {
 };
 let map = new kakao.maps.Map(container, options);
 
-var markers = [];
+let linePath = [];
+let markers = [];
+let pathLines = [];
 
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -23,6 +25,7 @@ window.onload = function () {
   TourDayCheck(tour_id);
   getplaceData(tour_id);
   checkLike();
+  countLike();
 };
 
 tourDays.addEventListener('change', function () {
@@ -80,6 +83,7 @@ createDairy.addEventListener('click', async function () {
 updateTour.addEventListener('click', function () {
   window.location.href = `tour-update.html?id=${tour_id}`;
 });
+
 function checkLike() {
   fetch(`/tours/${tour_id}/likes`, {
     method: 'GET',
@@ -90,6 +94,17 @@ function checkLike() {
         likeBtn.innerHTML = '좋아요취소';
         likeBtn.setAttribute('value', 'like');
       }
+    });
+}
+
+function countLike() {
+  fetch(`/likes/${tour_id}`, {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data.data);
+      document.getElementById('likeCounter').innerText = `좋아요 : ${data.data}`;
     });
 }
 
@@ -124,7 +139,7 @@ function displayPlaces(places) {
   for (var i = 0; i < places.length; i++) {
     // 마커를 생성하고 지도에 표시합니다
     var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
-      marker = addMarker(placePosition, i),
+      { marker, pathLines } = addMarker(placePosition, i),
       itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -238,10 +253,15 @@ function logout() {
 }
 
 function removeMarker() {
-  for (var i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
+    if (pathLines.length !== 0) {
+      linePath.pop();
+      pathLines[i].setMap(null);
+    }
   }
   markers = [];
+  pathLines = [];
 }
 
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
@@ -287,11 +307,20 @@ function addMarker(position, idx, title) {
       position: position, // 마커의 위치
       image: markerImage,
     });
+  linePath.push(position);
+  var polyline = new kakao.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 7, // 선의 두께 입니다
+    strokeColor: '#87ceeb', // 선의 색깔입니다
+    strokeOpacity: 0.9, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일입니다
+  });
 
   marker.setMap(map); // 지도 위에 마커를 표출합니다
   markers.push(marker); // 배열에 생성된 마커를 추가합니다
-
-  return marker;
+  polyline.setMap(map);
+  pathLines.push(polyline);
+  return { marker, pathLines };
 }
 
 function SetLike() {
@@ -301,6 +330,7 @@ function SetLike() {
     .then((response) => response.json())
     .then((data) => {
       alert(data.message);
+      countLike();
     })
     .catch((error) => {
       console.error('Error:', error);

@@ -8,8 +8,9 @@ const createTourBtn = document.getElementById('createTour');
 const closeBtn = document.getElementById('tourcloseBtn');
 const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
-
-var markers = [];
+let linePath = [];
+let markers = [];
+let pathLines = [];
 let i = 0;
 let container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
 let options = {
@@ -18,7 +19,7 @@ let options = {
   level: 3, //지도의 레벨(확대, 축소 정도)
 };
 let map = new kakao.maps.Map(container, options);
-var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
+let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
 //창이 열리면 실행되는 목록
 window.onload = function () {
@@ -34,7 +35,7 @@ window.onload = function () {
 };
 
 function displayPlaces(places) {
-  var listEl = document.getElementById('placesList'),
+  let listEl = document.getElementById('placesList'),
     menuEl = document.getElementById('menu_wrap'),
     fragment = document.createDocumentFragment(),
     bounds = new kakao.maps.LatLngBounds(),
@@ -46,10 +47,10 @@ function displayPlaces(places) {
   // 지도에 표시되고 있는 마커를 제거합니다
   removeMarker();
   if (places !== undefined) {
-    for (var i = 0; i < places.length; i++) {
+    for (let i = 0; i < places.length; i++) {
       // 마커를 생성하고 지도에 표시합니다
-      var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
-        marker = addMarker(placePosition, i),
+      let placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
+        { marker, pathLines } = addMarker(placePosition, i),
         itemEl = getListItem(i, places[i]);
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -94,10 +95,14 @@ function displayPlaces(places) {
 }
 
 function removeMarker() {
-  for (var i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
+    if (pathLines.length !== 0) {
+      pathLines[i].setMap(null);
+    }
   }
   markers = [];
+  pathLines = [];
 }
 
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
@@ -108,14 +113,14 @@ function removeAllChildNods(el) {
 }
 
 function displayInfowindow(marker, title) {
-  var content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
+  let content = '<div style="padding:5px;z-index:1;">' + title + '</div>';
 
   infowindow.setContent(content);
   infowindow.open(map, marker);
 }
 
 function getListItem(index, places) {
-  var el = document.createElement('li'),
+  let el = document.createElement('li'),
     itemStr = '<span class="markerbg marker_' + (index + 1) + '"></span>' + '<div class="info">' + '   <h1><strong>' + places.site_name + '</strong></h1>';
 
   if (places.site_address) {
@@ -131,7 +136,7 @@ function getListItem(index, places) {
 }
 
 function addMarker(position, idx, title) {
-  var imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
+  let imageSrc = 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_number_blue.png', // 마커 이미지 url, 스프라이트 이미지를 씁니다
     imageSize = new kakao.maps.Size(36, 37), // 마커 이미지의 크기
     imgOptions = {
       spriteSize: new kakao.maps.Size(36, 691), // 스프라이트 이미지의 크기
@@ -143,15 +148,24 @@ function addMarker(position, idx, title) {
       position: position, // 마커의 위치
       image: markerImage,
     });
+  linePath.push(position);
+  var polyline = new kakao.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 7, // 선의 두께 입니다
+    strokeColor: '#87ceeb', // 선의 색깔입니다
+    strokeOpacity: 0.9, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일입니다
+  });
 
   marker.setMap(map); // 지도 위에 마커를 표출합니다
   markers.push(marker); // 배열에 생성된 마커를 추가합니다
-
-  return marker;
+  polyline.setMap(map);
+  pathLines.push(polyline);
+  return { marker, pathLines };
 }
 
 function addsearchMarker(position) {
-  var marker = new kakao.maps.Marker({
+  let marker = new kakao.maps.Marker({
     position: position,
   });
 
@@ -188,7 +202,7 @@ function searchPlaces(search_data, search_type, id) {
 }
 
 function displaySearchData(places, id) {
-  var listEl = document.getElementById('updateSiteList'),
+  let listEl = document.getElementById('updateSiteList'),
     menuEl = document.getElementById('menu_wrap2'),
     fragment = document.createDocumentFragment(),
     bounds = new kakao.maps.LatLngBounds(),
@@ -199,9 +213,9 @@ function displaySearchData(places, id) {
   // 지도에 표시되고 있는 마커를 제거합니다
   removeMarker();
 
-  for (var i = 0; i < places.length; i++) {
+  for (let i = 0; i < places.length; i++) {
     // 마커를 생성하고 지도에 표시합니다
-    var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
+    let placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
       marker = addsearchMarker(placePosition, i),
       itemEl = getListItem(i, places[i]);
 
@@ -459,6 +473,7 @@ function deletePlace() {
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
+        linePath.pop();
         alert(data.message);
         getplaceData(tour_id);
       });
@@ -474,7 +489,7 @@ function setCenter() {
     .then((response) => response.json())
     .then((data) => {
       const site = data.result;
-      var moveLatLon = new kakao.maps.LatLng(site.mapy, site.mapx);
+      let moveLatLon = new kakao.maps.LatLng(site.mapy, site.mapx);
       map.setCenter(moveLatLon);
     });
 }

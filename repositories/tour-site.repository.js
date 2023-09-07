@@ -118,7 +118,7 @@ class ToursiteRepository {
     }
   };
   createTourSite = async (startNumber) => {
-    var i = startNumber; // max = 7, min = 1
+    var i = startNumber; // max = 8, min = 1
     let Code = sigunguCode[i - 1];
     let h = 0;
     const interval = setInterval(async function () {
