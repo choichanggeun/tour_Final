@@ -1,3 +1,4 @@
+//배너 기능 완료되면 추가적으로 넣어야합니다 잠시 주석처리 하겠습니다.
 // const testbtn = document.querySelector('#testbtn');
 // testbtn.addEventListener('click', async () => {
 //   const image = document.querySelector('#post-upload-img').files[0];
@@ -18,7 +19,6 @@
 
 const indicators = document.getElementById('carousel-indicators');
 const bannerListbox = document.getElementById('bannerlistbox');
-const siteCardBox = document.getElementById('siteCardBox');
 window.onload = function () {
   checkLoggedInStatus();
   getSiteData();
@@ -78,6 +78,27 @@ function checkLoggedInStatus() {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
         document.querySelector('#profileimg').style.display = 'block';
+
+        // 이미지 클릭 이벤트 추가
+        var profilePic = document.getElementById('profilePic');
+        var dropdownMenu = document.getElementById('dropdownMenu');
+
+        profilePic.addEventListener('click', function (event) {
+          event.stopPropagation(); // Stop the event from bubbling up to the window object
+          if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+          } else {
+            dropdownMenu.style.display = 'block';
+          }
+        });
+
+        // Window click event to hide the dropdown menu when clicked outside
+        window.addEventListener('click', function (event) {
+          if (dropdownMenu.style.display === 'block') {
+            dropdownMenu.style.display = 'none';
+          }
+        });
+
         document.querySelector('#loginbtn').style.display = 'none';
       } else {
         document.querySelector('#loginbtn').style.display = 'block';

@@ -45,6 +45,19 @@ class TourController {
       return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
     }
   };
+
+  // 좋아요 순으로 여행 계획 조회
+  getLikeList = async (req, res, next) => {
+    try {
+      const { code, message, result } = await this.tourService.getLikeList();
+      return res.status(code).json({ message, result });
+    } catch (error) {
+      if (error.status) return res.status(error.status).json({ message: error.message });
+      console.log(error);
+      return res.status(500).json({ message: '알 수 없는 오류가 발생하였습니다.' });
+    }
+  };
+
   searchTour = async (req, res, next) => {
     try {
       const { search_data, search_type } = req.params;
