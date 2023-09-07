@@ -315,13 +315,11 @@ function createTour(tour_site_id) {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        alert(data.message);
         if (data.code === 405) {
-          alert(data.message);
           window.location.href = `tour-update.html?id=${data.result.id}`;
         }
         if (data.code === 200) {
-          alert(data.message);
           window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
         }
       })

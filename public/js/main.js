@@ -1,5 +1,5 @@
-const testbtn = document.querySelector('#testbtn');
-testbtn.addEventListener('click', async () => {
+const postUploadBtn = document.querySelector('#post-upload-btn');
+postUploadBtn.addEventListener('click', async () => {
   const image = document.querySelector('#post-upload-img').files[0];
   const formData = new FormData();
   formData.append('image', image);
@@ -21,6 +21,7 @@ const bannerListbox = document.getElementById('bannerlistbox');
 const siteCardBox = document.getElementById('siteCardBox');
 window.onload = function () {
   checkLoggedInStatus();
+  checkLoggedInAdmin();
   getSiteData();
   fetch('/banner', {
     method: 'GET',
@@ -126,5 +127,22 @@ function getSiteData() {
                           </div>`;
         siteCardBox.innerHTML += siteCard;
       });
+    });
+}
+
+function checkLoggedInAdmin() {
+  fetch('/admin/me', {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // 응답 처리
+      if (data.data) {
+        document.querySelector('#post-upload-img').style.display = 'block';
+        document.querySelector('#post-upload-btn').style.display = 'block';
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
     });
 }

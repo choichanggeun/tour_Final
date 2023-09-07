@@ -7,7 +7,7 @@ module.exports = async (req, res, next) => {
     const { authorization } = req.cookies;
     // console.log(authorization);
     if (!authorization) {
-      return res.status(401).json({ message: '토큰이 없습니다.' });
+      return res.status(401).json({ message: '로그인을 진행해주세요.' });
     }
     const [tokenType, token] = authorization.split(' ');
     if (tokenType !== 'Bearer') {
