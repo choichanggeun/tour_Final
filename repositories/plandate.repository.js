@@ -18,7 +18,8 @@ class PlanDateRepository {
       const plan = await client.lRange(REDIS_PREFIX + tour_id + REDIS_SUFFIX + i, 0, -1);
       const plandate = await PlanDate.create({ tour_id, day: i });
       for (let j = 0; j < plan.length; j++) {
-        await Place.create({ tour_site_id: plan[j], plan_date_id: plandate.id });
+        let value = JSON.parse(plan[j]);
+        await Place.create({ tour_site_id: value[j].id, plan_date_id: plandate.id, start_time: value[j].start_time, end_time: value[j].end_time });
       }
     }
     await Tour.update({ status: 1 }, { where: { id: tour_id } });

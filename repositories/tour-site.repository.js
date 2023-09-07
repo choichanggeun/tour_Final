@@ -91,16 +91,7 @@ class ToursiteRepository {
 
   getTourSitebyId = async ({ tour_site_id }) => {
     const data = await TourSite.findOne({ where: { id: tour_site_id } });
-    return {
-      data: {
-        id: data.id,
-        site_name: data.site_name,
-        site_address: data.site_address,
-        site_img: data.site_img,
-        mapx: data.mapx,
-        mapy: data.mapy,
-      },
-    };
+    return data;
   };
   searchSiteList = async (search_data, search_type) => {
     if (search_type === '주소') {

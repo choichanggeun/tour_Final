@@ -33,14 +33,14 @@ enterInput.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     const searchInput = document.getElementById('searchSite-input').value;
     const search_type = document.getElementById('search_type').value;
-    window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+    window.location.replace(`tourSite.html?data=${searchInput}&type=${search_type}`);
   }
 });
 
 searchButton.addEventListener('click', function () {
   const searchInput = document.getElementById('searchSite-input').value;
   const search_type = document.getElementById('search_type').value;
-  window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+  window.location.replace(`tourSite.html?data=${searchInput}&type=${search_type}`);
 });
 
 function loadSearchSiteItem(search_data, search_type) {
@@ -86,7 +86,7 @@ function logout() {
     .then((response) => response.json())
     .then((data) => {
       alert('로그아웃 완료');
-      window.location.href = '/';
+      window.location.replace('/');
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -107,7 +107,7 @@ function siteApi(id) {
       document.getElementById('siteModalAddress').innerHTML = site.site_address;
       const tourBtn = document.getElementById('tourBtn');
       tourBtn.addEventListener('click', function () {
-        window.location.href = `tour.html?id=${site.id}`;
+        window.location.replace(`tour.html?id=${site.id}`);
       });
     });
   //모달의 x 버튼 누르면 꺼짐
