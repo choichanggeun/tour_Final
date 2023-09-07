@@ -23,6 +23,7 @@ window.onload = function () {
       .then((data) => {
         totalData = data.result.length;
         dataList = data.result;
+        console.log(totalData, dataList);
         displayData(1, dataPerPage);
         paging(totalData, dataPerPage, pageCount, 1);
       });
@@ -101,6 +102,7 @@ function displayData(currentPage, dataPerPage) {
   dataPerPage = Number(dataPerPage);
 
   for (var i = (currentPage - 1) * dataPerPage; i < (currentPage - 1) * dataPerPage + dataPerPage; i++) {
+    console.log(dataList);
     const siteCard = `<div class="col-lg-6">
                                     <div class="card" onclick="goTourDetail(${dataList[i].id})">
                                     <img class="img-fluid" src="${dataList[i].site_img}" style="width: 500px; height: 300px" alt="" />

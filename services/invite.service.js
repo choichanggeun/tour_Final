@@ -8,6 +8,7 @@ class InviteService {
     const findInvite = await this.inviteRepository.findInvite({ tour_id });
     const findUser = findInvite.map((user) => {
       return {
+        id: user.user_id,
         nickname: user.User.nickname,
       };
     });

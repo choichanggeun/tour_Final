@@ -20,6 +20,7 @@ const createDairy = document.getElementById('createDairy');
 const updateTour = document.getElementById('updateTour');
 const tourDays = document.getElementById('tourDays');
 const likeBtn = document.getElementById('likeBtn');
+const startChatting = document.getElementById('startChatting');
 window.onload = function () {
   checkLoggedInStatus();
   TourDayCheck(tour_id);
@@ -178,6 +179,10 @@ function displayPlaces(places) {
   map.setBounds(bounds);
 }
 
+startChatting.addEventListener('click', function () {
+  window.open(`chatting.html?tourId=${tour_id}`, 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
+});
+
 async function checkMember() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -210,9 +215,10 @@ function checkLoggedInStatus() {
         usernickname.innerHTML = data.data.nickname;
         const isMember = await checkMember();
         if (isMember) {
+          document.getElementById('updateTour').style.display = 'block';
           document.getElementById('createDairy').style.display = 'block';
+          startChatting.style.display = 'block';
         }
-        document.getElementById('updateTour').style.display = 'block';
         document.getElementById('likeBtn').style.display = 'block';
       }
     });

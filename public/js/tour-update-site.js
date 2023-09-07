@@ -20,6 +20,7 @@ const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
 const createTour = document.getElementById('createTour');
 const deleteTour = document.getElementById('deleteTour');
+const updateDate = document.getElementById('updateDate');
 
 window.onload = function () {
   checkLoggedInStatus();
@@ -67,11 +68,17 @@ function checkLoggedInStatus() {
     method: 'GET',
   })
     .then((response) => response.json())
-    .then((data) => {
+    .then(async (data) => {
       // 응답 처리
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        const isMember = await checkMember();
+        if (isMember) {
+          updateDate.style.display = 'block';
+          createTour.style.display = 'block';
+          deleteTour.style.display = 'block';
+        }
       }
     });
 }
@@ -423,3 +430,23 @@ createTour.addEventListener('click', function () {
       window.location.href = '/';
     });
 });
+
+async function checkMember() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tour_id = urlParams.get('id');
+    const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
+    const data = await response.json();
+    const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
+    const data2 = await response2.json();
+    // 초대된 유저이거나 여행 계획 만든 유저일 때
+    if (data.data.length !== 0 || data2.data) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

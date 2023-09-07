@@ -1,4 +1,4 @@
-const { Tour, User, TourSite, Like, PlanDate } = require('../models');
+const { Tour, User, TourSite, Like, PlanDate, Invite } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
@@ -37,7 +37,7 @@ class TourRepository {
         ],
       });
       await redisCli.set('tour', JSON.stringify(data));
-      await redisCli.expire('tour', 360);
+      await redisCli.expire('tour', 15);
       return data;
     }
   };
@@ -88,7 +88,36 @@ class TourRepository {
         },
       ],
     });
-    return tours;
+    const mapTours = tours.map((tour) => {
+      return {
+        id: tour.id,
+        title: tour.title,
+        start_date: tour.start_date,
+        end_date: tour.end_date,
+        site_img: tour.TourSite.site_img,
+      };
+    });
+
+    const invitedTours = await Invite.findAll({
+      where: { user_id: user_id },
+      include: [{ model: Tour, include: [{ model: TourSite }] }],
+    });
+
+    const mapinvitedTours = invitedTours.map((tour) => {
+      return {
+        id: tour.Tour.id,
+        title: tour.Tour.title,
+        start_date: tour.Tour.start_date,
+        end_date: tour.Tour.end_date,
+        site_img: tour.Tour.TourSite.site_img,
+      };
+    });
+    if (mapinvitedTours) {
+      for (let i = 0; i < mapinvitedTours.length; i++) {
+        mapTours.push(mapinvitedTours[i]);
+      }
+    }
+    return mapTours;
   };
   // 여행 계획 수정
   updateTour = async (tour_id, title, start_date, end_date) => {

@@ -19,8 +19,10 @@ postUploadBtn.addEventListener('click', async () => {
 const indicators = document.getElementById('carousel-indicators');
 const bannerListbox = document.getElementById('bannerlistbox');
 window.onload = function () {
-  checkLoggedInStatus();
-  checkLoggedInAdmin();
+  const checkLogin = checkLoggedInStatus();
+  if (checkLogin) {
+    checkLoggedInAdmin();
+  }
   getSiteData();
   fetch('/banner', {
     method: 'GET',
