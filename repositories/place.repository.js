@@ -8,12 +8,8 @@ class PlaceRepository {
   };
   // 여행 경로 조회
 
-<<<<<<< HEAD
   createPlaceBytourId = async (tour_id, days, tour_site_id, start_time, end_time) => {
     console.log(tour_id, days, tour_site_id, start_time, end_time);
-=======
-  createPlaceBytourId = async (tour_id, days, tour_site_id) => {
->>>>>>> b964c292b9adf84c5eb34407032c74534aa4e00c
     const findPlanDate = await PlanDate.findOne({ where: { [Op.and]: [{ tour_id: tour_id }, { day: days }] } });
     return await Place.create({ tour_site_id, plan_date_id: findPlanDate.id, start_time, end_time });
   };
@@ -39,16 +35,13 @@ class PlaceRepository {
     });
   };
   // 여행 장소 수정
-  updatePlace = async (id, place_id, start_time, end_time) => {
+  updatePlace = async ({ plan_date_id, tour_site_id, place_id, start_time, end_time }) => {
     const updatedPlace = await Place.update(
+      { plan_date_id, tour_site_id, start_time, end_time },
       {
-        tour_site_id: id,
-        start_time,
-        end_time,
-      },
-      { where: { id: place_id } }
+        where: { id: place_id },
+      }
     );
-
     return updatedPlace; // 업데이트 성공 여부 반환
   };
 

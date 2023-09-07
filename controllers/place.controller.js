@@ -7,7 +7,8 @@ class PlaceController {
   postPlace = async (req, res, next) => {
     try {
       const { user_id } = res.locals.user;
-      const { plan_date_id, tour_site_id, start_time, end_time } = req.params;
+      const { plan_date_id, tour_site_id } = req.params;
+      const { start_time, end_time } = req.body;
       const { code, message } = await this.placeService.createPlace({
         user_id,
         plan_date_id,
@@ -61,8 +62,10 @@ class PlaceController {
   //여행 경유지 수정
   putPlace = async (req, res, next) => {
     try {
+      const user_id = res.locals.user.id;
       const { place_id } = req.params;
-      const { plan_date_id, tour_site_id, start_time, end_time } = req.body; //
+      const { plan_date_id, tour_site_id, start_time, end_time } = req.body;
+
       const { code, message } = await this.placeService.putPlace({
         plan_date_id,
         tour_site_id,
