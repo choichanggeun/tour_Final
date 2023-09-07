@@ -41,7 +41,7 @@ class CommentController {
   // 댓글 수정
   updateComment = async (req, res) => {
     try {
-      const user_id = res.locals.user.id;
+      const { user_id } = res.locals.user;
       const { comment_id } = req.params;
       const { content } = req.body;
 

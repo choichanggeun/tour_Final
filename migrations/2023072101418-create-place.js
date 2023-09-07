@@ -25,6 +25,14 @@ module.exports = {
           key: 'id',
         },
       },
+      start_time: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
+      end_time: {
+        allowNull: true,
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
