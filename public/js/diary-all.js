@@ -99,3 +99,22 @@ async function getAllDiaries() {
     console.error(error);
   }
 }
+
+window.onpageshow = function (event) {
+  if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+    const parser = new DOMParser();
+    const storedDivData = sessionStorage.getItem('cardList', list);
+    if (storedDivData) {
+      const restoredDiv = parser.parseFromString(storedDivData, 'text/xml').documentElement;
+      // xmlns 속성 제거
+      restoredDiv.removeAttribute('xmlns');
+      const row = document.getElementById('row');
+      row.appendChild(restoredDiv);
+      sessionStorage.removeItem('cardList');
+    }
+  } else {
+    const list = document.getElementById('card-list');
+    const serializedDiv = new XMLSerializer().serializeToString(list);
+    sessionStorage.setItem('cardList', serializedDiv);
+  }
+};
