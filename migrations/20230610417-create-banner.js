@@ -16,6 +16,7 @@ module.exports = {
           model: 'Admins',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       img: {
         allowNull: false,

@@ -29,8 +29,19 @@ window.onload = function () {
   }
 };
 
+// profilePic 요소에 이벤트 리스너를 추가합니다.
+document.getElementById('profilePic').addEventListener('click', function () {
+  // dropdown-menu의 가시성을 토글합니다.
+  const dropdownMenu = document.getElementById('dropdownMenu');
+  if (dropdownMenu.style.display === 'block') {
+    dropdownMenu.style.display = 'none';
+  } else {
+    dropdownMenu.style.display = 'block';
+  }
+});
+
 enterInput.addEventListener('keyup', function (event) {
-  if (event.keyCode === 13) {
+  if (event.key === 'Enter') {
     const searchInput = document.getElementById('searchSite-input').value;
     const search_type = document.getElementById('search_type').value;
     window.location.href = `tour-all-post.html?data=${searchInput}&type=${search_type}`;

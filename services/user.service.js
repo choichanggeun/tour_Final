@@ -55,7 +55,7 @@ class UserService {
     const encryptedPassword = await bcrypt.hash(password, 10);
     await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
 
-    return new ServiceReturn('회원가입성공', 200);
+    return new ServiceReturn('회원가입 성공', 201);
   };
   // 로그인
   loginUser = async (email, password) => {

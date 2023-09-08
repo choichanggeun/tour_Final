@@ -1,8 +1,18 @@
 const loginBtn = document.getElementById('loginBtn');
+const emailInput = document.getElementById('userEmail');
+const passwordInput = document.getElementById('userPassword');
 
-loginBtn.addEventListener('click', function () {
-  const email = document.getElementById('userEmail').value;
-  const password = document.getElementById('userPassword').value;
+passwordInput.addEventListener('keyup', function (event) {
+  if (event.key === 'Enter') {
+    loginUser();
+  }
+});
+
+loginBtn.addEventListener('click', loginUser);
+
+function loginUser() {
+  const email = emailInput.value;
+  const password = passwordInput.value;
 
   const formData = {
     email: email,
@@ -20,11 +30,12 @@ loginBtn.addEventListener('click', function () {
       if (data.status === 200) {
         alert(data.message);
         window.location.href = '/';
+      } else {
+        alert(data.message);
       }
-      alert(data.message);
     })
     .catch((error) => {
       console.error('로그인 실패:', error);
       alert(error.message);
     });
-});
+}

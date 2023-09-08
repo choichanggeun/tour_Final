@@ -1,4 +1,5 @@
 const { User, Tour, Diary } = require('../models');
+const { Op } = require('sequelize');
 
 class DiaryRepository {
   // 여행 일지 작성
@@ -24,6 +25,43 @@ class DiaryRepository {
   // 모든 여행 일지 조회
   getDiaries = async () => {
     return await Diary.findAll({ where: { status: 0 }, include: [{ model: User, attributes: ['nickname'] }] });
+  };
+
+  // 모든 여행 일지 조회(커서)
+  getDiariesCursor = async (cursor) => {
+    const queryOptions = {
+      where: {
+        status: 0,
+      },
+      include: [{ model: User, attributes: ['nickname'] }],
+      limit: 16,
+      order: [['id', 'DESC']],
+    };
+    if (cursor !== 'undefined') {
+      queryOptions.where.id = {
+        [Op.lt]: parseInt(cursor),
+      };
+    }
+    return await Diary.findAll(queryOptions);
+  };
+
+  // 여행 일지 검색
+  searchDiaries = async (cursor, search_data) => {
+    const queryOptions = {
+      where: {
+        [Op.or]: [{ title: { [Op.like]: '%' + search_data + '%' } }, { content: { [Op.like]: '%' + search_data + '%' } }, { '$User.nickname$': { [Op.like]: '%' + search_data + '%' } }],
+        status: 0,
+      },
+      include: [{ model: User, attributes: ['nickname'] }],
+      limit: 16,
+      order: [['id', 'DESC']],
+    };
+    if (cursor !== 'undefined') {
+      queryOptions.where.id = {
+        [Op.lt]: parseInt(cursor),
+      };
+    }
+    return await Diary.findAll(queryOptions);
   };
 
   // 여행 일지 수정

@@ -16,6 +16,7 @@ module.exports = {
           model: 'Tours',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       user_id: {
         allowNull: false,
@@ -24,6 +25,7 @@ module.exports = {
           model: 'Users',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       title: {
         allowNull: false,

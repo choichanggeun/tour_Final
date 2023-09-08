@@ -43,7 +43,7 @@ class UserController {
 
       return res.status(200).json({ message: '로그아웃이 완료되었습니다.' });
     } catch (error) {
-      res.status(500).json({ errorMessage: '로그아웃에 실패했습니다.' });
+      res.status(500).json({ message: '로그아웃에 실패했습니다.' });
     }
   };
   // 사용자 정보 조회
@@ -78,7 +78,7 @@ class UserController {
       res.status(200).json({ message, result });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ errorMessage: '회원탈퇴에 실패하였습니다.' });
+      res.status(500).json({ message: '회원탈퇴에 실패하였습니다.' });
     }
   };
 
@@ -86,13 +86,12 @@ class UserController {
   isEmailValid = async (req, res) => {
     try {
       const { email } = req.body;
-      console.log(email);
       const { status, message } = await this.userService.isEmailValid(email);
       return res.status(status).json({ message });
     } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });
       console.error(err);
-      return res.status(500).json({ result: '오류가 발생하였습니다.' });
+      return res.status(500).json({ message: '오류가 발생하였습니다.' });
     }
   };
 }

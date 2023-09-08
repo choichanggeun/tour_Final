@@ -23,9 +23,11 @@ createBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      alert(data.message);
       if (data.status === 200) {
+        alert(data.message);
         window.location.href = '/login.html';
+      } else {
+        alert(data.message);
       }
     })
     .catch((error) => {
@@ -46,7 +48,11 @@ function authMailSending() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.status === 200) {
+          alert(data.message);
+        } else {
+          alert(data.message);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);
