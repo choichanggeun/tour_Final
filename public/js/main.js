@@ -162,6 +162,7 @@ function checkLoggedInAdmin() {
       if (data.data) {
         document.querySelector('#post-upload-img').style.display = 'block';
         document.querySelector('#post-upload-btn').style.display = 'block';
+        return data.data;
       }
     })
     .catch((error) => {
