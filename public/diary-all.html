@@ -144,15 +144,16 @@
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
           </ul>
           <!-- 검색기능 -->
-          <form class="pull-xs-right">
-            <label for="post-upload-img" class="basic-btn">파일 업로드</label>
-            <input id="post-upload-img" type="file" style="display: none" />
-            <button id="testbtn">버튼</button>
-          </form>
-          <form class="pull-xs-right">
-            <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+          <form class="pull-xs-right" onsubmit="return false">
+            <div style="float: right; margin-left: 50px; margin-top: 10px">
+              <select id="search_type">
+                <option value="제목">제목</option>
+                <option value="사용자">닉네임</option>
+              </select>
+            </div>
+            <div class="search" style="float: right">
+              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="searchSite-input" accept-charset="utf-8" />
+              <button type="button" class="btn btn-search" id="searchSite-button"><i class="fa fa-search"></i></button>
             </div>
           </form>
         </div>
