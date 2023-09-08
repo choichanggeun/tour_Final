@@ -143,11 +143,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                       let imgElement = document.createElement('img');
                       imgElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
 
+                      imgElement.classList.add('img-element');
+
                       diaryBoxElement.appendChild(imgElement);
                     }
                   } else {
                     let defaultImgElement = document.createElement('img');
                     defaultImgElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+
+                    defaultImgElement.classList.add('img-element');
 
                     diaryBoxElement.appendChild(defaultImgElement);
                   }
@@ -173,4 +177,9 @@ document.addEventListener('DOMContentLoaded', async function () {
       getMyDiary();
     })
     .catch((error) => console.error('Error:', error));
+
+  const imgElement = document.getElementById('img-element');
+
+  imgElement.style.width = '200%';
+  imgElement.style.height = 'auto';
 });
