@@ -41,6 +41,11 @@ class DiaryService {
     }
   };
 
+  // 여행 일지 검색
+  searchDiaries = async (cursor, search_type) => {
+    return await this.diaryRepository.searchDiaries(cursor, search_type);
+  };
+
   // 여행 일지 수정
   putDiary = async (diary_id, title, content, status) => {
     const diary = await this.diaryRepository.getDiary(diary_id);

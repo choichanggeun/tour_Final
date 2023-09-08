@@ -48,7 +48,11 @@ function authMailSending() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
+        if (data.status === 200) {
+          alert(data.message);
+        } else {
+          alert(data.message);
+        }
       })
       .catch((error) => {
         console.error('Error:', error);

@@ -30,6 +30,19 @@ class DiaryController {
     }
   };
 
+  // 여행 일지 검색
+  getDiary = async (req, res) => {
+    try {
+      const { diary_id } = req.params;
+
+      const data = await this.diaryService.getDiary(diary_id);
+      return res.status(200).json({ data });
+    } catch (error) {
+      console.log(error);
+      return res.status(error.status || 500).send({ message: `${error.message}` });
+    }
+  };
+
   // 내 모든 여행 일지 조회
   getMyDiaries = async (_, res) => {
     try {
@@ -59,8 +72,20 @@ class DiaryController {
   // 모든 여행 일지 조회 (공개 일지만)
   getDiaries = async (req, res) => {
     try {
-      const cursor = req.query.cursor;
+      const { cursor } = req.query;
       const data = await this.diaryService.getDiaries(cursor);
+      return res.status(200).json({ data });
+    } catch (error) {
+      console.log(error);
+      return res.status(error.status || 500).send({ message: `${error.message}` });
+    }
+  };
+
+  // 여행 일지 검색
+  searchDiaries = async (req, res) => {
+    try {
+      const { cursor, search_data } = req.query;
+      const data = await this.diaryService.searchDiaries(cursor, search_data);
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error);

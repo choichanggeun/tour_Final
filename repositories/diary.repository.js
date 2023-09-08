@@ -38,14 +38,32 @@ class DiaryRepository {
       order: [['id', 'DESC']],
     };
     if (cursor !== 'undefined') {
-      queryOptions.where = {
-        id: {
-          [Op.lt]: parseInt(cursor),
-        },
+      queryOptions.where.id = {
+        [Op.lt]: parseInt(cursor),
       };
     }
     return await Diary.findAll(queryOptions);
   };
+
+  // 여행 일지 검색
+  searchDiaries = async (cursor, search_data) => {
+    const queryOptions = {
+      where: {
+        [Op.or]: [{ title: { [Op.like]: '%' + search_data + '%' } }, { content: { [Op.like]: '%' + search_data + '%' } }, { '$User.nickname$': { [Op.like]: '%' + search_data + '%' } }],
+        status: 0,
+      },
+      include: [{ model: User, attributes: ['nickname'] }],
+      limit: 16,
+      order: [['id', 'DESC']],
+    };
+    if (cursor !== 'undefined') {
+      queryOptions.where.id = {
+        [Op.lt]: parseInt(cursor),
+      };
+    }
+    return await Diary.findAll(queryOptions);
+  };
+
   // 여행 일지 수정
   putDiary = async (diary_id, title, content, status) => {
     await Diary.update({ title, content, status }, { where: { id: diary_id } });
