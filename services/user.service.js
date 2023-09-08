@@ -1,9 +1,8 @@
 const UserRepository = require('../repositories/user.repository');
 const { CustomError, ServiceReturn } = require('../customError');
-const jwt = require('jsonwebtoken');
+const jwt = require('../utils/jwt-util');
+const redisCli = require('../utils/redis');
 const bcrypt = require('bcrypt');
-require('dotenv').config(); //환경변수를 관리하는 구성패키지
-const env = process.env;
 const dayjs = require('dayjs');
 
 const sendMail = require('../emailauth');
@@ -55,7 +54,7 @@ class UserService {
     const encryptedPassword = await bcrypt.hash(password, 10);
     await this.userRepository.createUser(email, encryptedPassword, confirm, nickname);
 
-    return new ServiceReturn('회원가입성공', 200);
+    return new ServiceReturn('회원가입 성공', 201);
   };
   // 로그인
   loginUser = async (email, password) => {
@@ -66,8 +65,12 @@ class UserService {
       if (!pwConfirm) throw new CustomError('비밀번호를 확인해 주세요.', 401);
     }
 
-    const token = jwt.sign({ user_id: user.id }, env.COOKIE_SECRET);
+    const accessToken = jwt.sign(user);
+    const refreshToken = jwt.refresh();
+    const Id = 'Id : ';
 
+    await redisCli.set(Id + user.id, refreshToken);
+    const token = { accessToken, refreshToken };
     return new ServiceReturn('로그인 성공', 200, token);
   };
 

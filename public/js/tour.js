@@ -22,7 +22,12 @@ let map = new kakao.maps.Map(container, options);
 let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
 //창이 열리면 실행되는 목록
-window.onload = function () {
+window.onload = async function () {
+  const check = await checkMember();
+  if (!check) {
+    alert('비정상적인 접근입니다.');
+    window.location.href = '/';
+  }
   checkLoggedInStatus();
   if (tour_site_id && !tour_id) {
     createTour(tour_site_id);
@@ -517,4 +522,22 @@ function createSite(places) {
       window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
     }
   });
+}
+
+async function checkMember() {
+  try {
+    const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
+    const data = await response.json();
+    const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
+    const data2 = await response2.json();
+    // 초대된 유저이거나 여행 계획 만든 유저일 때
+    if (data.data.length !== 0 || data2.data) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
 }

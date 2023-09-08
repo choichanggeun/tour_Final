@@ -8,10 +8,13 @@ class PlaceController {
     try {
       const { user_id } = res.locals.user;
       const { plan_date_id, tour_site_id } = req.params;
+      const { start_time, end_time } = req.body;
       const { code, message } = await this.placeService.createPlace({
         user_id,
         plan_date_id,
         tour_site_id,
+        start_time,
+        end_time,
       });
       return res.status(code).json({ message });
     } catch (err) {
@@ -25,8 +28,8 @@ class PlaceController {
     try {
       const { user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { days, tour_site_id } = req.body;
-      const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id);
+      const { days, tour_site_id, start_time, end_time } = req.body;
+      const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id, start_time, end_time);
       return res.status(code).json({ code, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
@@ -58,9 +61,10 @@ class PlaceController {
   //여행 경유지 수정
   putPlace = async (req, res, next) => {
     try {
+      const user_id = res.locals.user.id;
       const { place_id } = req.params;
-      const { id, start_time, end_time } = req.body;
-      const { code, message } = await this.placeService.putPlace(place_id, id, start_time, end_time);
+      const { id } = req.body;
+      const { code, message } = await this.placeService.putPlace(id, place_id);
 
       return res.status(code).json({ message, code });
     } catch (err) {

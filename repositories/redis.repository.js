@@ -1,13 +1,6 @@
 const redis = require('redis');
 //Redis 실행
-const client = redis.createClient();
-(async () => {
-  await client.connect();
-})();
-client.on('error', function (err) {
-  console.log('Error ' + err);
-});
-
+const client = require('../utils/redis');
 class RedisRepository {
   getRedis = async (key, day) => {
     const REDIS_PREFIX = 'KEY_';

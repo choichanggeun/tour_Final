@@ -61,10 +61,9 @@ likeBtn.addEventListener('click', function () {
 goDairy.addEventListener('click', function () {
   window.location.href = `diary-tour.html?Id=${tour_id}`;
 });
+
 createDairy.addEventListener('click', async function () {
   try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tour_id = urlParams.get('id');
     const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
     const data = await response.json();
     const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
@@ -76,11 +75,10 @@ createDairy.addEventListener('click', async function () {
       alert('여행 일지를 생성할 권한이 없습니다.');
     }
   } catch (error) {
-    console.log(error);
     alert('여행 일지를 생성할 권한이 없습니다.');
   }
-  // window.location.href = `diary-post.html?Id=${tour_id}`;
 });
+
 updateTour.addEventListener('click', function () {
   window.location.href = `tour-update.html?id=${tour_id}`;
 });
@@ -104,7 +102,6 @@ function countLike() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log(data.data);
       document.getElementById('likeCounter').innerText = `좋아요 : ${data.data}`;
     });
 }
@@ -117,7 +114,6 @@ function getplaceData(tour_id) {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.data;
-      console.log(tourlist);
       displayPlaces(tourlist);
     })
     .catch((error) => {

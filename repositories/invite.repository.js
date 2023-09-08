@@ -12,10 +12,10 @@ class InviteRepository {
     });
   };
 
-  inviteEmail = async ({ tour_id, email, user_id }) => {
+  inviteEmail = async ({ tour_id, email, user_id, tour_site_id }) => {
     const invitedUser = await User.findOne({ where: { email: email } });
     const inviteUser = await User.findOne({ where: { id: user_id } });
-    const inviteTokenFirst = jwt.sign({ id: invitedUser.id, email: invitedUser.email, tour_id }, ACCESS_SECRET, { expiresIn: '20m' });
+    const inviteTokenFirst = jwt.sign({ id: invitedUser.id, email: invitedUser.email, tour_id, tour_site_id }, ACCESS_SECRET, { expiresIn: '20m' });
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {

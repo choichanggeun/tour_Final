@@ -20,15 +20,8 @@ class UserController {
     const { email, password } = req.body;
     try {
       const { message, status, result } = await this.userService.loginUser(email, password);
-      const cookieConfig = {
-        //cookieConfig는 키, 밸류 외에 설정을 보낼 수 있다.
-        maxAge: 60000 * 60,
-        //밀리초 단위로 들어가는데 30000을 설정하면 30초만료 쿠키를 생성한다.
-        path: '/',
-        httpOnly: true,
-        //통신할때만 접속할 수 있다. 기본값은 false임
-      };
-      res.cookie('authorization', `Bearer ${result}`, cookieConfig);
+      const { accessToken, refreshToken } = result;
+      res.cookie('authorization', `Bearer ${accessToken} ${refreshToken}`);
       res.status(status).json({ message, status });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });
@@ -43,7 +36,7 @@ class UserController {
 
       return res.status(200).json({ message: '로그아웃이 완료되었습니다.' });
     } catch (error) {
-      res.status(500).json({ errorMessage: '로그아웃에 실패했습니다.' });
+      res.status(500).json({ message: '로그아웃에 실패했습니다.' });
     }
   };
   // 사용자 정보 조회
@@ -78,7 +71,7 @@ class UserController {
       res.status(200).json({ message, result });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ errorMessage: '회원탈퇴에 실패하였습니다.' });
+      res.status(500).json({ message: '회원탈퇴에 실패하였습니다.' });
     }
   };
 
@@ -86,13 +79,12 @@ class UserController {
   isEmailValid = async (req, res) => {
     try {
       const { email } = req.body;
-      console.log(email);
       const { status, message } = await this.userService.isEmailValid(email);
       return res.status(status).json({ message });
     } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });
       console.error(err);
-      return res.status(500).json({ result: '오류가 발생하였습니다.' });
+      return res.status(500).json({ message: '오류가 발생하였습니다.' });
     }
   };
 }

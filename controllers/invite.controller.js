@@ -26,11 +26,12 @@ class InviteController {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { inviteEmail: email } = req.body;
+      const { inviteEmail: email, tour_site_id } = req.body;
       const { code, message, result } = await this.inviteService.inviteEmail({
         tour_id,
         email,
         user_id,
+        tour_site_id,
       });
 
       return res.status(code).json({ message, result });
@@ -45,11 +46,12 @@ class InviteController {
     try {
       const inviteToken = req.query.token;
       const inviteData = jwt.verify(inviteToken, ACCESS_SECRET);
-      const { code, message } = await this.inviteService.createInvite({
+      const { code, message, link } = await this.inviteService.createInvite({
         tour_id: inviteData.tour_id,
         user_id: inviteData.id,
+        tour_site_id: inviteData.tour_site_id,
       });
-      return res.status(code).json({ code, message });
+      return res.status(code).json({ code, message, link });
     } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });
       console.log(err);

@@ -5,7 +5,7 @@ class PlaceService {
 
   // 경유지 작성
 
-  createPlace = async ({ user_id, plan_date_id, tour_site_id }) => {
+  createPlace = async ({ user_id, plan_date_id, tour_site_id, start_time, end_time }) => {
     if (!plan_date_id) throw { code: 401, message: 'start_date 입력해주세요.' };
 
     if (!tour_site_id) throw { code: 401, message: 'end_date 입력해주세요.' };
@@ -14,6 +14,8 @@ class PlaceService {
       user_id,
       plan_date_id,
       tour_site_id,
+      start_time,
+      end_time,
     });
 
     if (!createPlaceData) throw { code: 401, message: '경유지 경유지 등록이 실패하였습니다. 않습니다.' };
@@ -21,8 +23,8 @@ class PlaceService {
     return { createPlaceData, code: 200, message: '경유지 경유지 등록이 완료되었습니다.' };
   };
   // 경유지 작성
-  createPlaceBytourId = async (user_id, tour_id, days, tour_site_id) => {
-    const createPlaceData = await this.placeRepository.createPlaceBytourId(tour_id, days, tour_site_id);
+  createPlaceBytourId = async (user_id, tour_id, days, tour_site_id, start_time, end_time) => {
+    const createPlaceData = await this.placeRepository.createPlaceBytourId(tour_id, days, tour_site_id, start_time, end_time);
     if (!createPlaceData) throw { code: 401, message: '경유지 경유지 등록이 실패하였습니다. 않습니다.' };
 
     return { code: 200, message: '경유지 등록이 완료되었습니다.' };

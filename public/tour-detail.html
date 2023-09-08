@@ -14,6 +14,7 @@
     <link href="css/responsive-style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
     <style>
       html,
       body {
@@ -202,7 +203,11 @@
       <div class="top-head left">
         <div class="row">
           <div class="col-md-6 col-lg-4">
-            <h1 id="Title">Tour ProJect</h1>
+            <h1>
+             <a href="/index.html">  
+              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+              </a>
+              <small>여행 계획을 알차게!</small></h1>
           </div>
           <div id="likeCounter" style="float: left; margin-top: 45px">좋아요 : 0</div>
           <button class="header-button" id="likeBtn" value="none" style="display: none">좋아요</button>
@@ -220,7 +225,54 @@
           </div>
         </div>
       </div>
-    </header>
+
+     <!-- 메인페이지 로고 및 드롭박스-->
+     <div class="top-head left">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <h1>
+              <a href="/index.html">  
+              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+              <small>여행 계획을 알차게!</small></h1>
+          </div>
+          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
+            <!-- 사용자 부분 -->
+            <nav class="nav nav-inline">
+              <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
+                      <a href="#" class="nav-link">
+                <span class="ping"></span>
+                <i class="fa fa-envelope-o"></i
+              ></a> -->
+              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+              <div class="container header-container">
+                <div class="button-container right-aligned-buttons">
+                  <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                  <div id="profileimg" class="dropdown" style='display: none;'>
+                    <div class='nav-link'>
+                      <span id='usernickname'>홍길동</span>
+                      <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
+                    </div>
+                      <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
+                        <a href="./mypage.html">마이페이지</a>
+                        <a href="#" onclick="">채팅</a>
+                        <a href="#" onclick="">로그아웃</a>
+                    </div> 
+                  </div> 
+                </div> 
+              </div> 
+                   </div>
+                      </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
 
     <div class="map_wrap">
       <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
