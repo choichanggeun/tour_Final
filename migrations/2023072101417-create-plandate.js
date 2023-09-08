@@ -16,6 +16,7 @@ module.exports = {
           model: 'Tours',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
 
       day: {

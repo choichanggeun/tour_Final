@@ -31,8 +31,19 @@ class DiaryService {
   };
 
   // 모든 여행 일지 조회
-  getDiaries = async () => {
-    return await this.diaryRepository.getDiaries();
+  getDiaries = async (cursor) => {
+    // 조회 확인용
+    if (!cursor) {
+      return await this.diaryRepository.getDiaries();
+    } else {
+      // 커서 페이지 네이션
+      return await this.diaryRepository.getDiariesCursor(cursor);
+    }
+  };
+
+  // 여행 일지 검색
+  searchDiaries = async (cursor, search_type) => {
+    return await this.diaryRepository.searchDiaries(cursor, search_type);
   };
 
   // 여행 일지 수정
