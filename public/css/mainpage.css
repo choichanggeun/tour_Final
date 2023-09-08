@@ -28,6 +28,8 @@
   float: left; /* 카드를 왼쪽으로 정렬 */
 
   margin-right: 20px; /* 카드 간의 간격 설정 */
+
+  background-color: rgb(181, 196, 255)
 }
 
 .tour-card:nth-child(3n) {
@@ -51,8 +53,4 @@
 
 .likeplan-sec {
   background-color: white;
-}
-
-.tour-card {
-  background-color: rgb(181, 196, 255)
 }
