@@ -189,6 +189,7 @@ function checkLoggedInStatus() {
   })
     .then((response) => response.json())
     .then(async (data) => {
+      console.log(data);
       // 응답 처리
       if (data.data) {
         const usernickname = document.getElementById('usernickname');

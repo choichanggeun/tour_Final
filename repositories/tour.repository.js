@@ -126,6 +126,18 @@ class TourRepository {
   getVerifyTour = async (user_id, tour_id) => {
     return await Tour.findOne({ where: { user_id, id: tour_id } });
   };
+
+  //임시 여행계획작성
+  createTestTour = async ({ tour_site_id, user_id, title, start_date, end_date, status }) => {
+    return await Tour.create({
+      tour_site_id: tour_site_id,
+      user_id: user_id,
+      title,
+      start_date,
+      end_date,
+      status: status,
+    });
+  };
 }
 
 module.exports = TourRepository;

@@ -7,6 +7,10 @@ const tourController = new TourController();
 
 // 여행계획 생성
 router.post('/:tour_site_id/tours/', authMiddleware, tourController.postTour);
+
+// // 임시 여행계획 생성
+// router.post('/:tour_site_id/temp_tours/', authMiddleware, tourController.postTempTour);
+
 // 좋아요 많은 순으로 모든 여행계획 조회
 router.get('/like_tours', tourController.getLikeList);
 
@@ -27,5 +31,8 @@ router.delete('/tours/:tour_id/', authMiddleware, tourController.deleteTour);
 router.put('/tours/status/:tour_id', authMiddleware, tourController.updateStatus);
 // 로그인한 유저의 여행 계획인지 확인
 router.get('/verify_tours/:tour_id', authMiddleware, tourController.getVerifyTour);
+
+// // 여행계획 확정
+// router.put('/temp_tours/:tour_id/confirm', authMiddleware, tourController.confirmTour);
 
 module.exports = router;
