@@ -50,13 +50,15 @@ body {
   box-sizing: border-box;
   border-radius: 5px;
   font-size: 20pt;
+  text-align: center;
+  padding: 10px;
 }
 
-#main-content .tour-item img,
+/* #main-content .tour-item img,
 #main-content-diary .diary-item img {
   width: 30%;
   height: auto;
-}
+} */
 
 #main-content .tour-item p,
 #main-content-diary .diary-item p {
@@ -130,4 +132,8 @@ h3 {
 .img-element {
   margin: 0;
   padding: 0;
+  width: 400px; 
+  height: 150px; 
+  object-fit: cover;
 }
+
