@@ -196,6 +196,9 @@ function getListItem(index, places) {
   if (places.site_img) {
     itemStr += `<img class="img-fluid" src=${places.site_img} alt="" />`;
   }
+  if (places.start_time) {
+    itemStr += `<span class="gray"><strong>` + places.start_time + ' 부터 ' + places.end_time + ' 까지 ' + `</strong></span>`;
+  }
   el.innerHTML = itemStr;
   el.className = 'item';
 
@@ -326,26 +329,54 @@ function displaySearchData(places, id, oldData) {
 }
 
 function updateSite(newData, oldData, place_id) {
-  if (confirm(`${oldData}를 ${newData.site_name}으로 변경하시겠습니까?`)) {
-    fetch(`/${place_id}/place`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: newData.id }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.code === 200) {
-          alert(data.message);
-          window.location.reload();
-        }
-      });
-  } else {
-    alert('취소되었습니다.');
-  }
+  const placeTimeModal = document.getElementById('placeTimeModal');
+  placeTimeModal.style.display = 'flex';
+  const createPlaceBtn = document.getElementById('createPlaceBtn');
+  const timeCloseBtn = document.getElementById('timeCloseBtn');
+  createPlaceBtn.addEventListener('click', function () {
+    const startTime = document.getElementById('startTime').value;
+    const endTime = document.getElementById('endTime').value;
+    const formData = {
+      id: newData.id,
+      start_time: startTime,
+      end_time: endTime,
+    };
+    if (confirm(`${oldData}를 ${newData.site_name}으로 변경하시겠습니까?`)) {
+      fetch(`/${place_id}/place`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.code === 200) {
+            alert(data.message);
+            window.location.reload();
+          }
+        });
+    } else {
+      alert('취소되었습니다.');
+    }
+  });
+  timeCloseBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      window.location.reload();
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      window.location.reload();
+    }
+  });
 }
-
 tourcloseBtn.addEventListener('click', function () {
   document.getElementById('menu_wrap2').style.display = 'none';
   getplaceData(tour_id);

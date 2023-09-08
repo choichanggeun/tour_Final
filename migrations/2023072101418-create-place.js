@@ -16,6 +16,7 @@ module.exports = {
           model: 'TourSites',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       plan_date_id: {
         allowNull: false,
@@ -24,6 +25,15 @@ module.exports = {
           model: 'PlanDates',
           key: 'id',
         },
+        onDelete: 'CASCADE',
+      },
+      start_time: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      end_time: {
+        allowNull: false,
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,

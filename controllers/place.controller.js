@@ -59,8 +59,8 @@ class PlaceController {
   putPlace = async (req, res, next) => {
     try {
       const { place_id } = req.params;
-      const { id } = req.body;
-      const { code, message } = await this.placeService.putPlace(id, place_id);
+      const { id, start_time, end_time } = req.body;
+      const { code, message } = await this.placeService.putPlace(place_id, id, start_time, end_time);
 
       return res.status(code).json({ message, code });
     } catch (err) {

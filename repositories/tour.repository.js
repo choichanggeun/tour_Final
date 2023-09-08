@@ -37,7 +37,7 @@ class TourRepository {
         ],
       });
       await redisCli.set('tour', JSON.stringify(data));
-      await redisCli.expire('tour', 15);
+      await redisCli.expire('tour', 30);
       return data;
     }
   };
@@ -109,6 +109,7 @@ class TourRepository {
       });
     }
   };
+
   // 모든 여행 계획 조회
   getUserTour = async (user_id) => {
     const tours = await Tour.findAll({

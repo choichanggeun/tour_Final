@@ -129,6 +129,9 @@ function getListItem(index, places) {
   if (places.site_img) {
     itemStr += `<img class="img-fluid" src=${places.site_img} alt="" />`;
   }
+  if (places.start_time) {
+    itemStr += `<span class="gray"><strong>` + places.start_time + ' 부터 ' + places.end_time + ' 까지 ' + `</strong></span>`;
+  }
   el.innerHTML = itemStr;
   el.className = 'item';
 
@@ -264,33 +267,6 @@ tourcloseBtn.addEventListener('click', function () {
   getplaceData(tour_id);
 });
 
-function createSite(places) {
-  const days = document.getElementById('tourDays').value;
-  const formData = {
-    site_id: places.id,
-    day: days,
-  };
-  console.log(formData);
-  fetch(`/redis/${tour_id}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      if (data.status === 201) {
-        alert(data.message);
-        getplaceData(tour_id);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
 //계획 작성전에 tour테이블에 생성함
 function createTour(tour_site_id) {
   const modal = document.getElementById('modal');
@@ -409,7 +385,6 @@ function getplaceData(tour_id) {
     .then((data) => {
       const tourlist = data.result;
       if (tourlist.length !== 0) {
-        console.log(tourlist);
         displayPlaces(tourlist);
       }
     })
@@ -470,7 +445,6 @@ function deletePlace() {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         linePath.pop();
         alert(data.message);
         getplaceData(tour_id);
@@ -490,4 +464,57 @@ function setCenter() {
       let moveLatLon = new kakao.maps.LatLng(site.mapy, site.mapx);
       map.setCenter(moveLatLon);
     });
+}
+
+// 모달창안에 시간을 기입하면 완료
+function createSite(places) {
+  const placeTimeModal = document.getElementById('placeTimeModal');
+  placeTimeModal.style.display = 'flex';
+  const createPlaceBtn = document.getElementById('createPlaceBtn');
+  const timeCloseBtn = document.getElementById('timeCloseBtn');
+  createPlaceBtn.addEventListener('click', function () {
+    const day = document.getElementById('tourDays').value;
+    const startTime = document.getElementById('startTime').value;
+    const endTime = document.getElementById('endTime').value;
+    const formData = {
+      site_id: places.id,
+      day: day,
+      start_time: startTime,
+      end_time: endTime,
+    };
+    fetch(`/redis/${tour_id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        alert(data.message);
+        if (data.status === 201) {
+          window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
+        }
+      })
+      .catch((error) => {
+        console.error('여행계획 생성 실패:', error);
+        alert('여행 계획 생성에 실패하였습니다.');
+      });
+  });
+  timeCloseBtn.addEventListener('click', () => {
+    window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
+    }
+  });
 }

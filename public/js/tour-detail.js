@@ -117,6 +117,7 @@ function getplaceData(tour_id) {
     .then((response) => response.json())
     .then((data) => {
       const tourlist = data.data;
+      console.log(tourlist);
       displayPlaces(tourlist);
     })
     .catch((error) => {
@@ -293,6 +294,9 @@ function getListItem(index, places) {
   }
   if (places.site_img) {
     itemStr += `<img class="img-fluid" src=${places.site_img} alt="" />`;
+  }
+  if (places.start_time) {
+    itemStr += `<span class="gray"><strong>` + places.start_time + ' 부터 ' + places.end_time + ' 까지 ' + `</strong></span>`;
   }
   el.innerHTML = itemStr;
   el.className = 'item';

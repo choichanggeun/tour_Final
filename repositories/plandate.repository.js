@@ -19,7 +19,7 @@ class PlanDateRepository {
       const plandate = await PlanDate.create({ tour_id, day: i });
       for (let j = 0; j < plan.length; j++) {
         let value = JSON.parse(plan[j]);
-        await Place.create({ tour_site_id: value[j].id, plan_date_id: plandate.id, start_time: value[j].start_time, end_time: value[j].end_time });
+        await Place.create({ tour_site_id: value.site_id, plan_date_id: plandate.id, start_time: value.start_time, end_time: value.end_time });
       }
     }
     await Tour.update({ status: 1 }, { where: { id: tour_id } });

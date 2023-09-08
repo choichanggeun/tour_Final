@@ -366,6 +366,22 @@
         <button id="tourUpdateBtn" style="margin-top: 30px">여행 계획 수정!</button>
       </div>
     </div>
+
+      <!-- 시간 기입 모달 -->
+  <div id="placeTimeModal" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-title">
+        <h2 id="timeModalTitle">머무를 시간</h2>
+      </div>
+      <div class="modal-close-area" id="timeCloseBtn">X</div>
+      <div class="modal-conten">
+        <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
+        <input type="time" value="" id="endTime" />
+        <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+      </div>
+    </div>
+  </div>
+</body>
   </body>
 
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>

@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.PlanDate, {
         targetKey: 'id',
         foreignKey: 'plan_date_id',
+        onDelete: 'CASCADE',
       });
       this.belongsTo(models.TourSite, {
         targetKey: 'id',
         foreignKey: 'tour_site_id',
+        onDelete: 'CASCADE',
       });
     }
   }
@@ -44,13 +46,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       start_time: {
         allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        type: DataTypes.STRING,
       },
       end_time: {
         allowNull: false,
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
+        type: DataTypes.STRING,
       },
       createdAt: {
         allowNull: false,

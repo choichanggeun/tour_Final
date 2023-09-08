@@ -11,10 +11,12 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User, {
         targetKey: 'id',
         foreignKey: 'user_id',
+        onDelete: 'CASCADE',
       });
       this.belongsTo(models.Diary, {
         targetKey: 'id',
         foreignKey: 'diary_id',
+        onDelete: 'CASCADE',
       });
     }
   }
@@ -41,6 +43,7 @@ module.exports = (sequelize, DataTypes) => {
           model: 'Diary',
           key: 'id',
         },
+        onDelete: 'CASCADE',
       },
       content: {
         allowNull: false,
