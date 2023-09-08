@@ -19,10 +19,8 @@ postUploadBtn.addEventListener('click', async () => {
 const indicators = document.getElementById('carousel-indicators');
 const bannerListbox = document.getElementById('bannerlistbox');
 window.onload = function () {
-  const checkLogin = checkLoggedInStatus();
-  if (checkLogin) {
-    checkLoggedInAdmin();
-  }
+  checkLoggedInStatus();
+
   getSiteData();
   fetch('/banner', {
     method: 'GET',
@@ -100,7 +98,6 @@ function checkLoggedInStatus() {
             dropdownMenu.style.display = 'none';
           }
         });
-
         document.querySelector('#loginbtn').style.display = 'none';
       } else {
         document.querySelector('#loginbtn').style.display = 'block';

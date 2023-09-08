@@ -447,7 +447,7 @@ function deletePlace() {
       .then((data) => {
         linePath.pop();
         alert(data.message);
-        getplaceData(tour_id);
+        window.location.reload();
       });
   } else {
     alert('취소되었습니다.');

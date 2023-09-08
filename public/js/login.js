@@ -17,11 +17,10 @@ loginBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
+      alert(data.message);
       if (data.status === 200) {
-        alert(data.message);
         window.location.href = '/';
       }
-      alert(data.message);
     })
     .catch((error) => {
       console.error('로그인 실패:', error);

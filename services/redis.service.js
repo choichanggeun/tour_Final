@@ -36,13 +36,13 @@ class RedisService {
       let value = JSON.parse(redis[lastNumber]);
       if (value.end_time > start_time) throw new CustomError('이전 경유지와 시간이 겹칠 수 없습니다.', 401);
     }
-
+    if (start_time > end_time) throw new CustomError('시작 시간은 끝나는 시간보다 이전이어야 합니다.', 401);
     await this.redisRepository.createRedis(key, site_id, day, start_time, end_time);
-    return new ServiceReturn('redis 저장완료', 201);
+    return new ServiceReturn('경유지가 등록되었습니다.', 201);
   };
   deleteRedis = async (key, day) => {
     await this.redisRepository.deleteRedis(key, day);
-    return new ServiceReturn('redis 삭제완료', 201);
+    return new ServiceReturn('가장 마지막으로 등록된 경유지가 삭제되었습니다.', 201);
   };
 }
 module.exports = RedisService;

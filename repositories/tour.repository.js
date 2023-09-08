@@ -43,35 +43,27 @@ class TourRepository {
   };
   //좋아요 순으로 여행계획 조회하기
   getLikeList = async () => {
-    let value = await redisCli.get('tour');
-    if (value) {
-      return JSON.parse(value);
-    } else {
-      let data = await Tour.findAll({
-        include: [
-          { model: User, attributes: ['nickname'] },
-          { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
-        ],
-        attributes: ['id', 'title'], // 필요한 속성만 선택하여 가져옴
-      });
+    let data = await Tour.findAll({
+      include: [
+        { model: User, attributes: ['nickname'] },
+        { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
+      ],
+      attributes: ['id', 'title'], // 필요한 속성만 선택하여 가져옴
+    });
 
-      for (let i = 0; i < data.length; i++) {
-        let likeCount = await Like.count({ where: { tour_id: data[i].id } });
-        console.log(`Tour ID: ${data[i].id}, Like Count: ${likeCount}`);
-        data[i].dataValues.likeCount = likeCount;
-      }
-
-      // 좋아요 많은 순서대로 정렬합니다.
-      data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
-      // Convert each Sequelize instance into a plain JavaScript object and include the likeCount property
-      data = data.map((tour) => {
-        return { ...tour.get(), likeCount: tour.dataValues.likeCount };
-      });
-
-      await redisCli.set('tour', JSON.stringify(data));
-
-      return data;
+    for (let i = 0; i < data.length; i++) {
+      let likeCount = await Like.count({ where: { tour_id: data[i].id } });
+      console.log(`Tour ID: ${data[i].id}, Like Count: ${likeCount}`);
+      data[i].dataValues.likeCount = likeCount;
     }
+
+    // 좋아요 많은 순서대로 정렬합니다.
+    data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
+    // Convert each Sequelize instance into a plain JavaScript object and include the likeCount property
+    data = data.map((tour) => {
+      return { ...tour.get(), likeCount: tour.dataValues.likeCount };
+    });
+    return data;
   };
 
   searchTour = async (search_data, search_type) => {
