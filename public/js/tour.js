@@ -23,11 +23,6 @@ let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
 //창이 열리면 실행되는 목록
 window.onload = async function () {
-  const check = await checkMember();
-  if (!check) {
-    alert('비정상적인 접근입니다.');
-    window.location.href = '/';
-  }
   checkLoggedInStatus();
   if (tour_site_id && !tour_id) {
     createTour(tour_site_id);
@@ -36,6 +31,11 @@ window.onload = async function () {
     TourDayCheck(tour_id);
     getplaceData(tour_id);
     setCenter(tour_site_id);
+    const check = await checkMember();
+    if (!check) {
+      alert('비정상적인 접근입니다.');
+      window.location.href = '/';
+    }
   }
 };
 
