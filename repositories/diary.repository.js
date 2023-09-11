@@ -13,8 +13,19 @@ class DiaryRepository {
   };
 
   // 내 모든 여행 일지 조회
-  getMyDiaries = async (user_id) => {
-    return await Diary.findAll({ where: { user_id }, include: [{ model: User, attributes: ['nickname'] }] });
+  getMyDiaries = async (user_id, diary_cursor) => {
+    const queryOptions = {
+      where: { user_id },
+      include: [{ model: User, attributes: ['nickname'] }],
+      limit: 12,
+      order: [['id', 'DESC']],
+    };
+    if (diary_cursor !== 'undefined') {
+      queryOptions.where.id = {
+        [Op.lt]: parseInt(diary_cursor),
+      };
+    }
+    return await Diary.findAll(queryOptions);
   };
 
   // 여행 계획 여행 일지 조회

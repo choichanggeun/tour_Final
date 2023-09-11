@@ -112,8 +112,8 @@ class TourRepository {
   };
 
   // 모든 여행 계획 조회
-  getUserTour = async (user_id) => {
-    const tours = await Tour.findAll({
+  getUserTour = async (user_id, tour_cursor) => {
+    const queryOptions = {
       where: {
         user_id: user_id,
       },
@@ -124,9 +124,17 @@ class TourRepository {
           attributes: ['site_img'],
         },
       ],
-    });
-    return tours;
+      limit: 12,
+      order: [['id', 'DESC']],
+    };
+    if (tour_cursor !== 'undefined') {
+      queryOptions.where.id = {
+        [Op.lt]: parseInt(tour_cursor),
+      };
+    }
+    return await Tour.findAll(queryOptions);
   };
+
   // 여행 계획 수정
   updateTour = async (tour_id, title, start_date, end_date) => {
     const updatedTour = await Tour.update({ title, start_date, end_date }, { where: { id: tour_id } });

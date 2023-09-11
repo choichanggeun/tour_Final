@@ -27,159 +27,163 @@ document.addEventListener('DOMContentLoaded', async function () {
       nickNameBox.appendChild(button);
 
       const userId = result.data.id; // assuming the user object has an 'id' field
+    })
+    .catch((error) => console.error('Error:', error));
+});
 
-      // 여행계획 불러오기
+// 여행 계획 커서 값
+let tour_cursor;
 
-      fetch('/mytours')
-        .then((response) => response.json())
-        .then((result) => {
-          var mainContentTour = document.querySelector('#main-content');
-          mainContentTour.innerHTML = '';
-          var tourDataList = result.data;
+//초기 데이터 가져오기
+getMyTours();
 
-          if (Array.isArray(tourDataList)) {
-            tourDataList.forEach(function (item, index) {
-              if (typeof item === 'object' && item !== null) {
-                /* Tour Items */
-                let tourItemElement = document.createElement('div');
-                let titleElement = document.createElement('p');
-                let imgElement = document.createElement('img');
-                //제목과 이미지에 class를 부여해서 css 설정 가능하게 함
-                titleElement.classList.add('title-element');
-                imgElement.classList.add('img-element');
-                //제목과 이미지 클릭시 여행계획 상세조회 화면으로 이동
-                tourItemElement.addEventListener('click', function () {
-                  // 여행계획 불러오기
+// 무한 스크롤
+let timer;
+const planBox = document.getElementById('plan-box');
+planBox.addEventListener('scroll', function () {
+  // 화면에 보여지는 높이, 스크롤 높이, 스크롤 가능한 전체 높이
+  if (planBox.clientHeight + planBox.scrollTop + 500 >= planBox.scrollHeight) {
+    if (!timer) {
+      timer = setTimeout(() => {
+        timer = null;
+        getMyTours();
+      }, 100);
+    }
+  }
+});
 
-                  fetch('/mytours')
-                    .then((response) => response.json())
-                    .then((result) => {
-                      var mainContentTour = document.querySelector('#main-content');
-                      mainContentTour.innerHTML = '';
-                      var tourDataList = result.data;
+// 여행계획 불러오기
+function getMyTours() {
+  fetch(`/mytours?tour_cursor=${tour_cursor}`)
+    .then((response) => response.json())
+    .then((result) => {
+      var mainContentTour = document.querySelector('#main-content');
+      mainContentTour.innerHTML = '';
+      var tourDataList = result.data;
 
-                      if (Array.isArray(tourDataList)) {
-                        tourDataList.forEach(function (item, index) {
-                          if (typeof item === 'object' && item !== null) {
-                            /* Tour Items */
-                            let tourItemElement = document.createElement('div');
-                            let titleElement = document.createElement('p');
-                            let imgElement = document.createElement('img');
-                            //이미지 클릭시 여행계획 상세조회 화면으로 이동
-                            imgElement.addEventListener('click', function () {
-                              window.location.href = `tour-detail.html?id=${item.id}`;
-                            });
-
-                            tourItemElement.className = 'tour-item';
-
-                            titleElement.textContent = item.title;
-                            imgElement.src = item.TourSite.site_img;
-
-                            tourItemElement.appendChild(titleElement);
-                            tourItemElement.appendChild(imgElement);
-
-                            mainContentTour.appendChild(tourItemElement);
-                          }
-                        });
-                      }
-                    });
-                  window.location.href = `tour-detail.html?id=${item.id}`;
-                });
-
-                tourItemElement.className = 'tour-item';
-
-                titleElement.textContent = item.title;
-                imgElement.src = item.TourSite.site_img;
-
-                tourItemElement.appendChild(titleElement);
-                tourItemElement.appendChild(imgElement);
-
-                mainContentTour.appendChild(tourItemElement);
-              }
+      if (Array.isArray(tourDataList)) {
+        tourDataList.forEach(function (item, index) {
+          if (typeof item === 'object' && item !== null) {
+            /* Tour Items */
+            let tourItemElement = document.createElement('div');
+            let titleElement = document.createElement('p');
+            let imgElement = document.createElement('img');
+            //제목과 이미지에 class를 부여해서 css 설정 가능하게 함
+            titleElement.classList.add('title-element');
+            imgElement.classList.add('img-element');
+            //제목과 이미지 클릭시 여행계획 상세조회 화면으로 이동
+            tourItemElement.addEventListener('click', function () {
+              window.location.href = `tour-detail.html?id=${item.id}`;
             });
+
+            tourItemElement.className = 'tour-item';
+
+            titleElement.textContent = item.title;
+            imgElement.src = item.TourSite.site_img;
+
+            tourItemElement.appendChild(titleElement);
+            tourItemElement.appendChild(imgElement);
+
+            mainContentTour.appendChild(tourItemElement);
           }
-        })
-        .catch((error) => console.error('Error:', error));
-      // 내 여행 일지, 이미지 조회
-      const getMyDiary = async function () {
+        });
+        tour_cursor = result.data[result.data.length - 1].id;
+      }
+    })
+    .catch((error) => console.error('Error:', error));
+}
+
+// 여행 일지 커서 값
+let diary_cursor;
+
+// 초기 데이터 가져오기
+getMyDiary();
+
+// 무한 스크롤
+let timer2;
+const diaryBox = document.getElementById('diary-box');
+diaryBox.addEventListener('scroll', function () {
+  // 화면에 보여지는 높이, 스크롤 높이, 스크롤 가능한 전체 높이
+  if (diaryBox.clientHeight + diaryBox.scrollTop + 500 >= diaryBox.scrollHeight) {
+    if (!timer2) {
+      timer2 = setTimeout(() => {
+        timer2 = null;
+        getMyDiary();
+      }, 100);
+    }
+  }
+});
+
+// 내 여행 일지, 이미지 조회
+async function getMyDiary() {
+  try {
+    const response = await fetch(`/my_diaries?diary_cursor=${diary_cursor}`, {
+      method: 'GET',
+      credentials: 'include', // 인증 정보 포함
+    });
+    const { data } = await response.json();
+
+    if (response.ok) {
+      var mainContentDiary = document.getElementById('main-content-diary');
+
+      for (let diary of data) {
+        // 다이어리 박스 생성
+        let diaryBoxElement = document.createElement('div');
+        diaryBoxElement.className = 'diary-item';
+
+        // 다이어리 박스에 클릭 이벤트 리스너 추가
+        diaryBoxElement.addEventListener('click', function () {
+          window.location.href = `/diary-detail.html?diary_id=${diary.id}`;
+        });
+        // 다이어리 제목 추가
+        let titleElement = document.createElement('p');
+        titleElement.classList.add('title-element');
+        titleElement.textContent = `제목: ${diary.title}`;
+        diaryBoxElement.appendChild(titleElement);
+
+        // 이미지 가져오기
         try {
-          const response = await fetch('/my_diaries', {
+          const imageResponse = await fetch(`/diaries/${diary.id}/photos`, {
             method: 'GET',
             credentials: 'include', // 인증 정보 포함
           });
-          const { data } = await response.json();
 
-          if (response.ok) {
-            var mainContentDiary = document.getElementById('main-content-diary');
-            mainContentDiary.innerHTML = '';
+          if (imageResponse.ok) {
+            const { images } = await imageResponse.json();
 
-            for (let diary of data) {
-              // 다이어리 박스 생성
-              let diaryBoxElement = document.createElement('div');
-              diaryBoxElement.className = 'diary-item';
+            if (images.length > 0) {
+              for (let image of images) {
+                let imgElement = document.createElement('img');
+                imgElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
 
-              // 다이어리 박스에 클릭 이벤트 리스너 추가
-              diaryBoxElement.addEventListener('click', function () {
-                window.location.href = `/diary-detail.html?diary_id=${diary.id}`;
-              });
-              // 다이어리 제목 추가
-              let titleElement = document.createElement('p');
-              titleElement.classList.add('title-element');
-              titleElement.textContent = `제목: ${diary.title}`;
-              diaryBoxElement.appendChild(titleElement);
+                imgElement.classList.add('img-element');
 
-              // 이미지 가져오기
-              try {
-                const imageResponse = await fetch(`/diaries/${diary.id}/photos`, {
-                  method: 'GET',
-                  credentials: 'include', // 인증 정보 포함
-                });
-
-                if (imageResponse.ok) {
-                  const { images } = await imageResponse.json();
-
-                  if (images.length > 0) {
-                    for (let image of images) {
-                      let imgElement = document.createElement('img');
-                      imgElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
-
-                      imgElement.classList.add('img-element');
-
-                      diaryBoxElement.appendChild(imgElement);
-                    }
-                  } else {
-                    let defaultImgElement = document.createElement('img');
-                    defaultImgElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
-
-                    defaultImgElement.classList.add('img-element');
-
-                    diaryBoxElement.appendChild(defaultImgElement);
-                  }
-                }
-
-                // 다이어리 내용 추가
-                let contentParagraph = document.createElement('p');
-                contentParagraph.textContent = `내용: ${diary.content}`;
-
-                diaryBoxElement.appendChild(contentParagraph);
-
-                mainContentDiary.appendChild(diaryBoxElement);
-              } catch (error) {
-                console.error('Error fetching images:', error);
+                diaryBoxElement.appendChild(imgElement);
               }
+            } else {
+              let defaultImgElement = document.createElement('img');
+              defaultImgElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+
+              defaultImgElement.classList.add('img-element');
+
+              diaryBoxElement.appendChild(defaultImgElement);
             }
           }
+
+          // 다이어리 내용 추가
+          let contentParagraph = document.createElement('p');
+          contentParagraph.textContent = `내용: ${diary.content}`;
+
+          diaryBoxElement.appendChild(contentParagraph);
+
+          mainContentDiary.appendChild(diaryBoxElement);
         } catch (error) {
-          console.error('Error fetching diaries:', error);
+          console.error('Error fetching images:', error);
         }
-      };
-
-      getMyDiary();
-    })
-    .catch((error) => console.error('Error:', error));
-
-  const imgElement = document.getElementById('img-element');
-
-  imgElement.style.width = '200%';
-  imgElement.style.height = 'auto';
-});
+      }
+    }
+    diary_cursor = data[data.length - 1].id;
+  } catch (error) {
+    console.error('Error fetching diaries:', error);
+  }
+}
