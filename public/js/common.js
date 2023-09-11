@@ -45,10 +45,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
   checkLoggedInStatus();
 });
 
-function popup() {
-  window.open('chatting.html', 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
-}
-
 // 로그 아웃
 function logout() {
   const logoutBtn = document.getElementById('logoutbtn');

@@ -31,8 +31,7 @@ addEventListener('scroll', function () {
     if (!timer) {
       timer = setTimeout(() => {
         timer = null;
-        // 데이터 없으면 조회 멈추기
-        if (cursor > 1) getAllDiaries();
+        getAllDiaries();
       }, 100);
     }
   }

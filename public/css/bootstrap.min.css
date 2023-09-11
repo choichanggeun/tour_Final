@@ -3124,7 +3124,7 @@ input[type='submit'].btn-block {
 .input-group-btn:not(:last-child) > .btn:not(:first-child) {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
-  margin: 5px; 
+  margin: 5px;
 }
 .form-control + .input-group-addon:not(:first-child) {
   border-left: 0;
