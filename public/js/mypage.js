@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async function () {
 
       var nickName2 = document.createElement('span');
       nickName2.id = 'user-nickname';
-      nickName2.textContent = `user nickname : ${result.data.nickname}`;
+      nickName2.textContent = `유저명 : ${result.data.nickname}`;
 
       var button = document.createElement('button');
       button.className = 'btn btn-primary w-100 mt-3';

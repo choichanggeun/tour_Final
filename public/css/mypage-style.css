@@ -7,14 +7,19 @@ body {
 }
 
 #nickname-box {
-  border: 1px solid #000;
+
   padding: 20px;
   width: 650px;
   height: 120px;
   text-align: center;
-  background-color: white;
+  background-color: transparent;
   border-radius: 10px;
   margin-top: 30px
+}
+
+#user-nickname {
+  font-size: 20px; 
+  font-weight: bold;
 }
 
 .mb-3 {
@@ -140,3 +145,6 @@ h3 {
   padding: 0;
 }
 
+footer, div.copyright {
+margin-bottom:-22px
+}
