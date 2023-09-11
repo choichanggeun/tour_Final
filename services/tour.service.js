@@ -123,6 +123,22 @@ class TourService {
     const findTour = await this.tourRepository.getVerifyTour(user_id, tour_id);
     return { code: 200, message: '여행계획 조회 성공', data: findTour };
   };
+
+  // 임시 여행계획 작성
+  createTempTour = async ({ tour_site_id, user_id, title, start_date, end_date, status }) => {
+    const tour = await this.tourRepository.createTestTour({
+      tour_site_id,
+      user_id,
+      title,
+      start_date,
+      end_date,
+      status,
+    });
+
+    if (!tour) throw { code: 500, message: '여행 계획 생성에 실패하였습니다.' };
+
+    return tour;
+  };
 }
 
 module.exports = TourService;
