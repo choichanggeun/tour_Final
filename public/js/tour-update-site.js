@@ -5,8 +5,9 @@ let options = {
   level: 3, //지도의 레벨(확대, 축소 정도)
 };
 let map = new kakao.maps.Map(container, options);
-
-var markers = [];
+let linePath = [];
+let markers = [];
+let pathLines = [];
 
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -19,6 +20,7 @@ const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
 const createTour = document.getElementById('createTour');
 const deleteTour = document.getElementById('deleteTour');
+const updateDate = document.getElementById('updateDate');
 
 window.onload = function () {
   checkLoggedInStatus();
@@ -66,11 +68,17 @@ function checkLoggedInStatus() {
     method: 'GET',
   })
     .then((response) => response.json())
-    .then((data) => {
+    .then(async (data) => {
       // 응답 처리
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        const isMember = await checkMember();
+        if (isMember) {
+          updateDate.style.display = 'block';
+          createTour.style.display = 'block';
+          deleteTour.style.display = 'block';
+        }
       }
     });
 }
@@ -106,7 +114,7 @@ function displayPlaces(places) {
     for (var i = 0; i < places.length; i++) {
       // 마커를 생성하고 지도에 표시합니다
       var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
-        marker = addMarker(placePosition, i),
+        { marker, pathLines } = addMarker(placePosition, i),
         itemEl = getListItem(i, places[i]);
 
       // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -154,12 +162,16 @@ function displayPlaces(places) {
   map.setBounds(bounds);
 }
 function removeMarker() {
-  for (var i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
+    if (pathLines.length !== 0) {
+      linePath.pop();
+      pathLines[i].setMap(null);
+    }
   }
   markers = [];
+  pathLines = [];
 }
-
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
 function removeAllChildNods(el) {
   while (el.hasChildNodes()) {
@@ -184,6 +196,9 @@ function getListItem(index, places) {
   if (places.site_img) {
     itemStr += `<img class="img-fluid" src=${places.site_img} alt="" />`;
   }
+  if (places.start_time) {
+    itemStr += `<span class="gray"><strong>` + places.start_time + ' 부터 ' + places.end_time + ' 까지 ' + `</strong></span>`;
+  }
   el.innerHTML = itemStr;
   el.className = 'item';
 
@@ -203,11 +218,20 @@ function addMarker(position, idx, title) {
       position: position, // 마커의 위치
       image: markerImage,
     });
+  linePath.push(position);
+  var polyline = new kakao.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 7, // 선의 두께 입니다
+    strokeColor: '#87ceeb', // 선의 색깔입니다
+    strokeOpacity: 0.9, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일입니다
+  });
 
   marker.setMap(map); // 지도 위에 마커를 표출합니다
   markers.push(marker); // 배열에 생성된 마커를 추가합니다
-
-  return marker;
+  polyline.setMap(map);
+  pathLines.push(polyline);
+  return { marker, pathLines };
 }
 
 function openUpdateMenu(places) {
@@ -255,7 +279,7 @@ function displaySearchData(places, id, oldData) {
   for (var i = 0; i < places.length; i++) {
     // 마커를 생성하고 지도에 표시합니다
     var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
-      marker = addMarker(placePosition, i),
+      { marker, pathLines } = addMarker(placePosition, i),
       itemEl = getListItem(i, places[i]);
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -305,26 +329,54 @@ function displaySearchData(places, id, oldData) {
 }
 
 function updateSite(newData, oldData, place_id) {
-  if (confirm(`${oldData}를 ${newData.site_name}으로 변경하시겠습니까?`)) {
-    fetch(`/${place_id}/place`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: newData.id }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.code === 200) {
-          alert(data.message);
-          window.location.reload();
-        }
-      });
-  } else {
-    alert('취소되었습니다.');
-  }
+  const placeTimeModal = document.getElementById('placeTimeModal');
+  placeTimeModal.style.display = 'flex';
+  const createPlaceBtn = document.getElementById('createPlaceBtn');
+  const timeCloseBtn = document.getElementById('timeCloseBtn');
+  createPlaceBtn.addEventListener('click', function () {
+    const startTime = document.getElementById('startTime').value;
+    const endTime = document.getElementById('endTime').value;
+    const formData = {
+      id: newData.id,
+      start_time: startTime,
+      end_time: endTime,
+    };
+    if (confirm(`${oldData}를 ${newData.site_name}으로 변경하시겠습니까?`)) {
+      fetch(`/${place_id}/place`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.code === 200) {
+            alert(data.message);
+            window.location.reload();
+          }
+        });
+    } else {
+      alert('취소되었습니다.');
+    }
+  });
+  timeCloseBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      window.location.reload();
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      window.location.reload();
+    }
+  });
 }
-
 tourcloseBtn.addEventListener('click', function () {
   document.getElementById('menu_wrap2').style.display = 'none';
   getplaceData(tour_id);
@@ -409,3 +461,23 @@ createTour.addEventListener('click', function () {
       window.location.href = '/';
     });
 });
+
+async function checkMember() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const tour_id = urlParams.get('id');
+    const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
+    const data = await response.json();
+    const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
+    const data2 = await response2.json();
+    // 초대된 유저이거나 여행 계획 만든 유저일 때
+    if (data.data.length !== 0 || data2.data) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

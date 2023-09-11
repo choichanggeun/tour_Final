@@ -29,29 +29,18 @@ window.onload = function () {
   }
 };
 
-// profilePic 요소에 이벤트 리스너를 추가합니다.
-document.getElementById('profilePic').addEventListener('click', function () {
-  // dropdown-menu의 가시성을 토글합니다.
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  if (dropdownMenu.style.display === 'block') {
-    dropdownMenu.style.display = 'none';
-  } else {
-    dropdownMenu.style.display = 'block';
-  }
-});
-
 enterInput.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     const searchInput = document.getElementById('searchSite-input').value;
     const search_type = document.getElementById('search_type').value;
-    window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+    window.location.replace(`tourSite.html?data=${searchInput}&type=${search_type}`);
   }
 });
 
 searchButton.addEventListener('click', function () {
   const searchInput = document.getElementById('searchSite-input').value;
   const search_type = document.getElementById('search_type').value;
-  window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+  window.location.replace(`tourSite.html?data=${searchInput}&type=${search_type}`);
 });
 
 function loadSearchSiteItem(search_data, search_type) {
@@ -97,7 +86,7 @@ function logout() {
     .then((response) => response.json())
     .then((data) => {
       alert('로그아웃 완료');
-      window.location.href = '/';
+      window.location.replace('/');
     })
     .catch((error) => {
       console.error('Error:', error);
@@ -118,7 +107,7 @@ function siteApi(id) {
       document.getElementById('siteModalAddress').innerHTML = site.site_address;
       const tourBtn = document.getElementById('tourBtn');
       tourBtn.addEventListener('click', function () {
-        window.location.href = `tour.html?id=${site.id}`;
+        window.location.replace(`tour.html?id=${site.id}`);
       });
     });
   //모달의 x 버튼 누르면 꺼짐

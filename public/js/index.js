@@ -12,7 +12,10 @@ fetch('/like_tours')
     var tourDataList = data.result;
 
     if (Array.isArray(tourDataList)) {
-      tourDataList.forEach(function (item, index) {
+      //topSixTours라는 변수를 만들어서 배열의 첫번째 요소 0부터 마지막 5까지 총 6개를 표시
+      var topSixTours = tourDataList.slice(0, 6);
+      //좋아요 많이 받은 순으로 6개만 화면에 표시
+      topSixTours.forEach(function (item, index) {
         /* Tour Items */
         let tourItemElement = document.createElement('div');
         tourItemElement.className = 'tour-card';

@@ -128,6 +128,15 @@ document.addEventListener('DOMContentLoaded', async function () {
               titleElement.textContent = `제목: ${diary.title}`;
               diaryBoxElement.appendChild(titleElement);
 
+              // 공개/비공개 상태 표시
+              let statusElement = document.createElement('p');
+              if (diary.status === '0') {
+                statusElement.textContent = '상태: 공개';
+              } else {
+                statusElement.textContent = '상태: 비공개';
+              }
+              diaryBoxElement.appendChild(statusElement);
+
               // 이미지 가져오기
               try {
                 const imageResponse = await fetch(`/diaries/${diary.id}/photos`, {
