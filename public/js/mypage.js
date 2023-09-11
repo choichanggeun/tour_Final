@@ -29,6 +29,11 @@ document.addEventListener('DOMContentLoaded', async function () {
       const userId = result.data.id; // assuming the user object has an 'id' field
     })
     .catch((error) => console.error('Error:', error));
+
+    const imgElement = document.getElementById('img-element');
+
+  imgElement.style.width = '200%';
+  imgElement.style.height = 'auto';
 });
 
 // 여행 계획 커서 값
@@ -131,15 +136,24 @@ async function getMyDiary() {
         let diaryBoxElement = document.createElement('div');
         diaryBoxElement.className = 'diary-item';
 
-        // 다이어리 박스에 클릭 이벤트 리스너 추가
-        diaryBoxElement.addEventListener('click', function () {
-          window.location.href = `/diary-detail.html?diary_id=${diary.id}`;
-        });
-        // 다이어리 제목 추가
-        let titleElement = document.createElement('p');
-        titleElement.classList.add('title-element');
-        titleElement.textContent = `제목: ${diary.title}`;
-        diaryBoxElement.appendChild(titleElement);
+              // 다이어리 박스에 클릭 이벤트 리스너 추가
+              diaryBoxElement.addEventListener('click', function () {
+                window.location.href = `/diary-detail.html?diary_id=${diary.id}`;
+              });
+              // 다이어리 제목 추가
+              let titleElement = document.createElement('p');
+              titleElement.classList.add('title-element');
+              titleElement.textContent = `제목: ${diary.title}`;
+              diaryBoxElement.appendChild(titleElement);
+
+              // 공개/비공개 상태 표시
+              let statusElement = document.createElement('p');
+              if (diary.status === '0') {
+                statusElement.textContent = '상태: 공개';
+              } else {
+                statusElement.textContent = '상태: 비공개';
+              }
+              diaryBoxElement.appendChild(statusElement);
 
         // 이미지 가져오기
         try {
@@ -158,7 +172,57 @@ async function getMyDiary() {
 
                 imgElement.classList.add('img-element');
 
+<<<<<<< HEAD
                 diaryBoxElement.appendChild(imgElement);
+=======
+              // 공개/비공개 상태 표시
+              let statusElement = document.createElement('p');
+              if (diary.status === '0') {
+                statusElement.textContent = '상태: 공개';
+              } else {
+                statusElement.textContent = '상태: 비공개';
+              }
+              diaryBoxElement.appendChild(statusElement);
+
+              // 이미지 가져오기
+              try {
+                const imageResponse = await fetch(`/diaries/${diary.id}/photos`, {
+                  method: 'GET',
+                  credentials: 'include', // 인증 정보 포함
+                });
+
+                if (imageResponse.ok) {
+                  const { images } = await imageResponse.json();
+
+                  if (images.length > 0) {
+                    for (let image of images) {
+                      let imgElement = document.createElement('img');
+                      imgElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
+
+                      imgElement.classList.add('img-element');
+
+                diaryBoxElement.appendChild(imgElement);
+              }
+            } else {
+              let defaultImgElement = document.createElement('img');
+              defaultImgElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+
+              defaultImgElement.classList.add('img-element');
+
+              diaryBoxElement.appendChild(defaultImgElement);
+            }
+          }
+
+          // 다이어리 내용 추가
+          let contentParagraph = document.createElement('p');
+          contentParagraph.textContent = `내용: ${diary.content}`;
+
+          diaryBoxElement.appendChild(contentParagraph);
+
+                mainContentDiary.appendChild(diaryBoxElement);
+              } catch (error) {
+                console.error('Error fetching images:', error);
+>>>>>>> master
               }
             } else {
               let defaultImgElement = document.createElement('img');
