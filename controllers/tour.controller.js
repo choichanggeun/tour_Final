@@ -1,4 +1,5 @@
 const TourService = require('../services/tour.service');
+const io = require('../utils/io').getIO();
 
 class TourController {
   tourService = new TourService();
@@ -16,6 +17,8 @@ class TourController {
         end_date,
         tour_site_id,
       });
+      // 새로운 여행 계획 생성 후 해당 '방'의 모든 클라이언트에게 알림
+      io.to(tour_site_id).emit('tour created', result);
       return res.status(code).json({ result, code, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ result: err.result, code: err.code, message: err.message });
@@ -132,6 +135,48 @@ class TourController {
       if (err.code) return res.status(err.code).json({ message: err.message });
     }
   };
+
+  // // 임시 여행 계획 작성
+  // postTempTour = async (req, res, next) => {
+  //   try {
+  //     const { id: user_id } = res.locals.user;
+  //     const { tour_site_id } = req.params;
+  //     const { title, start_date, end_date, invites, status } = req.body;
+
+  //     try {
+  //       const tour = await this.tourService.createTempTour({
+  //         tour_site_id,
+  //         user_id,
+  //         title,
+  //         start_date,
+  //         end_date,
+  //         status,
+  //       });
+  //     } catch (err) {
+  //       console.error('투어 생성 중 오류 발생', err);
+  //       throw err; // Re-throw the error to be caught by the outer catch block
+  //     }
+
+  //     console.log(req.body);
+
+  //     if (invites) {
+  //       for (let email of invites) {
+  //         await inviteController.inviteEmail({
+  //           locals: { user: { id: user_id } },
+  //           params: { tour_id: tour.id },
+  //           body: { inviteEmail: email },
+  //         });
+  //         console.log(`초대 이메일 전송 완료: ${email}`);
+  //       }
+  //     }
+
+  //     return res.status(201).json({ message: ' 사용자 초대가 완료되었습니다.' });
+  //   } catch (err) {
+  //     if (err.code) return res.status(err.code).json({ message: err.message });
+  //     console.error(err); // Log the error for debugging purposes.
+  //     return res.status(500).json({ message: 'Internal server error' }); // Return a generic error message.
+  //   }
+  // };
 }
 
 module.exports = TourController;

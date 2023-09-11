@@ -12,7 +12,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
     <link href="css/responsive-style.css" rel="stylesheet" />
-    <link href="css/diary.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
@@ -301,60 +300,22 @@
     </style>
   </head>
   <header>
-    <div class="small-top">
-      <div class="container">
-        <!-- 시간 가져오는 부분 -->
-        <div class="col-lg-4 date-sec hidden-sm-down">
-          <div id="Date"></div>
-        </div>
-
-        <div class="col-lg-3 offset-lg-5">
-          <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
-          <div class="social-icon">
-            <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- 메인페이지 로고 및 드롭박스-->
     <div class="top-head left">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <h1>
-              <a href="/index.html">
-                <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" />
-                <small>여행 계획을 알차게!</small></a
-              >
-            </h1>
-          </div>
-          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
-            <!-- 사용자 부분 -->
-            <nav class="nav nav-inline">
-              <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
-                    <a href="#" class="nav-link">
-              <span class="ping"></span>
-              <i class="fa fa-envelope-o"></i
-            ></a> -->
-              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
-              <div class="container header-container">
-                <div class="button-container right-aligned-buttons">
-                  <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                  <div id="profileimg" class="dropdown" style="display: none">
-                    <div class="nav-link">
-                      <span id="usernickname">홍길동</span>
-                      <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
-                    </div>
-                    <div id="dropdownMenu" class="dropdown-content" style="display: none">
-                      <a href="./mypage.html">마이페이지</a>
-                      <a href="#" onclick="">채팅</a>
-                      <a href="#" onclick="">로그아웃</a>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </nav>
+      <div class="row">
+        <div class="col-md-6 col-lg-4">
+          <h1>
+            <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px" /></a>
+            <small>여행 계획을 알차게!</small>
+          </h1>
+        </div>
+        <button class="header-button" id="inviteUser">초대하기</button>
+        <button class="header-button" id="startChatting">채팅창 입장</button>
+        <button class="header-button" id="createTour">등록하기</button>
+        <div class="dropdown" style="float: right">
+          <span class="dropbtn" id="usernickname">홍길동</span>
+          <div class="dropdown-content">
+            <a href="javascript:void(0);" onclick="">회원정보</a>
+            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
           </div>
         </div>
       </div>
@@ -428,6 +389,23 @@
     </div>
   </body>
 
+  <!-- 시간 기입 모달 -->
+  <div id="placeTimeModal" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-title">
+        <h2 id="timeModalTitle">머무를 시간</h2>
+      </div>
+      <div class="modal-close-area" id="timeCloseBtn">X</div>
+      <div class="modal-conten">
+        <input type="start_time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
+        <input type="end_time" value="" id="endTime" />
+        <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+
   <script>
     //새로고침 방지입니다.
     function noEvent() {
@@ -444,5 +422,6 @@
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
   <script type="module" src="./js/tour.js"></script>
   <script type="module" src="./js/invite.js"></script>
+  <script type="module" src="./js/inviteCheck.js"></script>
   <script type="module" src="./js/go-home.js"></script>
 </html>
