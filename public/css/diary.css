@@ -68,3 +68,8 @@ a:hover {
   object-fit: cover;
   margin-bottom: 10px;
 }
+
+#usernickname {
+  white-space: nowrap;
+  display: inline-block;
+}

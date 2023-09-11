@@ -59,3 +59,12 @@
 .toprated h3 {
   margin: 0;
 }
+
+#usernickname {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.like-img {
+  margin-top: 8px;
+}

@@ -148,3 +148,8 @@ h3 {
 footer, div.copyright {
 margin-bottom:-22px
 }
+
+#usernickname {
+  white-space: nowrap;
+  display: inline-block;
+}
