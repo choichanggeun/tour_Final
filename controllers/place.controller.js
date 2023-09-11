@@ -29,6 +29,7 @@ class PlaceController {
       const { user_id } = res.locals.user;
       const { tour_id } = req.params;
       const { days, tour_site_id, start_time, end_time } = req.body;
+      console.log(req.body);
       const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id, start_time, end_time);
       console.log(code, message);
       return res.status(code).json({ code, message });

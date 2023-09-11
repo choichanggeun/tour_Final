@@ -200,17 +200,27 @@
   </head>
   <body>
     <header>
-      <div class="small-top">
-        <div class="container">
-          <!-- 시간 가져오는 부분 -->
-          <div class="col-lg-4 date-sec hidden-sm-down">
-            <div id="Date"></div>
+      <div class="top-head left">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <h1>
+             <a href="/index.html">  
+              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+              </a>
+              <small>여행 계획을 알차게!</small></h1>
           </div>
+          <div id="likeCounter" style="float: left; margin-top: 45px">좋아요 : 0</div>
+          <button class="header-button" id="likeBtn" value="none" style="display: none">좋아요</button>
+          <button class="header-button" id="goDairy" value="none">여행일지조회</button>
+          <button class="header-button" id="createDairy" value="none" style="display: none">여행일지생성</button>
+          <button class="header-button" id="updateTour" value="none" style="display: none">여행계획수정</button>
+          <button class="header-button" id="startChatting" value="none" style="display: none">채팅방 입장</button>
 
-          <div class="col-lg-3 offset-lg-5">
-            <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
-            <div class="social-icon">
-              <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
+          <div class="dropdown" style="float: right">
+            <span class="dropbtn" id="usernickname">홍길동</span>
+            <div class="dropdown-content">
+              <a href="javascript:void(0);" onclick="">회원정보</a>
+              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
             </div>
           </div>
         </div>
