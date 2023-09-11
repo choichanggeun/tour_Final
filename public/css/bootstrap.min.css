@@ -413,6 +413,8 @@ textarea {
   margin: 0;
   line-height: inherit;
   border-radius: 0;
+  border-radius: 7px;
+   /* 메인위에버튼테두리둥글게 */
 }
 input[type='checkbox']:disabled,
 input[type='radio']:disabled {
@@ -1761,6 +1763,8 @@ pre code {
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 0.25rem;
+  margin-bottom: 20px;
+  /* 다이어리업데이트 제목부분공간떨어트리기 */
 }
 .form-control::-ms-expand {
   background-color: transparent;
@@ -4412,8 +4416,8 @@ base::-moz-progress-bar {
   display: block;
   padding: 0.75rem 1.25rem;
   margin-bottom: -1px;
-  background-color: #fff;
-  border: 1px solid #ddd;
+  /* background-color: #fff;  댓글 창네모박스 때문에 일단주석처리
+  border: 1px solid #ddd; */
 }
 .list-group-item:first-child {
   border-top-right-radius: 0.25rem;
