@@ -55,6 +55,19 @@ fetch('/like_tours')
           window.location.href = `tour-detail.html?id=${item.id}`;
         });
 
+        var maxLength = 24; // 원하는 최대 글자 수
+
+        // 모든 p 요소에 대해 반복
+        var pElements = document.querySelectorAll('.tour-card p');
+        pElements.forEach(function (pElement) {
+          var text = pElement.textContent;
+          if (text.length > maxLength) {
+            // 글자 수가 최대 길이를 넘어가면 '...'을 추가
+            var truncatedText = text.slice(0, maxLength) + '...';
+            pElement.textContent = truncatedText;
+          }
+        });
+
         tourItemElement.appendChild(siteNameElement);
         tourItemElement.appendChild(titleElement);
         tourItemElement.appendChild(userElement);
