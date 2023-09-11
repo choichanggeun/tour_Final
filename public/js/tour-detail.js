@@ -6,7 +6,9 @@ let options = {
 };
 let map = new kakao.maps.Map(container, options);
 
-var markers = [];
+let linePath = [];
+let markers = [];
+let pathLines = [];
 
 var infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
@@ -18,11 +20,13 @@ const createDairy = document.getElementById('createDairy');
 const updateTour = document.getElementById('updateTour');
 const tourDays = document.getElementById('tourDays');
 const likeBtn = document.getElementById('likeBtn');
+const startChatting = document.getElementById('startChatting');
 window.onload = function () {
   checkLoggedInStatus();
   TourDayCheck(tour_id);
   getplaceData(tour_id);
   checkLike();
+  countLike();
 };
 
 tourDays.addEventListener('change', function () {
@@ -41,17 +45,6 @@ tourDays.addEventListener('change', function () {
     });
 });
 
-// profilePic 요소에 이벤트 리스너를 추가합니다.
-document.getElementById('profilePic').addEventListener('click', function () {
-  // dropdown-menu의 가시성을 토글합니다.
-  const dropdownMenu = document.getElementById('dropdownMenu');
-  if (dropdownMenu.style.display === 'block') {
-    dropdownMenu.style.display = 'none';
-  } else {
-    dropdownMenu.style.display = 'block';
-  }
-});
-
 likeBtn.addEventListener('click', function () {
   const checkLike = document.getElementById('likeBtn').value;
   if (checkLike === 'none') {
@@ -68,10 +61,9 @@ likeBtn.addEventListener('click', function () {
 goDairy.addEventListener('click', function () {
   window.location.href = `diary-tour.html?Id=${tour_id}`;
 });
+
 createDairy.addEventListener('click', async function () {
   try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const tour_id = urlParams.get('id');
     const response = await fetch(`/invite/${tour_id}`, { method: 'GET' });
     const data = await response.json();
     const response2 = await fetch(`/verify_tours/${tour_id}`, { method: 'GET' });
@@ -83,13 +75,14 @@ createDairy.addEventListener('click', async function () {
       alert('여행 일지를 생성할 권한이 없습니다.');
     }
   } catch (error) {
-    console.log(error);
     alert('여행 일지를 생성할 권한이 없습니다.');
   }
 });
+
 updateTour.addEventListener('click', function () {
   window.location.href = `tour-update.html?id=${tour_id}`;
 });
+
 function checkLike() {
   fetch(`/tours/${tour_id}/likes`, {
     method: 'GET',
@@ -100,6 +93,16 @@ function checkLike() {
         likeBtn.innerHTML = '좋아요취소';
         likeBtn.setAttribute('value', 'like');
       }
+    });
+}
+
+function countLike() {
+  fetch(`/likes/${tour_id}`, {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      document.getElementById('likeCounter').innerText = `좋아요 : ${data.data}`;
     });
 }
 
@@ -134,7 +137,7 @@ function displayPlaces(places) {
   for (var i = 0; i < places.length; i++) {
     // 마커를 생성하고 지도에 표시합니다
     var placePosition = new kakao.maps.LatLng(places[i].mapy, places[i].mapx),
-      marker = addMarker(placePosition, i),
+      { marker, pathLines } = addMarker(placePosition, i),
       itemEl = getListItem(i, places[i]); // 검색 결과 항목 Element를 생성합니다
 
     // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
@@ -173,6 +176,10 @@ function displayPlaces(places) {
   map.setBounds(bounds);
 }
 
+startChatting.addEventListener('click', function () {
+  window.open(`chatting.html?tourId=${tour_id}`, 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
+});
+
 async function checkMember() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
@@ -199,16 +206,16 @@ function checkLoggedInStatus() {
   })
     .then((response) => response.json())
     .then(async (data) => {
-      console.log(data);
       // 응답 처리
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
         const isMember = await checkMember();
         if (isMember) {
+          document.getElementById('updateTour').style.display = 'block';
           document.getElementById('createDairy').style.display = 'block';
+          startChatting.style.display = 'block';
         }
-        document.getElementById('updateTour').style.display = 'block';
         document.getElementById('likeBtn').style.display = 'block';
       }
     });
@@ -249,10 +256,15 @@ function logout() {
 }
 
 function removeMarker() {
-  for (var i = 0; i < markers.length; i++) {
+  for (let i = 0; i < markers.length; i++) {
     markers[i].setMap(null);
+    if (pathLines.length !== 0) {
+      linePath.pop();
+      pathLines[i].setMap(null);
+    }
   }
   markers = [];
+  pathLines = [];
 }
 
 // 검색결과 목록의 자식 Element를 제거하는 함수입니다
@@ -279,6 +291,9 @@ function getListItem(index, places) {
   if (places.site_img) {
     itemStr += `<img class="img-fluid" src=${places.site_img} alt="" />`;
   }
+  if (places.start_time) {
+    itemStr += `<span class="gray"><strong>` + places.start_time + ' 부터 ' + places.end_time + ' 까지 ' + `</strong></span>`;
+  }
   el.innerHTML = itemStr;
   el.className = 'item';
 
@@ -298,11 +313,20 @@ function addMarker(position, idx, title) {
       position: position, // 마커의 위치
       image: markerImage,
     });
+  linePath.push(position);
+  var polyline = new kakao.maps.Polyline({
+    path: linePath, // 선을 구성하는 좌표배열 입니다
+    strokeWeight: 7, // 선의 두께 입니다
+    strokeColor: '#87ceeb', // 선의 색깔입니다
+    strokeOpacity: 0.9, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+    strokeStyle: 'solid', // 선의 스타일입니다
+  });
 
   marker.setMap(map); // 지도 위에 마커를 표출합니다
   markers.push(marker); // 배열에 생성된 마커를 추가합니다
-
-  return marker;
+  polyline.setMap(map);
+  pathLines.push(polyline);
+  return { marker, pathLines };
 }
 
 function SetLike() {
@@ -312,6 +336,7 @@ function SetLike() {
     .then((response) => response.json())
     .then((data) => {
       alert(data.message);
+      countLike();
     })
     .catch((error) => {
       console.error('Error:', error);

@@ -14,7 +14,6 @@
     <link href="css/responsive-style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-    <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
     <style>
       html,
       body {
@@ -322,14 +321,21 @@
       <div class="container">
         <div class="row">
           <div class="col-md-6 col-lg-4">
-            <h1>
-              <a href="/index.html">  
-              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
-              <small>여행 계획을 알차게!</small></h1>
+            <h1 id="Title">Tour ProJect</h1>
           </div>
           <button class="header-button" id="updateDate" style="display: none">제목 & 날짜 수정</button>
           <button class="header-button" id="createTour" style="display: none">수정 작업 완료 / 게시하기</button>
           <button class="header-button" id="deleteTour" style="display: none">계획서 삭제하기</button>
+          <div class="dropdown" style="float: right">
+            <span class="dropbtn" id="usernickname">홍길동</span>
+            <div class="dropdown-content">
+              <a href="javascript:void(0);" onclick="">회원정보</a>
+              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
           <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
             <!-- 사용자 부분 -->
             <nav class="nav nav-inline">
@@ -415,12 +421,29 @@
         <button id="tourUpdateBtn" style="margin-top: 30px">여행 계획 수정!</button>
       </div>
     </div>
+
+      <!-- 시간 기입 모달 -->
+  <div id="placeTimeModal" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-title">
+        <h2 id="timeModalTitle">머무를 시간</h2>
+      </div>
+      <div class="modal-close-area" id="timeCloseBtn">X</div>
+      <div class="modal-conten">
+        <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
+        <input type="time" value="" id="endTime" />
+        <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+      </div>
+    </div>
+  </div>
+</body>
+
   </body>
 
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
-  <!-- <script type="module" src="./js/go-home.js"></script> -->
+  <script type="module" src="./js/go-home.js"></script>
   <script type="module" src="./js/tour-update-site.js"></script>
   <script type="module" src="./js/tour-update-date.js"></script>
 </html>

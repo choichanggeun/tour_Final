@@ -1,5 +1,5 @@
-const Title = document.getElementById('Title');
+// const Title = document.getElementById('Title');
 
-Title.addEventListener('click', function () {
-  window.location.href = '/';
-});
+// Title.addEventListener('click', function () {
+//   window.location.href = '/';
+// });

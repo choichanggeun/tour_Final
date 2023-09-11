@@ -203,7 +203,11 @@
       <div class="top-head left">
         <div class="row">
           <div class="col-md-6 col-lg-4">
-            <h1 id="Title">Tour ProJect</h1>
+            <h1>
+             <a href="/index.html">  
+              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+              </a>
+              <small>여행 계획을 알차게!</small></h1>
           </div>
           <div id="likeCounter" style="float: left; margin-top: 45px">좋아요 : 0</div>
           <button class="header-button" id="likeBtn" value="none" style="display: none">좋아요</button>
@@ -211,6 +215,7 @@
           <button class="header-button" id="createDairy" value="none" style="display: none">여행일지생성</button>
           <button class="header-button" id="updateTour" value="none" style="display: none">여행계획수정</button>
           <button class="header-button" id="startChatting" value="none" style="display: none">채팅방 입장</button>
+
           <div class="dropdown" style="float: right">
             <span class="dropbtn" id="usernickname">홍길동</span>
             <div class="dropdown-content">
@@ -220,9 +225,58 @@
           </div>
         </div>
       </div>
-    </header>
+
+     <!-- 메인페이지 로고 및 드롭박스-->
+     <div class="top-head left">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <h1>
+              <a href="/index.html">  
+              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+              <small>여행 계획을 알차게!</small></h1>
+          </div>
+          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
+            <!-- 사용자 부분 -->
+            <nav class="nav nav-inline">
+              <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
+                      <a href="#" class="nav-link">
+                <span class="ping"></span>
+                <i class="fa fa-envelope-o"></i
+              ></a> -->
+              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+              <div class="container header-container">
+                <div class="button-container right-aligned-buttons">
+                  <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                  <div id="profileimg" class="dropdown" style='display: none;'>
+                    <div class='nav-link'>
+                      <span id='usernickname'>홍길동</span>
+                      <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
+                    </div>
+                      <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
+                        <a href="./mypage.html">마이페이지</a>
+                        <a href="#" onclick="">채팅</a>
+                        <a href="#" onclick="">로그아웃</a>
+                    </div> 
+                  </div> 
+                </div> 
+              </div> 
+                   </div>
+                      </div>
+                   
+                  </div>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
     <div class="map_wrap">
       <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
+
       <div id="menu_wrap" class="bg_white">
         <div class="option">
           <div>
@@ -241,4 +295,5 @@
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services"></script>
   <script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
   <script type="module" src="./js/tour-detail.js"></script>
+  <script type="module" src="./js/go-home.js"></script>
 </html>
