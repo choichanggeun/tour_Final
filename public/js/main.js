@@ -18,6 +18,8 @@ postUploadBtn.addEventListener('click', async () => {
 
 const indicators = document.getElementById('carousel-indicators');
 const bannerListbox = document.getElementById('bannerlistbox');
+const searchButton = document.getElementById('search-button');
+const enterInput = document.getElementById('search-input');
 window.onload = function () {
   checkLoggedInStatus();
 
@@ -166,3 +168,16 @@ function checkLoggedInAdmin() {
       console.error('Error:', error);
     });
 }
+enterInput.addEventListener('keyup', function (event) {
+  if (event.keyCode === 13) {
+    const searchInput = document.getElementById('search-input').value;
+    const search_type = '제목';
+    window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+  }
+});
+
+searchButton.addEventListener('click', function () {
+  const searchInput = document.getElementById('search-input').value;
+  const search_type = '제목';
+  window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+});

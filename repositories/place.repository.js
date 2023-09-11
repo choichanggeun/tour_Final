@@ -37,7 +37,6 @@ class PlaceRepository {
   // 여행 장소 수정
   updatePlace = async (place_id, id, start_time, end_time) => {
     const updatedPlace = await Place.update(
-      { plan_date_id, tour_site_id, start_time, end_time },
       {
         tour_site_id: id,
         start_time: start_time,
