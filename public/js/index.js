@@ -9,6 +9,12 @@ fetch('/like_tours')
 
     mainContentTour.innerHTML = ''; // 기존 내용 초기화
 
+    // 좋아요 순위 제목 추가
+    let likeRankingTitle = document.createElement('h2');
+    likeRankingTitle.textContent = '좋아요 순위';
+    likeRankingTitle.className = 'like-ranking-title'; // 클래스 이름 변경
+    mainContentTour.appendChild(likeRankingTitle);
+
     var tourDataList = data.result;
 
     if (Array.isArray(tourDataList)) {
@@ -19,7 +25,7 @@ fetch('/like_tours')
         /* Tour Items */
         let tourItemElement = document.createElement('div');
         tourItemElement.className = 'tour-card';
-        tourItemElement.style.cursor = 'pointer'; // 카드에 마우스 커서 올렸을때 커서모양 변하게 함
+        tourItemElement.style.cursor = 'pointer'; // 카드에 마우스 커서 올렸을 때 커서 모양 변하게 함
         let titleElement = document.createElement('p');
         let userElement = document.createElement('p');
 
@@ -50,7 +56,7 @@ fetch('/like_tours')
 
         siteNameElement.textContent = ` ${item.site_name}`;
 
-        // 카드 클릭시 여행계획 상세조회 화면으로 이동
+        // 카드 클릭시 여행 계획 상세조회 화면으로 이동
         tourItemElement.addEventListener('click', function () {
           window.location.href = `tour-detail.html?id=${item.id}`;
         });

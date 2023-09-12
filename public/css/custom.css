@@ -40,13 +40,16 @@ a:hover,
   border-color: #ca1b1b;
 }
 section {
-  padding: 30px 0;
+  /* padding: 30px 0; */
   float: left;
   width: 100%;
+  background-color: #fff;
+  /* 메인배경색 */
 }
 .card {
-  float: left;
-  width: 100%;
+  /* float: left; 일지생성 카드틀어짐 */
+  /* width: 100%; 전체일지 카드 간격안벌어짐 */
+  text-align: center;
 }
 .navbar {
   border: medium none;
@@ -384,6 +387,7 @@ header {
   padding: 0 0 6px;
   margin: 0 0 18px;
   text-align: left;
+  margin-top: 20px;
 }
 .section-01 .heading-large::before,
 .section-01 .heading-large::after {
@@ -420,6 +424,8 @@ header {
 }
 .section-01 .card-block {
   padding: 10px 0;
+  margin-right: 50px;
+  /* 국내 여행지 투어상세페이지 */
 }
 .section-01 .video-sec {
   float: left;
