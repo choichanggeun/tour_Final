@@ -40,6 +40,8 @@
 
           <div class="col-lg-3 offset-lg-5">
             <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
+            <!-- 소셜 아이ddddddd콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
+            
             <div class="social-icon">
               <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
             </div>
@@ -77,7 +79,7 @@
                       <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
                         <a href="./mypage.html">마이페이지</a>
                         <a href="#" onclick="">채팅</a>
-                        <a href="#" onclick="logout()">로그아웃</a>
+                        <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
                     </div> 
                   </div> 
                 </div> 
@@ -126,18 +128,21 @@
             </div>
         </div>
       </div>
-    </nav>
-    <!-- 좋아요 top6 여행지 -->
+    
+    </nav><!-- 좋아요 top6 여행지 -->
     <section class="likeplan-sec">
+          <!-- 좋아요 top9 여행지 -->
+          <div class="toprated">
+          </div>
       <div class="container">
 
-        <div class="row" style="width: 50%; float: left">
+        <div class="row">
           <div id="main-content"> <!-- 이 div 안에 카드들을 동적으로 추가 -->
             <!-- 카드들이 동적으로 추가될 위치입니다 -->
           </div>
         </div>
           <!-- 배너부분이 들어갈 자리입니다. -->
-          <div class="row" style="width: 50%; float: right">
+          <div class="row">
         <div class="col-md-6 top-slider">
           <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
             <!-- Indicators -->
