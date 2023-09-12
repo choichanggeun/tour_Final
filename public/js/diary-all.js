@@ -2,8 +2,8 @@
 let cursor;
 
 // 검색 기능
-const searchButton = document.getElementById('search-diaries-button');
-const searchInput = document.getElementById('search-diaries-input');
+const searchButton = document.getElementById('search-button');
+const searchInput = document.getElementById('search-input');
 
 const urlParams = new URLSearchParams(window.location.search);
 const search_data = urlParams.get('search_data');
@@ -49,6 +49,9 @@ async function renderDiaryCards() {
         method: 'GET',
       });
     }
+    const response2 = await fetch('/diaries/photos', {
+      method: 'GET',
+    });
     const { data } = await response.json();
     const { images } = await response2.json();
     if (response.ok) {
