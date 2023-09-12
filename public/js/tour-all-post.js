@@ -22,7 +22,6 @@ window.onload = function () {
       .then((response) => response.json())
       .then((data) => {
         totalData = data.result.length;
-        console.log(data);
         dataList = data.result;
         displayData(1, dataPerPage);
         paging(totalData, dataPerPage, pageCount, 1);

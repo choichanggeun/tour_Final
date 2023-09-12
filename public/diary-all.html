@@ -8,13 +8,14 @@
     <meta name="author" content="" />
     <title>Tour Project</title>
 
-  <!--Bootstrap core CSS-->
-  <link href="css/bootstrap.min.css" rel="stylesheet" />
-  <link href="css/custom.css" rel="stylesheet" />
-  <link href="css/responsive-style.css" rel="stylesheet" />
-  <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
-  <link rel="stylesheet" type="text/css" href="css/loaders.css" />
-  <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
+    <!--Bootstrap core CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/custom.css" rel="stylesheet" />
+    <link href="css/responsive-style.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainpage.css" />
 
     <style>
       .button-container {
@@ -153,10 +154,10 @@
           <div class="row">
             <div class="col-md-6 col-lg-4">
               <h1>
-                <a href="index.html">
+                <a href="/index.html">
                   <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" />
-                  <small>여행 계획을 알차게!</small>
-                </a>
+                  <small>여행 계획을 알차게!</small></a
+                >
               </h1>
             </div>
             <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
@@ -212,34 +213,6 @@
             <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
-        </ul>
-        <!-- 검색기능 -->
-        <form class="pull-xs-right">
-          <label for="post-upload-img" class="basic-btn">파일 업로드</label>
-          <input id="post-upload-img" type="file" style="display: none" />
-          <button id="testbtn"
-            style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px; margin-top: 7px">업로드</button>
-        </form>
-        <form class="pull-xs-right">
-          <div class="search">
-            <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-diaries-input" />
-            <button type="submit" class="btn btn-search" id="search-diaries-button"><i class="fa fa-search"></i></button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </nav>
-  <!-- 왼쪽에 4개 있는 부분입니다. -->
-  <section class="banner-sec">
-    <div class="container">
-      <div class="row">
-        <!-- 여행 일지 나열하는 자리입니다. -->
-        <div class="card-list" id="card-list"></div>
-        <!-- 배너부분이 들어갈 자리입니다. -->
-        <div class="col-md-6 top-slider">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators" id="carousel-indicators"></ol>
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
@@ -249,13 +222,41 @@
           </form>
           <form class="pull-xs-right">
             <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-diaries-input" />
+              <button type="submit" class="btn btn-search" id="search-diaries-button"><i class="fa fa-search"></i></button>
             </div>
           </form>
         </div>
       </div>
     </nav>
+    <!-- 왼쪽에 4개 있는 부분입니다. -->
+    <section class="banner-sec">
+      <div class="container">
+        <div class="row">
+          <!-- 여행 일지 나열하는 자리입니다. -->
+          <div class="card-list" id="card-list"></div>
+          <!-- 배너부분이 들어갈 자리입니다. -->
+          <div class="col-md-6 top-slider">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators" id="carousel-indicators"></ol>
+              <!-- 검색기능 -->
+              <form class="pull-xs-right">
+                <label for="post-upload-img" class="basic-btn">파일 업로드</label>
+                <input id="post-upload-img" type="file" style="display: none" />
+                <button id="testbtn" style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px; margin-top: 7px">업로드</button>
+              </form>
+              <form class="pull-xs-right">
+                <div class="search">
+                  <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
+                  <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- 왼쪽에 4개 있는 부분입니다. -->
     <section class="banner-sec">
