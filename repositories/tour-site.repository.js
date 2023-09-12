@@ -123,7 +123,7 @@ class ToursiteRepository {
     if (value) {
       return JSON.parse(value);
     } else {
-      let data = await TourSite.findAll({ limit: 12 });
+      let data = await TourSite.findAll({ limit: 12, order: [['id', 'ASC']] });
       await redisCli.set('firstSite', JSON.stringify(data));
       await redisCli.expire('firstSite', 360);
       return data;
