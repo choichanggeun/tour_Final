@@ -12,15 +12,14 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
     <link href="css/responsive-style.css" rel="stylesheet" />
-    <link href="css/diary.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
-
     <style>
       .button-container {
         float: right;
       }
+
       .dropdown {
         width: 60px;
         position: relative;
@@ -31,7 +30,8 @@
         overflow: hidden;
         display: none;
         position: absolute;
-        z-index: 1; /*다른 요소들보다 앞에 배치*/
+        z-index: 1;
+        /*다른 요소들보다 앞에 배치*/
       }
 
       .dropdown-content a {
@@ -40,6 +40,134 @@
 
       .dropdown:hover .dropdown-content {
         display: block;
+      }
+
+      #diaryBox h5 {
+        font-size: 28px;
+        margin: 20px 0;
+        text-align: center;
+        color: #333;
+      }
+
+      /* Style for the diary content */
+      #diaryBox p {
+        font-size: 18px;
+        margin: 10px 0;
+        padding: 0 20px;
+        text-align: justify;
+        color: #666;
+      }
+
+      /* Style for the edit and delete buttons */
+      #diaryBox button {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin: 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      #diaryBox button:hover {
+        background-color: #0056b3;
+      }
+
+      /* Style for diary images */
+      #diaryBox img {
+        max-width: 100%;
+        height: auto;
+        margin: 20px auto;
+        display: block;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      }
+
+      Style for the card .card {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        /* Stack elements vertically */
+        align-items: center;
+        /* Center align elements horizontally */
+        text-align: center;
+        /* Center align text */
+      }
+
+      #row {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+
+      .card {
+        max-width: 800px;
+        /* Adjust the maximum width as per your preference */
+        /* Adjust the height as needed */
+        margin: 20px auto;
+        /* Center the card horizontally with some margin */
+        background-color: #b1dfed;
+        /* Set the background color */
+        padding: 20px;
+        /* Add some padding to the card content */
+        border-radius: 10px;
+        /* Add rounded corners to the card */
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+        /* Add a box shadow for depth */
+        text-align: center;
+      }
+
+      /* Style for the card title */
+      .card-title {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #333;
+        margin-top: 20px;
+      }
+
+      /* Style for the card content */
+      .card-text {
+        font-size: 14px;
+        margin-bottom: 10px;
+        color: #666;
+      }
+
+      /* Style for the buttons */
+      .btn {
+        margin-right: 10px;
+        color: #ffffff;
+      }
+
+      /* Style for the edit and delete buttons */
+      .btn-primary {
+        background-color: #ffffff;
+        color: #000000;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .btn-primary:hover {
+        background-color: #0056b3;
+      }
+
+      .btn-danger {
+        background-color: #000000;
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+      }
+
+      .btn-danger:hover {
+        background-color: #c82333;
       }
     </style>
   </head>
@@ -126,11 +254,11 @@
             <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
             <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
+              <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
@@ -147,10 +275,9 @@
         </div>
       </div>
     </nav>
-    <!-- 왼쪽에 4개 있는 부분입니다. -->
+    <!-- 여행 일지 조회하는 부분 -->
     <section class="banner-sec">
       <div class="container">
-        <!-- 여행 일지 조회하는 부분입니다. -->
         <div class="row" id="row" style="text-align: center">
           <!-- 배너부분이 들어갈 자리입니다. -->
           <div class="col-md-6 top-slider">
@@ -166,7 +293,14 @@
       </div>
     </section>
 
-    <!-- 댓글 부분 입니다. -->
+    <!-- 여행 일지 내용 표시 -->
+    <div class="container my-4">
+      <div class="row">
+        <div class="col"></div>
+      </div>
+    </div>
+
+    <!-- 댓글 부분 -->
     <div class="container my-4">
       <div class="row">
         <div class="col">
@@ -175,17 +309,16 @@
             <div class="card-body">
               <form id="comment-form">
                 <div class="mb-3">
-                  <label for="comment-input" class="form-label">댓글</label>
-                  <input type="text" class="form-control" id="comment-input" placeholder="댓글을 입력해주세요" />
+                  <!-- <label for="comment-input" class="form-label">댓글</label> -->
+                  <textarea class="form-control" id="comment-input" rows="2" cols="50" placeholder="댓글을 입력해주세요"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">댓글 추가</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px">댓글 추가</button>
               </form>
             </div>
           </div>
         </div>
       </div>
     </div>
-
     <footer>
       <div class="container">
         <div class="row">

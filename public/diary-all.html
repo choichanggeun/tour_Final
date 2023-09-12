@@ -12,7 +12,6 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
     <link href="css/responsive-style.css" rel="stylesheet" />
-    <link href="css/diary.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
@@ -21,6 +20,7 @@
       .button-container {
         float: right;
       }
+
       .dropdown {
         width: 60px;
         position: relative;
@@ -31,7 +31,8 @@
         overflow: hidden;
         display: none;
         position: absolute;
-        z-index: 1; /*다른 요소들보다 앞에 배치*/
+        z-index: 1;
+        /*다른 요소들보다 앞에 배치*/
       }
 
       .dropdown-content a {
@@ -40,6 +41,86 @@
 
       .dropdown:hover .dropdown-content {
         display: block;
+      }
+
+      .card-list .card {
+        margin-bottom: 20px;
+        /* 기본 카드 간격 설정 */
+        margin-right: 10px;
+        /* 오른쪽 간격 설정 */
+        margin-left: 10px;
+        /* 왼쪽 간격 설정 */
+        margin-top: 30px;
+      }
+
+      /* 카드 디자인 변경 */
+      .custom-card {
+        background-color: #0390ff30;
+        /* 카드 배경색 변경 */
+        border: 1px solid #000000;
+        /* 테두리 추가 */
+        box-shadow: 0 4px 8px rgb(50 115 255 / 36%);
+        /* 그림자 추가 */
+        width: calc(25% - 20px);
+        /* 각 카드의 너비를 25%로 설정하고 간격을 뺍니다. */
+        margin-right: 20px;
+        /* 오른쪽 간격 설정 */
+        margin-bottom: 20px;
+        /* 아래쪽 간격 설정 */
+        float: left;
+        /* 카드를 왼쪽으로 정렬합니다. */
+        box-sizing: border-box;
+        /* 경계 상자 모델 사용 */
+        height: 300px;
+        /* 모든 카드의 높이를 300px로 지정합니다. */
+        overflow: hidden;
+        /* 내용이 넘칠 경우 숨깁니다. */
+      }
+
+      /* 이미지 크기 및 여백 조정 */
+      .custom-card .card-img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      /* CSS 코드 */
+      #card-list .card-title {
+        font-size: 20px;
+        margin-bottom: 1px;
+        color: #333;
+      }
+
+      #card-list .card-text p {
+        font-size: 18px;
+        /* 위쪽 간격 추가 */
+        color: #777;
+        /* margin-bottom: 20px; */
+        /* 아래쪽 간격 추가 */
+      }
+
+      /* 제목 스타일 */
+      .custom-card-title {
+        font-size: 20px;
+        color: #333;
+        margin-bottom: 10px;
+        /* 제목 아래 간격을 줄입니다. */
+      }
+
+      /* 닉네임 스타일 */
+      .custom-card-text {
+        font-size: 16px;
+        color: #777;
+        /* margin-top: 10px; */
+        /* 닉네임 위 간격을 줄입니다. */
+        transform: translateY(-30px);
+      }
+
+      .top-btn {
+        width: 20px;
+        height: 20px;
+        position: fixed;
+        right: 17%;
+        bottom: 20%;
       }
     </style>
   </head>
@@ -72,7 +153,7 @@
           <div class="row">
             <div class="col-md-6 col-lg-4">
               <h1>
-                <a href="/">
+                <a href="/index.html">
                   <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" />
                   <small>여행 계획을 알차게!</small>
                 </a>
@@ -133,10 +214,15 @@
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
           </ul>
           <!-- 검색기능 -->
-          <form class="pull-xs-right" onsubmit="return false">
-            <div class="search" style="float: right">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-diaries-input" accept-charset="utf-8" />
-              <button type="button" class="btn btn-search" id="search-diaries-button"><i class="fa fa-search"></i></button>
+          <form class="pull-xs-right">
+            <label for="post-upload-img" class="basic-btn">파일 업로드</label>
+            <input id="post-upload-img" type="file" style="display: none" />
+            <button id="testbtn" style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px; margin-top: 7px">업로드</button>
+          </form>
+          <form class="pull-xs-right">
+            <div class="search">
+              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
+              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
             </div>
           </form>
         </div>
