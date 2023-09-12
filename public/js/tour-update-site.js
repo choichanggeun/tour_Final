@@ -73,6 +73,12 @@ function checkLoggedInStatus() {
       if (data.data) {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
+        const isMember = await checkMember();
+        if (isMember) {
+          updateDate.style.display = 'block';
+          createTour.style.display = 'block';
+          deleteTour.style.display = 'block';
+        }
       }
     });
 }
@@ -323,26 +329,54 @@ function displaySearchData(places, id, oldData) {
 }
 
 function updateSite(newData, oldData, place_id) {
-  if (confirm(`${oldData}를 ${newData.site_name}으로 변경하시겠습니까?`)) {
-    fetch(`/${place_id}/place`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ id: newData.id }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.code === 200) {
-          alert(data.message);
-          window.location.reload();
-        }
-      });
-  } else {
-    alert('취소되었습니다.');
-  }
+  const placeTimeModal = document.getElementById('placeTimeModal');
+  placeTimeModal.style.display = 'flex';
+  const createPlaceBtn = document.getElementById('createPlaceBtn');
+  const timeCloseBtn = document.getElementById('timeCloseBtn');
+  createPlaceBtn.addEventListener('click', function () {
+    const startTime = document.getElementById('startTime').value;
+    const endTime = document.getElementById('endTime').value;
+    const formData = {
+      id: newData.id,
+      start_time: startTime,
+      end_time: endTime,
+    };
+    if (confirm(`${oldData}를 ${newData.site_name}으로 변경하시겠습니까?`)) {
+      fetch(`/${place_id}/place`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.code === 200) {
+            alert(data.message);
+            window.location.reload();
+          }
+        });
+    } else {
+      alert('취소되었습니다.');
+    }
+  });
+  timeCloseBtn.addEventListener('click', () => {
+    window.location.reload();
+  });
+  //모달의 바깥부분을 누르면 꺼짐
+  modal.addEventListener('click', (e) => {
+    const evTarget = e.target;
+    if (evTarget.classList.contains('modal-overlay')) {
+      window.location.reload();
+    }
+  });
+  //esc누르면 꺼짐
+  window.addEventListener('keyup', (e) => {
+    if (modal.style.display === 'flex' && e.key === 'Escape') {
+      window.location.reload();
+    }
+  });
 }
-
 tourcloseBtn.addEventListener('click', function () {
   document.getElementById('menu_wrap2').style.display = 'none';
   getplaceData(tour_id);
@@ -363,53 +397,28 @@ siteCreateBtn.addEventListener('click', function () {
 function createSite(places) {
   const days = document.getElementById('tourDays').value;
   const tour_site_id = places.id;
-  const placeTimeModal = document.getElementById('placeTimeModal');
-  placeTimeModal.style.display = 'flex';
-  const createPlaceBtn = document.getElementById('createPlaceBtn');
-  const timeCloseBtn = document.getElementById('timeCloseBtn');
-  createPlaceBtn.addEventListener('click', function () {
-    const startTime = document.getElementById('startTime').value;
-    const endTime = document.getElementById('endTime').value;
-    const formData = {
-      days: days,
-      tour_site_id: tour_site_id,
-      start_time: startTime,
-      end_time: endTime,
-    };
-    fetch(`/place/${tour_id}`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
+  const formData = {
+    days: days,
+    tour_site_id: tour_site_id,
+  };
+  fetch(`/place/${tour_id}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      if (data.code === 200) {
+        alert(data.message);
+        getplaceData(tour_id);
+      }
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.code === 200) {
-          alert(data.message);
-          window.location.reload();
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-  timeCloseBtn.addEventListener('click', () => {
-    window.location.reload();
-  });
-  //모달의 바깥부분을 누르면 꺼짐
-  modal.addEventListener('click', (e) => {
-    const evTarget = e.target;
-    if (evTarget.classList.contains('modal-overlay')) {
-      window.location.reload();
-    }
-  });
-  //esc누르면 꺼짐
-  window.addEventListener('keyup', (e) => {
-    if (modal.style.display === 'flex' && e.key === 'Escape') {
-      window.location.reload();
-    }
-  });
+    .catch((error) => {
+      console.log(error);
+    });
 }
 
 function deletePlace(places) {
