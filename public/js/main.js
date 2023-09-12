@@ -1,4 +1,5 @@
 const postUploadBtn = document.querySelector('#post-upload-btn');
+console.log(postUploadBtn);
 postUploadBtn.addEventListener('click', async () => {
   const image = document.querySelector('#post-upload-img').files[0];
   const formData = new FormData();
@@ -80,7 +81,7 @@ function checkLoggedInStatus() {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
         document.querySelector('#profileimg').style.display = 'block';
-
+        console.log(data.data);
         // 이미지 클릭 이벤트 추가
         var profilePic = document.getElementById('profilePic');
         var dropdownMenu = document.getElementById('dropdownMenu');
