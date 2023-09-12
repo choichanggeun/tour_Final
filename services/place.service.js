@@ -50,6 +50,8 @@ class PlaceService {
     const PlaceList = findPlace.map((data) => {
       return {
         id: data.id,
+        start_time: data.start_time,
+        end_time: data.end_time,
         site_name: data.TourSite.site_name,
         site_address: data.TourSite.site_address,
         site_img: data.TourSite.site_img,
@@ -64,11 +66,8 @@ class PlaceService {
     };
   };
   //경유지 장소 수정
-  putPlace = async ({ user_id, place_id, plan_date_id, tour_site_id, start_time, end_time }) => {
-    if (!user_id) throw { code: 403, message: '로그인이 필요한 기능입니다.' };
-
-    const updatedPlace = await this.placeRepository.updatePlace({ place_id, plan_date_id, tour_site_id, start_time, end_time });
-
+  putPlace = async (place_id, id, start_time, end_time) => {
+    const updatedPlace = await this.placeRepository.updatePlace(place_id, id, start_time, end_time);
     if (!updatedPlace) throw { code: 400, message: '경유지 장소 수정에 실패했습니다.' };
 
     return { code: 200, message: '경유지 장소가 성공적으로 수정되었습니다.' };

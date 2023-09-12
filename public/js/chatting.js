@@ -3,7 +3,12 @@ const urlParams = new URLSearchParams(window.location.search);
 const roomNumber = urlParams.get('tourId');
 document.getElementById('RoomTitle').innerHTML = `방 번호 : ${roomNumber}`;
 
-$(document).ready(function () {
+$(document).ready(async function () {
+  const check = await checkMember();
+  if (!check) {
+    alert('비정상적인 접근입니다.');
+    window.location.href = '/';
+  }
   fetch('/users', {
     method: 'GET',
   })
@@ -69,3 +74,21 @@ $(document).ready(function () {
       }
     });
 });
+
+async function checkMember() {
+  try {
+    const response = await fetch(`/invite/${roomNumber}`, { method: 'GET' });
+    const data = await response.json();
+    const response2 = await fetch(`/verify_tours/${roomNumber}`, { method: 'GET' });
+    const data2 = await response2.json();
+    // 초대된 유저이거나 여행 계획 만든 유저일 때
+    if (data.data.length !== 0 || data2.data) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+}

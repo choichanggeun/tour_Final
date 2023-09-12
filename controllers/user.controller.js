@@ -20,15 +20,8 @@ class UserController {
     const { email, password } = req.body;
     try {
       const { message, status, result } = await this.userService.loginUser(email, password);
-      const cookieConfig = {
-        //cookieConfig는 키, 밸류 외에 설정을 보낼 수 있다.
-        maxAge: 60000 * 60,
-        //밀리초 단위로 들어가는데 30000을 설정하면 30초만료 쿠키를 생성한다.
-        path: '/',
-        httpOnly: true,
-        //통신할때만 접속할 수 있다. 기본값은 false임
-      };
-      res.cookie('authorization', `Bearer ${result}`, cookieConfig);
+      const { accessToken, refreshToken } = result;
+      res.cookie('authorization', `Bearer ${accessToken} ${refreshToken}`);
       res.status(status).json({ message, status });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });

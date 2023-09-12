@@ -31,9 +31,8 @@ class LikeController {
   };
   getLikes = async (req, res) => {
     try {
-      const { id: user_id } = res.locals.user;
-
-      const { data } = await this.likeService.getLikes(user_id);
+      const { tour_id } = req.params;
+      const { data } = await this.likeService.getLikes(tour_id);
       res.status(200).json({ data });
     } catch (error) {
       console.log(error);
