@@ -32,7 +32,6 @@ class InviteController {
         email,
         user_id,
       });
-
       return res.status(code).json({ message, result });
     } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });

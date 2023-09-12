@@ -9,9 +9,9 @@ class TourService {
     let year = now.getFullYear();
     let month = now.getMonth() + 1;
     let date = now.getDate();
-    if (!title) throw { code: 401, message: 'title을 입력해주세요.' };
-    if (!start_date) throw { code: 401, message: 'start_date 입력해주세요.' };
-    if (!end_date) throw { code: 401, message: 'end_date 입력해주세요.' };
+    if (!title) throw { code: 401, message: '제목을 입력해주세요.' };
+    if (!start_date) throw { code: 401, message: '시작 날짜를 입력해주세요.' };
+    if (!end_date) throw { code: 401, message: '종료 날짜를 입력해주세요.' };
     if (new Date(start_date) > new Date(end_date)) throw { code: 401, message: '시작 날짜는 마지막 날짜보다 이전이어야 합니다.' };
     if (new Date(start_date).getFullYear() <= year && new Date(start_date).getMonth() + 1 <= month && new Date(start_date).getDate() < date) throw { code: 401, message: '과거의 날짜는 선택할 수 없습니다.' };
     const valiTourInProgress = await this.tourRepository.findTourInProgress(user_id);
@@ -84,7 +84,7 @@ class TourService {
   };
   //여행계획 수정
   putTour = async (user_id, tour_id, title, start_date, end_date) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
+    if (!tour_id) throw { code: 400, message: '존재하지 않는 여행 계획입니다.' };
 
     const oldDate = new Date(start_date);
     const newDate = new Date(end_date);
@@ -99,7 +99,7 @@ class TourService {
   };
   //여행계획 삭제
   deleteTour = async ({ user_id, tour_id }) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
+    if (!tour_id) throw { code: 400, message: '존재하지 않는 여행 계획입니다.' };
 
     const deletedTour = await this.tourRepository.deleteTour({ user_id, tour_id });
 
