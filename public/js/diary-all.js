@@ -31,14 +31,15 @@ const renderDiaryCards = async () => {
         const cardTitleLabel = document.createElement('label'); // Label for title
         cardTitleLabel.textContent = '제목 ';
         const cardTitle = document.createElement('h5');
-        cardTitle.classList.add('card-title');
+        cardTitle.classList.add('card-title', 'custom-card-title'); // Add custom-card-title class for styling
         cardTitle.textContent = diary.title;
 
         // Create card text for the nickname
         const cardNicknameLabel = document.createElement('label'); // Label for nickname
+        cardNicknameLabel.style.transform = 'translateY(-20px)'; // 간격을 조절합니다.
         cardNicknameLabel.textContent = '닉네임 ';
         const cardText = document.createElement('p');
-        cardText.classList.add('card-text');
+        cardText.classList.add('card-text', 'custom-card-text'); // Add custom-card-text class for styling
         cardText.textContent = diary.User.nickname;
 
         // Create an anchor tag for the image
@@ -55,9 +56,7 @@ const renderDiaryCards = async () => {
         diaryImage.alt = '';
         diaryImage.style.width = '100px'; // Adjust image width as needed
         diaryImage.style.margin = '0 auto'; // Maintain aspect ratio
-        diaryImage.src = diaryImg
-          ? `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${diaryImg.diary_img}`
-          : 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+        diaryImage.src = diaryImg ? `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${diaryImg.diary_img}` : 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
 
         // Append elements to card body
         cardBody.appendChild(cardTitleLabel);

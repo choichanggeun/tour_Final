@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', async function () {
     .then(async (result) => {
       var nickNameBox = document.querySelector('#nickname-box');
 
-      var nickName2 = document.createElement('div');
+      var nickName2 = document.createElement('span');
       nickName2.id = 'user-nickname';
-      nickName2.textContent = `user nickname : ${result.data.nickname}`;
+      nickName2.textContent = `유저명 : ${result.data.nickname}`;
 
       var button = document.createElement('button');
       button.className = 'btn btn-primary w-100 mt-3';
@@ -44,8 +44,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 let tourItemElement = document.createElement('div');
                 let titleElement = document.createElement('p');
                 let imgElement = document.createElement('img');
-                //이미지 클릭시 여행계획 상세조회 화면으로 이동
-                imgElement.addEventListener('click', function () {
+                //제목과 이미지에 class를 부여해서 css 설정 가능하게 함
+                titleElement.classList.add('title-element');
+                imgElement.classList.add('img-element');
+                //제목과 이미지 클릭시 여행계획 상세조회 화면으로 이동
+                tourItemElement.addEventListener('click', function () {
                   // 여행계획 불러오기
 
                   fetch('/mytours')
@@ -112,7 +115,6 @@ document.addEventListener('DOMContentLoaded', async function () {
 
             for (let diary of data) {
               // 다이어리 박스 생성
-
               let diaryBoxElement = document.createElement('div');
               diaryBoxElement.className = 'diary-item';
 
@@ -122,8 +124,18 @@ document.addEventListener('DOMContentLoaded', async function () {
               });
               // 다이어리 제목 추가
               let titleElement = document.createElement('p');
+              titleElement.classList.add('title-element');
               titleElement.textContent = `제목: ${diary.title}`;
               diaryBoxElement.appendChild(titleElement);
+
+              // 공개/비공개 상태 표시
+              let statusElement = document.createElement('p');
+              if (diary.status === '0') {
+                statusElement.textContent = '상태: 공개';
+              } else {
+                statusElement.textContent = '상태: 비공개';
+              }
+              diaryBoxElement.appendChild(statusElement);
 
               // 이미지 가져오기
               try {
@@ -140,11 +152,15 @@ document.addEventListener('DOMContentLoaded', async function () {
                       let imgElement = document.createElement('img');
                       imgElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
 
+                      imgElement.classList.add('img-element');
+
                       diaryBoxElement.appendChild(imgElement);
                     }
                   } else {
                     let defaultImgElement = document.createElement('img');
                     defaultImgElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
+
+                    defaultImgElement.classList.add('img-element');
 
                     diaryBoxElement.appendChild(defaultImgElement);
                   }
@@ -170,4 +186,9 @@ document.addEventListener('DOMContentLoaded', async function () {
       getMyDiary();
     })
     .catch((error) => console.error('Error:', error));
+
+  const imgElement = document.getElementById('img-element');
+
+  imgElement.style.width = '200%';
+  imgElement.style.height = 'auto';
 });

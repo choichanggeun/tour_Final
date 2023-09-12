@@ -4078,6 +4078,7 @@ a.tag:hover {
 }
 .tag-success {
   background-color: #5cb85c;
+  float: left;
 }
 .tag-success[href]:focus,
 .tag-success[href]:hover {

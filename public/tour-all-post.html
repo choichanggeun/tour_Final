@@ -14,6 +14,7 @@
     <link href="css/responsive-style.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
+    <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     <style>
@@ -144,19 +145,18 @@
       #pagingul li.on a {
         color: #fff;
       }
+
+      #usernickname {
+        white-space: nowrap;
+        display: inline-block;
+      }
     </style>
   </head>
 
   <body>
     <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
     <div class="loader loader-bg">
-      <div class="loader-inner ball-pulse-rise">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <div class="loader-inner ball-pulse-rise"></div>
     </div>
     <header>
       <div class="small-top">
@@ -175,35 +175,40 @@
         </div>
       </div>
 
+      <!-- 메인페이지 로고 및 드롭박스-->
       <div class="top-head left">
         <div class="container">
           <div class="row">
             <div class="col-md-6 col-lg-4">
-              <h1 id="Title">Tour ProJect<small>여행 계획을 알차게!</small></h1>
+              <h1>
+                <a href="/index.html">
+                  <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+                  <small>여행 계획을 알차게!</small></a
+                >
+              </h1>
             </div>
             <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
               <!-- 사용자 부분 -->
               <nav class="nav nav-inline">
                 <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
-                        <a href="#" class="nav-link">
-                  <span class="ping"></span>
-                  <i class="fa fa-envelope-o"></i
-                ></a> -->
+                      <a href="#" class="nav-link">
+                <span class="ping"></span>
+                <i class="fa fa-envelope-o"></i
+              ></a> -->
                 <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
                 <div class="container header-container">
                   <div class="button-container right-aligned-buttons">
                     <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                    <div id="profileimg">
-                      <a href="" class="nav-link">
-                        <div class="dropdown">
-                          <span class="dropbtn" id="usernickname">홍길동</span>
-                          <div class="dropdown-content">
-                            <a href="javascript:void(0);" onclick="">회원정보</a>
-                            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
-                          </div>
-                        </div>
-                        <img class="img-fluid img-circle" src="img/admin-bg.jpg" />
-                      </a>
+                    <div id="profileimg" class="dropdown" style="display: none">
+                      <div class="nav-link">
+                        <span id="usernickname">홍길동</span>
+                        <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
+                      </div>
+                      <div id="dropdownMenu" class="dropdown-content" style="display: none">
+                        <a href="./mypage.html">마이페이지</a>
+                        <a href="#" onclick="">채팅</a>
+                        <a href="#" onclick="">로그아웃</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -262,7 +267,7 @@
           <div class="row" id="siteList"></div>
         </div>
       </div>
-      <div style="display: flex; justify-content: center">
+      <div style="display: flex; justify-content: center; margin: 10px;">
         <ul id="pagingul"></ul>
         <span id="displayCount"></span>
         <table id="dataTableBody"></table>

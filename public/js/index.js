@@ -18,7 +18,10 @@ fetch('/like_tours')
     var tourDataList = data.result;
 
     if (Array.isArray(tourDataList)) {
-      tourDataList.forEach(function (item, index) {
+      //topSixTours라는 변수를 만들어서 배열의 첫번째 요소 0부터 마지막 5까지 총 6개를 표시
+      var topSixTours = tourDataList.slice(0, 6);
+      //좋아요 많이 받은 순으로 6개만 화면에 표시
+      topSixTours.forEach(function (item, index) {
         /* Tour Items */
         let tourItemElement = document.createElement('div');
         tourItemElement.className = 'tour-card';
@@ -56,6 +59,19 @@ fetch('/like_tours')
         // 카드 클릭시 여행 계획 상세조회 화면으로 이동
         tourItemElement.addEventListener('click', function () {
           window.location.href = `tour-detail.html?id=${item.id}`;
+        });
+
+        var maxLength = 24; // 원하는 최대 글자 수
+
+        // 모든 p 요소에 대해 반복
+        var pElements = document.querySelectorAll('.tour-card p');
+        pElements.forEach(function (pElement) {
+          var text = pElement.textContent;
+          if (text.length > maxLength) {
+            // 글자 수가 최대 길이를 넘어가면 '...'을 추가
+            var truncatedText = text.slice(0, maxLength) + '...';
+            pElement.textContent = truncatedText;
+          }
         });
 
         tourItemElement.appendChild(siteNameElement);

@@ -10,7 +10,7 @@ const getDiary = function () {
   }
 };
 
-// Function to render diary content
+// 일지 내용을 렌더링
 const renderDiary = async (diary_id) => {
   try {
     const response = await fetch(`/diaries/${Number(diary_id)}`, {
@@ -24,23 +24,23 @@ const renderDiary = async (diary_id) => {
     if (response.ok) {
       const row = document.getElementById('row');
 
-      // Create a card element
+      // 카드 요소 생성
       const diaryCard = document.createElement('div');
       diaryCard.classList.add('card');
 
-      // Create a card body
+      // 카드 본문 만들기
       const cardBody = document.createElement('div');
       cardBody.classList.add('card-body');
 
-      // Diary title
+      // 일지제목
       const title = document.createElement('h5');
       title.classList.add('card-title');
       title.textContent = `제목: ${data.title}`;
 
-      // Append the title to the card body
+      // 제목을 카드 본문에 추가
       cardBody.appendChild(title);
 
-      // Check if there are images to display
+      // 표시할 이미지가 있는지 확인합니다
       if (images.length !== 0) {
         for (let image of images) {
           const diaryCardImage = document.createElement('img');
@@ -50,7 +50,7 @@ const renderDiary = async (diary_id) => {
           diaryCard.appendChild(diaryCardImage);
         }
       } else {
-        // Display a default image if there are no images
+        // 이미지가 없는 경우 기본 이미지 표시
         const defaultImage = document.createElement('img');
         defaultImage.classList.add('card-img-top');
         defaultImage.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
@@ -58,19 +58,19 @@ const renderDiary = async (diary_id) => {
         diaryCard.appendChild(defaultImage);
       }
 
-      // Diary content
+      // 일지내용
       const content = document.createElement('p');
       content.classList.add('card-text');
       content.textContent = `내용: ${data.content}`;
 
-      // Append the content to the card body
+      // 카드 본문에 내용 추가
       cardBody.appendChild(content);
 
-      // Edit button
+      // 편집버튼
       const editButton = document.createElement('button');
       editButton.classList.add('btn', 'btn-primary', 'mt-3'); // btn-primary 클래스 추가
       editButton.innerHTML = `<a href="http://localhost:3000/diary-update.html?diary_id=${diary_id}">일지 수정</a>`;
-      // Delete button
+      // 삭제버튼
       const deleteButton = document.createElement('button');
       deleteButton.classList.add('btn', 'btn-danger', 'mt-3'); // btn-danger 클래스 추가
       deleteButton.textContent = '일지 삭제';
@@ -78,14 +78,14 @@ const renderDiary = async (diary_id) => {
         deleteDiary(diary_id);
       });
 
-      // Append the buttons to the card body
+      // 카드 본체에 버튼 추가
       cardBody.appendChild(editButton);
       cardBody.appendChild(deleteButton);
 
-      // Append the card body to the card
+      // 카드 본체를 카드에 추가합니다
       diaryCard.appendChild(cardBody);
 
-      // Append the card to the row
+      // 카드를 행에 추가합니다
       row.appendChild(diaryCard);
     } else {
       alert(data.message);
@@ -94,7 +94,7 @@ const renderDiary = async (diary_id) => {
     console.error(error);
   }
 };
-// Call getDiary when the DOM is loaded
+// DOM이 로드되면 getDiary 호출
 document.addEventListener('DOMContentLoaded', getDiary);
 
 // 여행 일지, 이미지 삭제

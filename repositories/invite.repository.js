@@ -33,6 +33,14 @@ class InviteRepository {
   };
 
   createInvite = async ({ tour_id, user_id }) => {
+    //tour_id 와 user_id를 가진 초대 정보가 있는 지 확인 후 이미 초대 된 유저이면
+    //에러 발생
+
+    const existingInvite = await Invite.findOne({ where: { tour_id, user_id } });
+
+    if (existingInvite) {
+      throw { code: 409, message: 'The user has already been invited.' };
+    }
     return await Invite.create({ tour_id, user_id });
   };
 

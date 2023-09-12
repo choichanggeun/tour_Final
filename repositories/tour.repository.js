@@ -41,6 +41,43 @@ class TourRepository {
       return data;
     }
   };
+
+  searchTour = async (search_data, search_type) => {
+    if (search_type === '제목') {
+      const findTour = await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } }, include: [{ model: User }, { model: TourSite }] });
+      return findTour.map((tour) => {
+        return {
+          nickname: tour.User.nickname,
+          title: tour.title,
+          site_name: tour.TourSite.site_name,
+          site_img: tour.TourSite.site_img,
+        };
+      });
+    } else if (search_type === '사용자') {
+      const findUser = await User.findAll({
+        where: { nickname: { [Op.like]: '%' + search_data + '%' } },
+        include: [
+          {
+            model: Tour,
+            include: [
+              {
+                model: TourSite,
+              },
+            ],
+          },
+        ],
+      });
+      return findUser.map((user) => {
+        return {
+          nickname: user.nickname,
+          title: user.Tours[0].title,
+          site_name: user.Tours[0].TourSite.site_name,
+          site_img: user.Tours[0].TourSite.site_img,
+        };
+      });
+    }
+  };
+
   //좋아요 순으로 여행계획 조회하기
   getLikeList = async () => {
     let value = await redisCli.get('tour');
@@ -125,6 +162,18 @@ class TourRepository {
 
   getVerifyTour = async (user_id, tour_id) => {
     return await Tour.findOne({ where: { user_id, id: tour_id } });
+  };
+
+  //임시 여행계획작성
+  createTestTour = async ({ tour_site_id, user_id, title, start_date, end_date, status }) => {
+    return await Tour.create({
+      tour_site_id: tour_site_id,
+      user_id: user_id,
+      title,
+      start_date,
+      end_date,
+      status: status,
+    });
   };
 }
 

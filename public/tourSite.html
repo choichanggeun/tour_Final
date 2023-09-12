@@ -145,84 +145,89 @@
       #pagingul li.on a {
         color: #fff;
       }
+
+      #usernickname {
+        white-space: nowrap;
+        display: inline-block;
+      }
     </style>
   </head>
 
   <body>
-    <body>
-      <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
-      <div class="loader loader-bg">
-        <div class="loader-inner ball-pulse-rise">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
+    <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
+    <div class="loader loader-bg">
+      <div class="loader-inner ball-pulse-rise">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+    <header>
+      <div class="small-top">
+        <div class="container">
+          <!-- 시간 가져오는 부분 -->
+          <div class="col-lg-4 date-sec hidden-sm-down">
+            <div id="Date"></div>
+          </div>
+
+          <div class="col-lg-3 offset-lg-5">
+            <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
+            <div class="social-icon">
+              <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
+            </div>
+          </div>
         </div>
       </div>
-      <header>
-        <div class="small-top">
-          <div class="container">
-            <!-- 시간 가져오는 부분 -->
-            <div class="col-lg-4 date-sec hidden-sm-down">
-              <div id="Date"></div>
-            </div>
-  
-            <div class="col-lg-3 offset-lg-5">
-              <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
-              <div class="social-icon">
-                <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
-              </div>
-            </div>
+
+     <!-- 메인페이지 로고 및 드롭박스-->
+     <div class="top-head left">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <h1>
+              <a href="/index.html">  
+              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+              <small>여행 계획을 알차게!</small></h1>
           </div>
-        </div>
-        <!-- 메인페이지 로고 및 드롭박스-->
-        <div class="top-head left">
-          <div class="container">
-            <div class="row">
-              <div class="col-md-6 col-lg-4">
-                <h1>
-                  <a href="/index.html">  
-                  <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
-                  <small>여행 계획을 알차게!</small></h1>
-              </div>
-              <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
-                <!-- 사용자 부분 -->
-                <nav class="nav nav-inline">
-                  <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
-                          <a href="#" class="nav-link">
-                    <span class="ping"></span>
-                    <i class="fa fa-envelope-o"></i
-                  ></a> -->
-                  <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
-                  <div class="container header-container">
-                    <div class="button-container right-aligned-buttons">
-                      <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                      <div id="profileimg" class="dropdown" style='display: none;'>
-                        <div class='nav-link'>
-                          <span id='usernickname'>홍길동</span>
-                          <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
-                        </div>
-                          <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
-                            <a href="./mypage.html">마이페이지</a>
-                            <a href="#" onclick="">채팅</a>
-                            <a href="#" onclick="">로그아웃</a>
-                        </div> 
-                      </div> 
+          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
+            <!-- 사용자 부분 -->
+            <nav class="nav nav-inline">
+              <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
+                      <a href="#" class="nav-link">
+                <span class="ping"></span>
+                <i class="fa fa-envelope-o"></i
+              ></a> -->
+              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+              <div class="container header-container">
+                <div class="button-container right-aligned-buttons">
+                  <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                  <div id="profileimg" class="dropdown" style='display: none;'>
+                    <div class='nav-link'>
+                      <span id='usernickname'>홍길동</span>
+                      <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
+                    </div>
+                      <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
+                        <a href="./mypage.html">마이페이지</a>
+                        <a href="#" onclick="">채팅</a>
+                        <a href="#" onclick="">로그아웃</a>
                     </div> 
                   </div> 
-                       </div>
-                          </div>
-                       
+                </div> 
+              </div> 
+                   </div>
                       </div>
-                    </div>
+                   
                   </div>
-                </nav>
+                </div>
               </div>
-            </div>
+            </nav>
           </div>
         </div>
-      </header>
+      </div>
+    </div>
+  </header>
 
     <nav class="navbar top-nav">
       <div class="container">
@@ -272,7 +277,7 @@
           <div class="row" id="siteList"></div>
         </div>
       </div>
-      <div style="display: flex; justify-content: center">
+      <div style="display: flex; justify-content: center; margin: 10px;">
         <ul id="pagingul"></ul>
         <span id="displayCount"></span>
         <table id="dataTableBody"></table>
