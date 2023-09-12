@@ -121,9 +121,19 @@ class ToursiteRepository {
       return await TourSite.findAll({ where: { site_name: { [Op.like]: '%' + search_data + '%' } } });
     }
   };
+
   getFirstSite = async () => {
-    return await TourSite.findAll({ limit: 12 });
+    let value = await redisCli.get('firstSite', 0, -1);
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      let data = await TourSite.findAll({ limit: 12 });
+      await redisCli.set('firstSite', JSON.stringify(data));
+      await redisCli.expire('firstSite', 360);
+      return data;
+    }
   };
+
   //이거 먼저 실행해야함
   firstTourSite = async () => {
     for (let i = 0; i < 12; i++) {

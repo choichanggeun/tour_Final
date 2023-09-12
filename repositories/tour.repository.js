@@ -182,8 +182,10 @@ class TourRepository {
         mapTours.push(mapinvitedTours[i]);
       }
     }
+
     return mapTours;
   };
+
   // 여행 계획 수정
   updateTour = async (tour_id, title, start_date, end_date) => {
     const updatedTour = await Tour.update({ title, start_date, end_date }, { where: { id: tour_id } });

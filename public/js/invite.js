@@ -21,6 +21,7 @@ inviteUser.addEventListener('click', function () {
     })
       .then((response) => response.json())
       .then((data) => {
+        alert(data.message);
         const invitedUser = data.result;
         const inviteCard = `<div><strong>${invitedUser.nickname}</strong></div>`;
         invitedUserList.innerHTML += inviteCard;
