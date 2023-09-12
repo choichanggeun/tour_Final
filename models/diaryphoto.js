@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Diary, {
         targetKey: 'id',
         foreignKey: 'diary_id',
+        onDelete: 'CASCADE',
       });
     }
   }

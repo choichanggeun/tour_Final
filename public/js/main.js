@@ -1,26 +1,28 @@
-//배너 기능 완료되면 추가적으로 넣어야합니다 잠시 주석처리 하겠습니다.
-// const testbtn = document.querySelector('#testbtn');
-// testbtn.addEventListener('click', async () => {
-//   const image = document.querySelector('#post-upload-img').files[0];
-//   const formData = new FormData();
-//   formData.append('image', image);
-//   try {
-//     await fetch('/banner', {
-//       method: 'POST',
-//       body: formData,
-//     });
-//     alert('게시글을 작성하였습니다.');
-//     window.location.href = '/';
-//   } catch (error) {
-//     console.log(error);
-//     alert('게시글 작성에 실패하였습니다.');
-//   }
-// });
+const postUploadBtn = document.querySelector('#post-upload-btn');
+postUploadBtn.addEventListener('click', async () => {
+  const image = document.querySelector('#post-upload-img').files[0];
+  const formData = new FormData();
+  formData.append('image', image);
+  try {
+    await fetch('/banner', {
+      method: 'POST',
+      body: formData,
+    });
+    alert('게시글을 작성하였습니다.');
+    window.location.href = '/';
+  } catch (error) {
+    console.log(error);
+    alert('게시글 작성에 실패하였습니다.');
+  }
+});
 
 const indicators = document.getElementById('carousel-indicators');
 const bannerListbox = document.getElementById('bannerlistbox');
+const searchButton = document.getElementById('search-button');
+const enterInput = document.getElementById('search-input');
 window.onload = function () {
   checkLoggedInStatus();
+
   getSiteData();
   fetch('/banner', {
     method: 'GET',
@@ -98,7 +100,6 @@ function checkLoggedInStatus() {
             dropdownMenu.style.display = 'none';
           }
         });
-
         document.querySelector('#loginbtn').style.display = 'none';
       } else {
         document.querySelector('#loginbtn').style.display = 'block';
@@ -149,3 +150,34 @@ function getSiteData() {
       });
     });
 }
+
+function checkLoggedInAdmin() {
+  fetch('/admin/me', {
+    method: 'GET',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // 응답 처리
+      if (data.data) {
+        document.querySelector('#post-upload-img').style.display = 'block';
+        document.querySelector('#post-upload-btn').style.display = 'block';
+        return data.data;
+      }
+    })
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+}
+enterInput.addEventListener('keyup', function (event) {
+  if (event.keyCode === 13) {
+    const searchInput = document.getElementById('search-input').value;
+    const search_type = '제목';
+    window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+  }
+});
+
+searchButton.addEventListener('click', function () {
+  const searchInput = document.getElementById('search-input').value;
+  const search_type = '제목';
+  window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+});

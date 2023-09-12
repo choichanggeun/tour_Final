@@ -13,8 +13,8 @@ class LikeRepository {
     return await Like.destroy({ where: { user_id, tour_id } });
   }
 
-  async getLikes(user_id) {
-    return await Like.findAll({ where: { user_id } });
+  async getLikes(tour_id) {
+    return await Like.count({ where: { tour_id: tour_id } });
   }
 }
 

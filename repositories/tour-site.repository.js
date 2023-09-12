@@ -71,6 +71,27 @@ const list = [
     mapx: 129.05562775,
     mapy: 35.1379222,
   },
+  {
+    site_name: '경주',
+    site_address: '경상북도 경주시 건천읍 경주역로 80',
+    site_img: 'https://a.cdn-hotels.com/gdcs/production102/d1023/e3c18663-14e2-49e3-b9f0-bd7a029a661f.jpg',
+    mapx: 129.0820477,
+    mapy: 35.4754114,
+  },
+  {
+    site_name: '전주',
+    site_address: '전라북도 전주시 덕진구 동부대로 680',
+    site_img: 'https://www.jeollailbo.com/news/photo/202305/691824_91398_5826.jpg',
+    mapx: 127.1479532,
+    mapy: 35.8242238,
+  },
+  {
+    site_name: '춘천',
+    site_address: '강원특별자치도 춘천시 공지로 591',
+    site_img: 'https://www.hotelrestaurant.co.kr/data/photos/20220834/art_16613161004291_b2fc1f.jpg',
+    mapx: 127.7169083,
+    mapy: 37.8847972,
+  },
 ];
 class ToursiteRepository {
   getTourSiteList = async () => {
@@ -91,16 +112,7 @@ class ToursiteRepository {
 
   getTourSitebyId = async ({ tour_site_id }) => {
     const data = await TourSite.findOne({ where: { id: tour_site_id } });
-    return {
-      data: {
-        id: data.id,
-        site_name: data.site_name,
-        site_address: data.site_address,
-        site_img: data.site_img,
-        mapx: data.mapx,
-        mapy: data.mapy,
-      },
-    };
+    return data;
   };
   searchSiteList = async (search_data, search_type) => {
     if (search_type === '주소') {
@@ -110,15 +122,16 @@ class ToursiteRepository {
     }
   };
   getFirstSite = async () => {
-    return await TourSite.findAll({ limit: 9 });
+    return await TourSite.findAll({ limit: 12 });
   };
+  //이거 먼저 실행해야함
   firstTourSite = async () => {
-    for (let i = 0; i < 9; i++) {
+    for (let i = 0; i < 12; i++) {
       await TourSite.create(list[i]);
     }
   };
   createTourSite = async (startNumber) => {
-    var i = startNumber; // max = 7, min = 1
+    var i = startNumber; // max = 8, min = 1(서울) 2(인천)
     let Code = sigunguCode[i - 1];
     let h = 0;
     const interval = setInterval(async function () {

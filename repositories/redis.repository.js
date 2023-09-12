@@ -1,23 +1,17 @@
 const redis = require('redis');
 //Redis 실행
-const client = redis.createClient();
-(async () => {
-  await client.connect();
-})();
-client.on('error', function (err) {
-  console.log('Error ' + err);
-});
-
+const client = require('../utils/redis');
 class RedisRepository {
   getRedis = async (key, day) => {
     const REDIS_PREFIX = 'KEY_';
     const REDIS_SUFFIX = 'DAY_';
     return await client.lRange(REDIS_PREFIX + key + REDIS_SUFFIX + day, 0, -1);
   };
-  createRedis = async (key, site_id, day) => {
+  createRedis = async (key, site_id, day, start_time, end_time) => {
     const REDIS_PREFIX = 'KEY_';
     const REDIS_SUFFIX = 'DAY_';
-    await client.RPUSH(REDIS_PREFIX + key + REDIS_SUFFIX + day, JSON.stringify(site_id));
+    const formdata = { site_id, day, start_time, end_time };
+    await client.RPUSH(REDIS_PREFIX + key + REDIS_SUFFIX + day, JSON.stringify(formdata));
     await client.expire(REDIS_PREFIX + key + REDIS_SUFFIX + day, 1800);
   };
   deleteRedis = async (key, day) => {

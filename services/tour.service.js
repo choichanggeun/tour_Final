@@ -1,8 +1,8 @@
 const TourRepository = require('../repositories/tour.repository');
-
+const InviteRepository = require('../repositories/invite.repository');
 class TourService {
   tourRepository = new TourRepository();
-
+  inviteRepository = new InviteRepository();
   // 여행 계획 작성
   createTour = async ({ user_id, title, start_date, end_date, tour_site_id }) => {
     let now = new Date();
@@ -84,8 +84,11 @@ class TourService {
   };
   //여행계획 수정
   putTour = async (user_id, tour_id, title, start_date, end_date) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
-
+    const valiUser = await this.tourRepository.getTourOne(tour_id);
+    if (valiUser.user_id !== user_id) {
+      const invitedUser = await this.inviteRepository.findByUserId({ tour_id, user_id });
+      if (!invitedUser) throw { code: 400, message: '초대받지 못한 유저입니다.' };
+    }
     const oldDate = new Date(start_date);
     const newDate = new Date(end_date);
     let diff = Math.abs(newDate.getTime() - oldDate.getTime());
@@ -99,10 +102,13 @@ class TourService {
   };
   //여행계획 삭제
   deleteTour = async ({ user_id, tour_id }) => {
-    if (!tour_id) throw { code: 400, message: 'tour_id가 필요합니다.' };
+    const valiUser = await this.tourRepository.getTourOne(tour_id);
+    if (valiUser.user_id !== user_id) {
+      const invitedUser = await this.inviteRepository.findByUserId({ tour_id, user_id });
+      if (!invitedUser) throw { code: 400, message: '초대받지 못한 유저입니다.' };
+    }
 
     const deletedTour = await this.tourRepository.deleteTour({ user_id, tour_id });
-
     if (!deletedTour) throw { code: 400, message: '여행 계획 삭제에 실패했습니다.' };
 
     return { code: 200, message: '여행 계획이 성공적으로 삭제되었습니다.' };

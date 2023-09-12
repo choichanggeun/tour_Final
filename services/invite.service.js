@@ -8,13 +8,14 @@ class InviteService {
     const findInvite = await this.inviteRepository.findInvite({ tour_id });
     const findUser = findInvite.map((user) => {
       return {
+        id: user.user_id,
         nickname: user.User.nickname,
       };
     });
     return { code: 200, data: findUser };
   };
 
-  inviteEmail = async ({ tour_id, email, user_id }) => {
+  inviteEmail = async ({ tour_id, email, user_id, tour_site_id }) => {
     const existsEmail = await this.inviteRepository.findByEmail({ email });
     const existsUserId = await this.inviteRepository.findByUserId({ tour_id, user_id });
 
@@ -26,16 +27,17 @@ class InviteService {
       tour_id,
       email,
       user_id,
+      tour_site_id,
     });
     return { code: 201, message: '사용자 초대가 완료되었습니다.' };
   };
 
-  createInvite = async ({ tour_id, user_id }) => {
+  createInvite = async ({ tour_id, user_id, tour_site_id }) => {
     await this.inviteRepository.createInvite({
       tour_id,
       user_id,
     });
-    return { code: 201, message: '사용자 초대가 완료되었습니다.' };
+    return { code: 201, message: '환영합니다.', link: `입장을 위한 링크입니다. http://localhost:3000/tour.html?tourId=${tour_id}&id=${tour_site_id}` };
   };
 
   deleteInvite = async ({ user_id, invite_id }) => {

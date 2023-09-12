@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                             tourItemElement.className = 'tour-item';
 
                             titleElement.textContent = item.title;
-                            imgElement.src = item.TourSite.site_img;
+                            imgElement.src = item.site_img;
 
                             tourItemElement.appendChild(titleElement);
                             tourItemElement.appendChild(imgElement);
@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                 tourItemElement.className = 'tour-item';
 
                 titleElement.textContent = item.title;
-                imgElement.src = item.TourSite.site_img;
+                imgElement.src = item.site_img;
 
                 tourItemElement.appendChild(titleElement);
                 tourItemElement.appendChild(imgElement);

@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Tour, {
         targetKey: 'id',
         foreignKey: 'tour_id',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(models.Place, {

@@ -1,4 +1,46 @@
-const renderDiaryCards = async () => {
+// 가져온 마지막 여행 일지 id
+let cursor;
+
+// 검색 기능
+const searchButton = document.getElementById('search-diaries-button');
+const searchInput = document.getElementById('search-diaries-input');
+const cardList = document.getElementById('card-list');
+
+const urlParams = new URLSearchParams(window.location.search);
+const search_data = urlParams.get('search_data');
+
+searchInput.addEventListener('keyup', function (event) {
+  if (event.key === 'Enter') {
+    const searchInputValue = searchInput.value;
+    window.location.href = `diary-all.html?search_data=${searchInputValue}`;
+  }
+});
+
+searchButton.addEventListener('click', function () {
+  const searchInputValue = searchInput.value;
+  window.location.href = `diary-all.html?search_data=${searchInputValue}`;
+});
+
+// 초기 데이터 가져오기
+getAllDiaries();
+
+// 무한 스크롤
+let timer;
+addEventListener('scroll', function () {
+  // 화면에 보여지는 높이, 스크롤 높이, 스크롤 가능한 전체 높이
+  if (window.innerHeight + window.scrollY + 1000 >= document.body.scrollHeight) {
+    if (!timer) {
+      timer = setTimeout(() => {
+        timer = null;
+        // 데이터 없으면 조회 멈추기
+        if (cursor > 1) getAllDiaries();
+      }, 100);
+    }
+  }
+});
+
+// 모든 여행 일지, 이미지 조회
+async function getAllDiaries() {
   try {
     const response = await fetch('/diaries', {
       method: 'GET',
@@ -9,9 +51,6 @@ const renderDiaryCards = async () => {
     const { data } = await response.json();
     const { images } = await response2.json();
     if (response.ok) {
-      const cardList = document.getElementById('card-list');
-      cardList.innerHTML = ''; // Clear existing content
-
       for (let diary of data) {
         let diaryImg;
         if (images) {
@@ -84,7 +123,7 @@ const renderDiaryCards = async () => {
   } catch (error) {
     console.error(error);
   }
-};
+}
 
 // Call renderDiaryCards when the DOM is loaded
 document.addEventListener('DOMContentLoaded', renderDiaryCards);
