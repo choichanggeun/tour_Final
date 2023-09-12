@@ -1,4 +1,4 @@
-const { Tour, User, TourSite, Like, PlanDate, Invite, sequelize } = require('../models');
+const { Tour, User, TourSite, Like, PlanDate, Invite } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
@@ -140,16 +140,51 @@ class TourRepository {
   };
 
   // 모든 여행 계획 조회
-  getUserTour = async (user_id, tour_cursor) => {
-    const sqlQuery = `
-    SELECT * FROM Tours WHERE user_id = ?
-    ORDER BY Tours.id DESC LIMIT 12
-    `;
-
-    return await sequelize.query(sqlQuery, {
-      replacements: { user_id, tour_cursor }, // 변수의 값 적용
-      type: sequelize.QueryTypes.SELECT,
+  getUserTour = async (user_id) => {
+    const tours = await Tour.findAll({
+      where: {
+        user_id: user_id,
+      },
+      attributes: ['id', 'title', 'start_date', 'end_date', 'user_id', 'tour_site_id'],
+      include: [
+        {
+          model: TourSite,
+          attributes: ['site_img'],
+        },
+      ],
+      order: [['id', 'DESC']],
     });
+    const mapTours = tours.map((tour) => {
+      return {
+        id: tour.id,
+        title: tour.title,
+        start_date: tour.start_date,
+        end_date: tour.end_date,
+        site_img: tour.TourSite.site_img,
+      };
+    });
+
+    const invitedTours = await Invite.findAll({
+      where: { user_id: user_id },
+      include: [{ model: Tour, include: [{ model: TourSite }] }],
+      order: [['id', 'DESC']],
+    });
+
+    const mapinvitedTours = invitedTours.map((tour) => {
+      return {
+        id: tour.Tour.id,
+        title: tour.Tour.title,
+        start_date: tour.Tour.start_date,
+        end_date: tour.Tour.end_date,
+        site_img: tour.Tour.TourSite.site_img,
+      };
+    });
+    if (mapinvitedTours) {
+      for (let i = 0; i < mapinvitedTours.length; i++) {
+        mapTours.push(mapinvitedTours[i]);
+      }
+    }
+    return mapTours;
   };
 
   // 여행 계획 수정

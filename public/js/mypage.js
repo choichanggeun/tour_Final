@@ -31,33 +31,12 @@ document.addEventListener('DOMContentLoaded', async function () {
     .catch((error) => console.error('Error:', error));
 });
 
-// 여행 계획 커서 값
-let tour_cursor;
-
-//초기 데이터 가져오기
-getMyTours();
-
-// 무한 스크롤
-let timer;
-const planBox = document.getElementById('plan-box');
-planBox.addEventListener('scroll', function () {
-  // 화면에 보여지는 높이, 스크롤 높이, 스크롤 가능한 전체 높이
-  if (planBox.clientHeight + planBox.scrollTop + 500 >= planBox.scrollHeight) {
-    if (!timer) {
-      timer = setTimeout(() => {
-        timer = null;
-        getMyTours();
-      }, 100);
-    }
-  }
-});
-
 // 여행계획 불러오기
+getMyTours();
 function getMyTours() {
-  fetch(`/mytours?tour_cursor=${tour_cursor}`)
+  fetch(`/mytours`)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result.data);
       var mainContentTour = document.querySelector('#main-content');
       var tourDataList = result.data;
 
@@ -79,7 +58,7 @@ function getMyTours() {
             tourItemElement.className = 'tour-item';
 
             titleElement.textContent = item.title;
-            imgElement.src = item.TourSite.site_img;
+            imgElement.src = item.site_img;
 
             tourItemElement.appendChild(titleElement);
             tourItemElement.appendChild(imgElement);
@@ -87,7 +66,6 @@ function getMyTours() {
             mainContentTour.appendChild(tourItemElement);
           }
         });
-        tour_cursor = result.data[result.data.length - 1].id;
       }
     })
     .catch((error) => console.error('Error:', error));

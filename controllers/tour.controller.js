@@ -77,8 +77,7 @@ class TourController {
   getTour = async (req, res, next) => {
     try {
       const { id: user_id } = res.locals.user;
-      const { tour_cursor } = req.query;
-      const { data, code, message } = await this.tourService.getTourData({ user_id, tour_cursor });
+      const { data, code, message } = await this.tourService.getTourData({ user_id });
       return res.status(code).json({ message, data });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });

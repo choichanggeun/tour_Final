@@ -21,7 +21,7 @@ class CommentRepository {
 
   // 댓글 아이디 찾기
   findById = async ({ user_id, comment_id }) => {
-    return await Comment.findOne({ where: { [Op.and]: [{ user_id }, { id: comment_id }] } });
+    return await Comment.findOne({ where: { user_id, id: comment_id } });
   };
 
   // 댓글 수정
