@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Tour, {
         targetKey: 'id',
         foreignKey: 'tour_id',
+        onDelete: 'CASCADE',
       });
 
       this.hasMany(models.Comment, {
@@ -21,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.User, {
         targetKey: 'id',
         foreignKey: 'user_id',
+        onDelete: 'CASCADE',
       });
     }
   }

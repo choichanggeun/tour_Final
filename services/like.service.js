@@ -24,9 +24,8 @@ class LikeService {
     return { status: 201, message: '좋아요를 하지않은 유저입니다.' };
   };
 
-  async getLikes(user_id) {
-    const data = await this.likeRepository.getLikes(user_id);
-
+  async getLikes(tour_id) {
+    const data = await this.likeRepository.getLikes(tour_id);
     return { data };
   }
 }

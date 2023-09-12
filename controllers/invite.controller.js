@@ -26,11 +26,12 @@ class InviteController {
     try {
       const { id: user_id } = res.locals.user;
       const { tour_id } = req.params;
-      const { inviteEmail: email } = req.body;
+      const { inviteEmail: email, tour_site_id } = req.body;
       const { code, message, result } = await this.inviteService.inviteEmail({
         tour_id,
         email,
         user_id,
+        tour_site_id,
       });
 
       return res.status(code).json({ message, result });
@@ -48,6 +49,7 @@ class InviteController {
       await this.inviteService.createInvite({
         tour_id: inviteData.tour_id,
         user_id: inviteData.id,
+        tour_site_id: inviteData.tour_site_id,
       });
 
       //초대 이메일이 왔을 때 링크 버튼을 누르면  검증 후 현재 작성하고 있는  tour.html로  페이지 이동

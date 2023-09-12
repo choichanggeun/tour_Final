@@ -37,7 +37,7 @@
         overflow: hidden;
         display: none;
         position: absolute;
-        z-index: 1; /*다른 요소들보다 앞에 배치*/
+        z-index: 9999; /*다른 요소들보다 앞에 배치*/
       }
 
       .dropdown-content a {
@@ -438,8 +438,8 @@
       </div>
       <div class="modal-close-area" id="timeCloseBtn">X</div>
       <div class="modal-conten">
-        <input type="start_time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
-        <input type="end_time" value="" id="endTime" />
+        <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
+        <input type="time" value="" id="endTime" />
         <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
       </div>
     </div>

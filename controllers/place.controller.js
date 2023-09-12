@@ -31,7 +31,6 @@ class PlaceController {
       const { days, tour_site_id, start_time, end_time } = req.body;
       console.log(req.body);
       const { code, message } = await this.placeService.createPlaceBytourId(user_id, tour_id, days, tour_site_id, start_time, end_time);
-      console.log(code, message);
       return res.status(code).json({ code, message });
     } catch (err) {
       if (err.code) return res.status(err.code).json({ message: err.message });
@@ -65,16 +64,8 @@ class PlaceController {
     try {
       const user_id = res.locals.user.id;
       const { place_id } = req.params;
-      const { plan_date_id, tour_site_id, start_time, end_time } = req.body;
-
-      const { code, message } = await this.placeService.putPlace({
-        plan_date_id,
-        tour_site_id,
-        user_id,
-        place_id,
-        start_time,
-        end_time,
-      });
+      const { id, start_time, end_time } = req.body;
+      const { code, message } = await this.placeService.putPlace(place_id, id, start_time, end_time);
 
       return res.status(code).json({ message, code });
     } catch (err) {
@@ -92,7 +83,7 @@ class PlaceController {
         user_id,
         place_id,
       });
-      return res.status(code).json({ message });
+      return res.status(code).json({ code, message });
     } catch (err) {
       console.error(err);
       res.status(500).send('알 수 없는 에러가 발생');
