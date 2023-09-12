@@ -8,6 +8,7 @@ const createTourBtn = document.getElementById('createTour');
 const closeBtn = document.getElementById('tourcloseBtn');
 const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
+
 let linePath = [];
 let markers = [];
 let pathLines = [];
@@ -413,29 +414,33 @@ tourDays.addEventListener('change', function () {
       console.error(error);
     });
 });
+document.addEventListener('DOMContentLoaded', (event) => {
+  // 여기서 io 객체와 관련 코드를 사용하세요.
+  const socket = io();
 
-createTourBtn.addEventListener('click', function () {
-  const days = tourDays.length;
-  fetch(`/${tour_id}/planDate`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ days }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.code === 200) {
-        alert(data.message);
-        window.location.href = '/';
-      }
-      if (data.code === 400) {
-        alert(data.message);
-      }
-    })
-    .catch((error) => {
-      console.log(error);
-    });
+  createTourBtn.addEventListener('click', function () {
+    const days = tourDays.length;
+    const formData = { days };
+
+    // "createTour" 이벤트를 서버에 보냅니다.
+    socket.emit('createTour', { tourId: tour_id, formData });
+  });
+
+  // 백엔드에서 보낸 "tour created" 이벤트가 오면 알림을 표시합니다.
+  socket.on('tour created', function (data) {
+    if (data.code === 200) {
+      alert(data.message);
+      window.location.href = '/';
+    }
+
+    if (data.code === 400) {
+      alert(data.message);
+    }
+  });
+
+  socket.on('error', function (error) {
+    console.log(error);
+  });
 });
 
 function deletePlace() {
