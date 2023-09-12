@@ -152,6 +152,7 @@ class TourRepository {
           attributes: ['site_img'],
         },
       ],
+      order: [['id', 'DESC']],
     });
     const mapTours = tours.map((tour) => {
       return {
@@ -166,6 +167,7 @@ class TourRepository {
     const invitedTours = await Invite.findAll({
       where: { user_id: user_id },
       include: [{ model: Tour, include: [{ model: TourSite }] }],
+      order: [['id', 'DESC']],
     });
 
     const mapinvitedTours = invitedTours.map((tour) => {
@@ -184,6 +186,7 @@ class TourRepository {
     }
     return mapTours;
   };
+
   // 여행 계획 수정
   updateTour = async (tour_id, title, start_date, end_date) => {
     const updatedTour = await Tour.update({ title, start_date, end_date }, { where: { id: tour_id } });

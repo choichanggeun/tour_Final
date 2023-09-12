@@ -21,8 +21,8 @@ class DiaryService {
   };
 
   // 내 모든 여행 일지 조회
-  getMyDiaries = async (user_id) => {
-    return await this.diaryRepository.getMyDiaries(user_id);
+  getMyDiaries = async (user_id, diary_cursor) => {
+    return await this.diaryRepository.getMyDiaries(user_id, diary_cursor);
   };
 
   // 여행 계획 여행 일지 조회

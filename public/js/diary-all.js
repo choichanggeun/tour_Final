@@ -2,9 +2,8 @@
 let cursor;
 
 // 검색 기능
-const searchButton = document.getElementById('search-diaries-button');
-const searchInput = document.getElementById('search-diaries-input');
-const cardList = document.getElementById('card-list');
+const searchButton = document.getElementById('search-button');
+const searchInput = document.getElementById('search-input');
 
 const urlParams = new URLSearchParams(window.location.search);
 const search_data = urlParams.get('search_data');
@@ -22,7 +21,7 @@ searchButton.addEventListener('click', function () {
 });
 
 // 초기 데이터 가져오기
-getAllDiaries();
+renderDiaryCards();
 
 // 무한 스크롤
 let timer;
@@ -32,25 +31,32 @@ addEventListener('scroll', function () {
     if (!timer) {
       timer = setTimeout(() => {
         timer = null;
-        // 데이터 없으면 조회 멈추기
-        if (cursor > 1) getAllDiaries();
+        renderDiaryCards();
       }, 100);
     }
   }
 });
 
-// 모든 여행 일지, 이미지 조회
-async function getAllDiaries() {
+async function renderDiaryCards() {
   try {
-    const response = await fetch('/diaries', {
-      method: 'GET',
-    });
+    let response;
+    if (search_data) {
+      response = await fetch(`/search_diaries?cursor=${cursor}&search_data=${search_data}`, {
+        method: 'GET',
+      });
+    } else {
+      response = await fetch(`/diaries?cursor=${cursor}`, {
+        method: 'GET',
+      });
+    }
     const response2 = await fetch('/diaries/photos', {
       method: 'GET',
     });
     const { data } = await response.json();
     const { images } = await response2.json();
     if (response.ok) {
+      const cardList = document.getElementById('card-list');
+
       for (let diary of data) {
         let diaryImg;
         if (images) {
@@ -117,6 +123,7 @@ async function getAllDiaries() {
         // Append card to card list
         cardList.appendChild(card);
       }
+      cursor = data[data.length - 1].id;
     } else {
       alert(data.message);
     }
@@ -124,6 +131,3 @@ async function getAllDiaries() {
     console.error(error);
   }
 }
-
-// Call renderDiaryCards when the DOM is loaded
-document.addEventListener('DOMContentLoaded', renderDiaryCards);

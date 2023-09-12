@@ -33,11 +33,9 @@ class InviteController {
         user_id,
         tour_site_id,
       });
-
       return res.status(code).json({ message, result });
     } catch (err) {
       if (err.status) return res.status(err.status).json({ message: err.message });
-      console.log(err);
       throw res.status(500).json({ message: err.message });
     }
   };
