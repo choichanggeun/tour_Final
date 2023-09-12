@@ -1,4 +1,4 @@
-const { Tour, User, TourSite, Like, PlanDate, Invite } = require('../models');
+const { Tour, User, TourSite, Like, PlanDate, Invite, sequelize } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
@@ -141,21 +141,15 @@ class TourRepository {
 
   // 모든 여행 계획 조회
   getUserTour = async (user_id, tour_cursor) => {
-    const queryOptions = {
-      where: {
-        user_id,
-        ...(tour_cursor !== 'undefined' && { id: { [Op.lt]: parseInt(tour_cursor) } }),
-      },
-      include: [
-        {
-          model: TourSite,
-          attributes: ['site_img'],
-        },
-      ],
-      limit: 12,
-      order: [['id', 'DESC']],
-    };
-    return await Tour.findAll(queryOptions);
+    const sqlQuery = `
+    SELECT * FROM Tours WHERE user_id = ?
+    ORDER BY Tours.id DESC LIMIT 12
+    `;
+
+    return await sequelize.query(sqlQuery, {
+      replacements: { user_id, tour_cursor }, // 변수의 값 적용
+      type: sequelize.QueryTypes.SELECT,
+    });
   };
 
   // 여행 계획 수정
