@@ -1,11 +1,7 @@
 const { TourSite } = require('../models');
 const axios = require('axios');
 const { Op } = require('sequelize');
-const redis = require('redis');
-//Redis 실행
-const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 반드시 설정 !!
-redisClient.connect().then(); // redis v4 연결 (비동기)
-const redisCli = redisClient.v4;
+const redisCli = require('./../utils/redis');
 const sigunguCode = [25, 10, 5, 9, 5, 16, 5, 1];
 const list = [
   {

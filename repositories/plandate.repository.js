@@ -1,13 +1,5 @@
 const { PlanDate, User, Tour, Place } = require('../models');
-const redis = require('redis');
-//Redis 실행
-const client = redis.createClient();
-(async () => {
-  await client.connect();
-})();
-client.on('error', function (err) {
-  console.log('Error ' + err);
-});
+const redisCli = require('./../utils/redis');
 
 class PlanDateRepository {
   //여행 일자 등록
