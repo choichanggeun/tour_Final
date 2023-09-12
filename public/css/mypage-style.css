@@ -1,5 +1,5 @@
 body {
-  background-color: skyblue;
+  background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -7,14 +7,19 @@ body {
 }
 
 #nickname-box {
-  border: 1px solid #000;
+
   padding: 20px;
   width: 650px;
   height: 120px;
   text-align: center;
-  background-color: white;
+  background-color: transparent;
   border-radius: 10px;
   margin-top: 30px
+}
+
+#user-nickname {
+  font-size: 20px; 
+  font-weight: bold;
 }
 
 .mb-3 {
@@ -37,13 +42,14 @@ body {
 .btn-primary {
   margin-top: 30px;
   color: #fff;
-  background-color: #007bff;
+  background-color: #000000;
   width: 100px;
   height: 40px;
+  box-shadow: 0 4px 8px rgb(0 79 248 / 36%);
 }
 
 #main-content .tour-item {
-  width: calc(33% - 10px); /* 가로로 3개씩 배치하고 간격을 조절 */
+  width: calc(25% - 20px); 
   height: auto; 
   border: 1px solid black; /* 테두리 설정 */
   box-shadow: 2px2px6px rgba(0, 0, 0, 0.1);
@@ -54,20 +60,24 @@ body {
   text-align: center;
   padding: 10px;
   float: left;
+  background-color: #0074f947;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 36%);
 }
 
 #main-content-diary .diary-item {
-  width: calc(33% - 10px); /* 가로로 3개씩 배치하고 간격을 조절 */
+  width: calc(25% - 20px); 
   height: auto; 
   border: 1px solid black; /* 테두리 설정 */
   box-shadow: 2px2px6px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px; /* 아래 여백 설정 */
   border-radius: 5px;
   box-sizing: border-box;
-  font-size: 20pt;
+  font-size: 15pt;
   text-align: center;
   padding: 10px;
   float: left; /* 카드를 왼쪽으로 정렬 */
+  background-color: #0074f947;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 36%);
 }
 
 #main-content .tour-item p,
@@ -84,10 +94,9 @@ body {
   
   #main-content-diary .diary-item img {
     width: 100%;
-    height: 200px;
-    cursor: pointer;
-    object-fit: cover;
-    margin-bottom: 10px;
+    height: 300px;
+    
+    /* margin-bottom: 10px; */
   }
 
   #main-content {
@@ -125,14 +134,16 @@ body {
 }
 
 h3 {
-  background-color: white;
-  border: 1px solid black;
-  padding: 10px;
-  width: 300px; 
+  background-color: rgb(0, 0, 0);
+  border: 1px solid rgb(68, 0, 255);
+  padding: 3px;
+  width: 200px; 
   display: block; 
   border-radius: 10px;
   text-align: center; /* 텍스트를 중앙 정렬합니다. */
   margin: 0 auto; /* 좌우 여백을 자동으로 조절하여 요소를 가운데 정렬합니다. */
+  font-size: 20px;
+  color: white;
 }
 
 .title-element {
@@ -140,3 +151,11 @@ h3 {
   padding: 0;
 }
 
+footer, div.copyright {
+margin-bottom:-22px
+}
+
+#usernickname {
+  white-space: nowrap;
+  display: inline-block;
+}
