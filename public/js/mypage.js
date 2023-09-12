@@ -29,11 +29,6 @@ document.addEventListener('DOMContentLoaded', async function () {
       const userId = result.data.id; // assuming the user object has an 'id' field
     })
     .catch((error) => console.error('Error:', error));
-
-  const imgElement = document.getElementById('img-element');
-
-  imgElement.style.width = '200%';
-  imgElement.style.height = 'auto';
 });
 
 // 여행 계획 커서 값
@@ -62,8 +57,8 @@ function getMyTours() {
   fetch(`/mytours?tour_cursor=${tour_cursor}`)
     .then((response) => response.json())
     .then((result) => {
+      console.log(result.data);
       var mainContentTour = document.querySelector('#main-content');
-      mainContentTour.innerHTML = '';
       var tourDataList = result.data;
 
       if (Array.isArray(tourDataList)) {

@@ -212,6 +212,34 @@
             <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
             <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
+        </ul>
+        <!-- 검색기능 -->
+        <form class="pull-xs-right">
+          <label for="post-upload-img" class="basic-btn">파일 업로드</label>
+          <input id="post-upload-img" type="file" style="display: none" />
+          <button id="testbtn"
+            style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px; margin-top: 7px">업로드</button>
+        </form>
+        <form class="pull-xs-right">
+          <div class="search">
+            <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-diaries-input" />
+            <button type="submit" class="btn btn-search" id="search-diaries-button"><i class="fa fa-search"></i></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </nav>
+  <!-- 왼쪽에 4개 있는 부분입니다. -->
+  <section class="banner-sec">
+    <div class="container">
+      <div class="row">
+        <!-- 여행 일지 나열하는 자리입니다. -->
+        <div class="card-list" id="card-list"></div>
+        <!-- 배너부분이 들어갈 자리입니다. -->
+        <div class="col-md-6 top-slider">
+          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+            <!-- Indicators -->
+            <ol class="carousel-indicators" id="carousel-indicators"></ol>
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">

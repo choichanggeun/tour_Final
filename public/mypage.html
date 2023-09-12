@@ -41,6 +41,18 @@
       .dropdown:hover .dropdown-content {
         display: block;
       }
+
+      #plan-box {
+        height: 500px;
+        margin: 20px 0 30px 0;
+        overflow: scroll;
+      }
+
+      #diary-box {
+        height: 740px;
+        margin: 30px 0 40px 0;
+        overflow: scroll;
+      }
     </style>
   </head>
 
@@ -171,11 +183,11 @@
         <h3>나의 여행일지 목록</h3>
         <div class="boxes" id="diary-box">
           <div class="travel-logs"></div>
+
+          <!-- Main Content Area for Diaries Data-->
+          <main id="main-content-diary"></main>
         </div>
       </div>
-
-      <!-- Main Content Area for Diaries Data-->
-      <main id="main-content-diary"></main>
     </div>
 
     <!-- Bootstrap core JavaScript

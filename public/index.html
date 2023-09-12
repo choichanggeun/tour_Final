@@ -74,7 +74,7 @@
                       </div>
                       <div id="dropdownMenu" class="dropdown-content" style="display: none">
                         <a href="./mypage.html">마이페이지</a>
-                        <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+                        <a id="logoutbtn">로그아웃</a>
                       </div>
                     </div>
                   </div>
@@ -105,20 +105,18 @@
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
-            <label for="post-upload-img" class="basic-btn">파일 업로드</label>
             <input id="post-upload-img" type="file" style="display: none" />
-            <button id="testbtn">버튼</button>
+            <button id="post-upload-btn" style="display: none">버튼</button>
           </form>
-          <form class="pull-xs-right">
-            <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
-            </div>
-          </form>
+
+          <div class="search" style="float: right">
+            <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" accept-charset="utf-8" />
+            <button type="button" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+          </div>
         </div>
       </div>
     </nav>
-
+    <!-- 좋아요 top6 여행지 -->
     <section class="likeplan-sec">
       <!-- 좋아요 top9 여행지 -->
       <div class="toprated"></div>
@@ -129,91 +127,27 @@
             <!-- 카드들이 동적으로 추가될 위치입니다 -->
           </div>
         </div>
+        <!-- 배너부분이 들어갈 자리입니다. -->
+        <div class="row">
+          <div class="col-md-6 top-slider">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators" id="carousel-indicators"></ol>
+
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
-
-    <!-- 배너부분이 들어갈 자리입니다. -->
-    <div class="col-md-6 top-slider">
-      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
-        <ol class="carousel-indicators" id="carousel-indicators"></ol>
-
-        <!-- Wrapper for slides -->
-        <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
-      </div>
-    </div>
 
     <!-- Politics 부분입니다. -->
     <section class="section-01">
       <div class="container">
         <div class="row">
           <h3 class="heading-large">도시</h3>
-          <div class="row" id="siteCardBox">
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-9.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-10.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-7.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-6">
-              <div class="card">
-                <img class="img-fluid" src="img/media-8.jpg" alt="" />
-                <div class="card-block">
-                  <div class="news-title">
-                    <a href="#">
-                      <h2 class="title-small">Minorities Suffer From Unequal Pain Treatment</h2>
-                    </a>
-                  </div>
-                  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                  <p class="card-text">
-                    <small class="text-time"><em>3 mins ago</em></small>
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
+          <div class="row" id="siteCardBox"></div>
         </div>
       </div>
     </section>

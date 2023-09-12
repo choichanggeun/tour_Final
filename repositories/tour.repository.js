@@ -1,4 +1,4 @@
-const { Tour, User, TourSite, Like, PlanDate } = require('../models');
+const { Tour, User, TourSite, Like, PlanDate, Invite } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
 //Redis 실행
@@ -37,7 +37,7 @@ class TourRepository {
         ],
       });
       await redisCli.set('tour', JSON.stringify(data));
-      await redisCli.expire('tour', 360);
+      await redisCli.expire('tour', 30);
       return data;
     }
   };
@@ -80,34 +80,62 @@ class TourRepository {
 
   //좋아요 순으로 여행계획 조회하기
   getLikeList = async () => {
-    let value = await redisCli.get('tour');
-    if (value) {
-      return JSON.parse(value);
-    } else {
-      let data = await Tour.findAll({
+    let data = await Tour.findAll({
+      include: [
+        { model: User, attributes: ['nickname'] },
+        { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
+      ],
+      attributes: ['id', 'title'], // 필요한 속성만 선택하여 가져옴
+    });
+
+    for (let i = 0; i < data.length; i++) {
+      let likeCount = await Like.count({ where: { tour_id: data[i].id } });
+      console.log(`Tour ID: ${data[i].id}, Like Count: ${likeCount}`);
+      data[i].dataValues.likeCount = likeCount;
+    }
+
+    // 좋아요 많은 순서대로 정렬합니다.
+    data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
+    // Convert each Sequelize instance into a plain JavaScript object and include the likeCount property
+    data = data.map((tour) => {
+      return { ...tour.get(), likeCount: tour.dataValues.likeCount };
+    });
+    return data;
+  };
+
+  searchTour = async (search_data, search_type) => {
+    if (search_type === '제목') {
+      const findTour = await Tour.findAll({ where: { title: { [Op.like]: '%' + search_data + '%' } }, include: [{ model: User }, { model: TourSite }] });
+      return findTour.map((tour) => {
+        return {
+          nickname: tour.User.nickname,
+          title: tour.title,
+          site_name: tour.TourSite.site_name,
+          site_img: tour.TourSite.site_img,
+        };
+      });
+    } else if (search_type === '사용자') {
+      const findUser = await User.findAll({
+        where: { nickname: { [Op.like]: '%' + search_data + '%' } },
         include: [
-          { model: User, attributes: ['nickname'] },
-          { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
+          {
+            model: Tour,
+            include: [
+              {
+                model: TourSite,
+              },
+            ],
+          },
         ],
-        attributes: ['id', 'title'], // 필요한 속성만 선택하여 가져옴
       });
-
-      for (let i = 0; i < data.length; i++) {
-        let likeCount = await Like.count({ where: { tour_id: data[i].id } });
-        console.log(`Tour ID: ${data[i].id}, Like Count: ${likeCount}`);
-        data[i].dataValues.likeCount = likeCount;
-      }
-
-      // 좋아요 많은 순서대로 정렬합니다.
-      data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
-      // Convert each Sequelize instance into a plain JavaScript object and include the likeCount property
-      data = data.map((tour) => {
-        return { ...tour.get(), likeCount: tour.dataValues.likeCount };
+      return findUser.map((user) => {
+        return {
+          nickname: user.nickname,
+          title: user.Tours[0].title,
+          site_name: user.Tours[0].TourSite.site_name,
+          site_img: user.Tours[0].TourSite.site_img,
+        };
       });
-
-      await redisCli.set('tour', JSON.stringify(data));
-
-      return data;
     }
   };
 
@@ -115,9 +143,9 @@ class TourRepository {
   getUserTour = async (user_id, tour_cursor) => {
     const queryOptions = {
       where: {
-        user_id: user_id,
+        user_id,
+        ...(tour_cursor !== 'undefined' && { id: { [Op.lt]: parseInt(tour_cursor) } }),
       },
-      attributes: ['id', 'title', 'start_date', 'end_date', 'user_id', 'tour_site_id'],
       include: [
         {
           model: TourSite,
@@ -127,11 +155,6 @@ class TourRepository {
       limit: 12,
       order: [['id', 'DESC']],
     };
-    if (tour_cursor !== 'undefined') {
-      queryOptions.where.id = {
-        [Op.lt]: parseInt(tour_cursor),
-      };
-    }
     return await Tour.findAll(queryOptions);
   };
 

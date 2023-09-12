@@ -1,6 +1,7 @@
 const inviteUser = document.getElementById('inviteUser');
 const urlParams = new URLSearchParams(window.location.search);
 const tour_id = urlParams.get('tourId');
+const tour_site_id = urlParams.get('id');
 const invitedUserList = document.getElementById('invitedUserListBox');
 const inviteBtn = document.getElementById('inviteBtn');
 const closeBtn = document.getElementById('closeBtn');
@@ -20,7 +21,7 @@ inviteUser.addEventListener('click', async function () {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ inviteEmail }),
+      body: JSON.stringify({ inviteEmail, tour_site_id }),
     })
       .then((response) => response.json())
       .then((data) => {
