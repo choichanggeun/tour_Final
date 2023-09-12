@@ -1,4 +1,5 @@
 const postUploadBtn = document.querySelector('#post-upload-btn');
+console.log(postUploadBtn);
 postUploadBtn.addEventListener('click', async () => {
   const image = document.querySelector('#post-upload-img').files[0];
   const formData = new FormData();
