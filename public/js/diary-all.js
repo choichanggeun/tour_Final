@@ -89,7 +89,7 @@ async function renderDiaryCards() {
 
         // Create an anchor tag for the image
         const imageAnchor = document.createElement('a');
-        imageAnchor.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+        imageAnchor.href = `http://tourplan.store/diary-detail.html?diary_id=${diary.id}`;
 
         // Create a div for image container and centering
         const imageContainer = document.createElement('div');

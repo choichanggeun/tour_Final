@@ -4,7 +4,7 @@ const getDiary = function () {
   const currentPageURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const diary_id = urlParams.get('diary_id');
-  const targetPageURL = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
+  const targetPageURL = `http://tourplan.store/diary-detail.html?diary_id=${diary_id}`;
   if (currentPageURL === targetPageURL) {
     renderDiary(diary_id);
   }
@@ -69,7 +69,7 @@ const renderDiary = async (diary_id) => {
       // 편집버튼
       const editButton = document.createElement('button');
       editButton.classList.add('btn', 'btn-primary', 'mt-3'); // btn-primary 클래스 추가
-      editButton.innerHTML = `<a href="http://localhost:3000/diary-update.html?diary_id=${diary_id}">일지 수정</a>`;
+      editButton.innerHTML = `<a href="http://tourplan.store/diary-update.html?diary_id=${diary_id}">일지 수정</a>`;
       // 삭제버튼
       const deleteButton = document.createElement('button');
       deleteButton.classList.add('btn', 'btn-danger', 'mt-3'); // btn-danger 클래스 추가
