@@ -81,7 +81,7 @@
       }
       #menu_wrap {
         position: absolute;
-        top: 13%;
+        top: 12%;
         left: 0;
         bottom: 0;
         width: 400px;
@@ -107,10 +107,6 @@
         z-index: 1;
         font-size: 12px;
         border-radius: 10px;
-      }
-      #menu_wrap.bg_white {
-        /* background: #fff; */
-        margin-top: 45px
       }
       #menu_wrap2 hr {
         display: block;
@@ -319,101 +315,30 @@
         </div>
       </div>
 
-     <!-- 메인페이지 로고 및 드롭박스-->
-     <div class="top-head left">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <h1>
-              <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px; margin-left: 10px;" /></a>
-              <small>여행 계획을 알차게!</small>
-            </h1>
-          </div>
-          <button class="header-button" id="updateDate">제목 & 날짜 수정</button>
-          <button class="header-button" id="createTour">수정 작업 완료 / 게시하기</button>
-          <button class="header-button" id="deleteTour" >계획서 삭제하기</button>
-          <div class="dropdown" style="float: right">
-            <span class="dropbtn" id="usernickname">홍길동</span>
-            <div class="dropdown-content">
-              <a href="javascript:void(0);" onclick="">회원정보</a>
-              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+      <!-- 메인페이지 로고 및 드롭박스-->
+      <div class="top-head left">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <h1>
+                <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px; margin-left: 10px" /></a>
+                <small>여행 계획을 알차게!</small>
+              </h1>
+            </div>
+            <button class="header-button" id="updateDate" style="display: none">제목 & 날짜 수정</button>
+            <button class="header-button" id="createTour" style="display: none">수정 작업 완료 / 게시하기</button>
+            <button class="header-button" id="deleteTour" style="display: none">계획서 삭제하기</button>
+            <div class="dropdown" style="float: right">
+              <span class="dropbtn" id="usernickname">홍길동</span>
+              <div class="dropdown-content">
+                <a href="javascript:void(0);" onclick="">회원정보</a>
+                <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </header>
-          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
-            <!-- 사용자 부분 -->
-            <nav class="nav nav-inline">
-              <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
-                      <a href="#" class="nav-link">
-                <span class="ping"></span>
-                <i class="fa fa-envelope-o"></i
-              ></a> -->
-              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
-              <!-- <div class="container header-container">
-                <div class="button-container right-aligned-buttons">
-                  <button type="button" class="btn btn-search" id="loginbtn" style="display: none"><a href="/login.html">로그인</a></button>
-                  <div id="profileimg" class="dropdown" style='display: none;'>
-                    <div class='nav-link'>
-                      <span id='usernickname'>홍길동</span>
-                      <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
-                    </div>
-                      <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
-                        <a href="./mypage.html">마이페이지</a>
-                        <a href="#" onclick="">채팅</a>
-                        <a href="#" onclick="">로그아웃</a>
-                    </div> 
-                  </div> 
-                </div> 
-              </div>  -->
-                   </div>
-                      </div>
-                   
-                  </div>
-                </div>
-              </div>
-            </nav>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <nav class="navbar top-nav">
-    <div class="container">
-      <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
-      <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
-        <a class="navbar-brand" href="#">Responsive navbar</a>
-
-        <ul class="nav navbar-nav">
-          <li class="nav-item active">
-            <!-- 홈 버튼 -->
-            <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
-          </li>
-
-          <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
-          <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
-          <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
-          <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
-        
-       
-        </ul>
-        <!-- 검색기능 -->
-        <form class="pull-xs-right">
-          <label for="post-upload-img" class="basic-btn">파일 업로드</label>
-          <input id="post-upload-img" type="file" style="display: none" />
-          <button id="testbtn">버튼</button>
-        </form>
-        <form class="pull-xs-right">
-          <div class="search">
-            <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-            <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </nav>
 
     <div class="map_wrap">
       <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
@@ -463,22 +388,20 @@
       </div>
     </div>
 
-      <!-- 시간 기입 모달 -->
-  <div id="placeTimeModal" class="modal-overlay">
-    <div class="modal-window">
-      <div class="modal-title">
-        <h2 id="timeModalTitle">머무를 시간</h2>
-      </div>
-      <div class="modal-close-area" id="timeCloseBtn">X</div>
-      <div class="modal-conten">
-        <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
-        <input type="time" value="" id="endTime" />
-        <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+    <!-- 시간 기입 모달 -->
+    <div id="placeTimeModal" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-title">
+          <h2 id="timeModalTitle">머무를 시간</h2>
+        </div>
+        <div class="modal-close-area" id="timeCloseBtn">X</div>
+        <div class="modal-conten">
+          <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
+          <input type="time" value="" id="endTime" />
+          <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+        </div>
       </div>
     </div>
-  </div>
-</body>
-
   </body>
 
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54"></script>

@@ -44,11 +44,11 @@ class DiaryController {
   };
 
   // 내 모든 여행 일지 조회
-  getMyDiaries = async (_, res) => {
+  getMyDiaries = async (req, res) => {
     try {
       const { id: user_id } = res.locals.user;
-
-      const data = await this.diaryService.getMyDiaries(user_id);
+      const { diary_cursor } = req.query;
+      const data = await this.diaryService.getMyDiaries(user_id, diary_cursor);
       return res.status(200).json({ data });
     } catch (error) {
       console.log(error);

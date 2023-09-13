@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html lang="kr">
-
-<head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Tour Project</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Tour Project</title>
 
     <!--Bootstrap core CSS-->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/custom.css" rel="stylesheet" />
     <link href="css/responsive-style.css" rel="stylesheet" />
-    <link href="css/diary.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
     <link rel="stylesheet" type="text/css" href="css/loaders.css" />
     <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
@@ -21,13 +19,13 @@
       .button-container {
         float: right;
       }
-  
+
       .dropdown {
         width: 60px;
         position: relative;
         display: inline-block;
       }
-  
+
       .dropdown-content {
         overflow: hidden;
         display: none;
@@ -35,22 +33,22 @@
         z-index: 1;
         /*다른 요소들보다 앞에 배치*/
       }
-  
+
       .dropdown-content a {
         display: block;
       }
-  
+
       .dropdown:hover .dropdown-content {
         display: block;
       }
-  
+
       #diaryBox h5 {
         font-size: 28px;
         margin: 20px 0;
         text-align: center;
         color: #333;
       }
-  
+
       /* Style for the diary content */
       #diaryBox p {
         font-size: 18px;
@@ -59,7 +57,7 @@
         text-align: justify;
         color: #666;
       }
-  
+
       /* Style for the edit and delete buttons */
       #diaryBox button {
         background-color: #007bff;
@@ -72,11 +70,11 @@
         font-size: 16px;
         transition: background-color 0.3s ease-in-out;
       }
-  
+
       #diaryBox button:hover {
         background-color: #0056b3;
       }
-  
+
       /* Style for diary images */
       #diaryBox img {
         max-width: 100%;
@@ -86,7 +84,7 @@
         border-radius: 5px;
         box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
       }
-  
+
       Style for the card .card {
         margin-top: 20px;
         display: flex;
@@ -97,14 +95,14 @@
         text-align: center;
         /* Center align text */
       }
-  
+
       #row {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
       }
-  
+
       .card {
         max-width: 800px;
         /* Adjust the maximum width as per your preference */
@@ -121,7 +119,7 @@
         /* Add a box shadow for depth */
         text-align: center;
       }
-  
+
       /* Style for the card title */
       .card-title {
         font-size: 20px;
@@ -129,20 +127,20 @@
         color: #333;
         margin-top: 20px;
       }
-  
+
       /* Style for the card content */
       .card-text {
         font-size: 14px;
         margin-bottom: 10px;
         color: #666;
       }
-  
+
       /* Style for the buttons */
       .btn {
         margin-right: 10px;
-        color:#ffffff;
+        color: #ffffff;
       }
-  
+
       /* Style for the edit and delete buttons */
       .btn-primary {
         background-color: #ffffff;
@@ -153,11 +151,11 @@
         cursor: pointer;
         transition: background-color 0.3s ease-in-out;
       }
-  
+
       .btn-primary:hover {
         background-color: #0056b3;
       }
-  
+
       .btn-danger {
         background-color: #000000;
         color: #fff;
@@ -167,23 +165,17 @@
         cursor: pointer;
         transition: background-color 0.3s ease-in-out;
       }
-  
+
       .btn-danger:hover {
         background-color: #c82333;
       }
     </style>
   </head>
-  
+
   <body>
     <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
     <div class="loader loader-bg">
-      <div class="loader-inner ball-pulse-rise">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <div class="loader-inner ball-pulse-rise"></div>
     </div>
     <header>
       <div class="small-top">
@@ -192,18 +184,16 @@
           <div class="col-lg-4 date-sec hidden-sm-down">
             <div id="Date"></div>
           </div>
-  
+
           <div class="col-lg-3 offset-lg-5">
             <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
             <div class="social-icon">
-              <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#"
-                class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank"
-                href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
+              <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
             </div>
           </div>
         </div>
       </div>
-  
+
       <!-- 메인페이지 로고 및 드롭박스-->
       <div class="top-head left">
         <div class="container">
@@ -213,60 +203,52 @@
                 <a href="/index.html">
                   <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" />
                   <small>여행 계획을 알차게!</small>
+                </a>
               </h1>
             </div>
             <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
               <!-- 사용자 부분 -->
               <nav class="nav nav-inline">
                 <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
-                          <a href="#" class="nav-link">
-                    <span class="ping"></span>
-                    <i class="fa fa-envelope-o"></i
-                  ></a> -->
+                      <a href="#" class="nav-link">
+                <span class="ping"></span>
+                <i class="fa fa-envelope-o"></i
+              ></a> -->
                 <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
                 <div class="container header-container">
                   <div class="button-container right-aligned-buttons">
                     <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                    <div id="profileimg" class="dropdown" style='display: none;'>
-                      <div class='nav-link'>
-                        <span id='usernickname'>홍길동</span>
-                        <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
+                    <div id="profileimg">
+                      <div class="nav-link">
+                        <span id="usernickname">홍길동</span>
+                        <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
                       </div>
-                      <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
+                      <div id="dropdownMenu" class="dropdown-content" style="display: none">
                         <a href="./mypage.html">마이페이지</a>
-                        <a href="#" onclick="">채팅</a>
-                        <a href="#" onclick="">로그아웃</a>
+                        <a id="logoutbtn">로그아웃</a>
                       </div>
                     </div>
                   </div>
                 </div>
+              </nav>
             </div>
           </div>
-  
         </div>
       </div>
-      </div>
-      </nav>
-      </div>
-      </div>
-      </div>
-      </div>
     </header>
-  
+
     <nav class="navbar top-nav">
       <div class="container">
-        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse"
-          data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false"
-          aria-label="Toggle navigation">&#9776;</button>
+        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
         <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
           <a class="navbar-brand" href="#">Responsive navbar</a>
-  
+
           <ul class="nav navbar-nav">
             <li class="nav-item active">
               <!-- 홈 버튼 -->
               <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
             </li>
-  
+
             <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
             <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
@@ -282,8 +264,7 @@
           <form class="pull-xs-right">
             <label for="post-upload-img" class="basic-btn">파일 업로드</label>
             <input id="post-upload-img" type="file" style="display: none" />
-            <button id="testbtn"
-              style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px; margin-top: 7px">업로드</button>
+            <button id="testbtn" style="background-color: #ffffff; color: #000000; border: none; padding: 5px 10px; border-radius: 10px; margin-top: 7px">업로드</button>
           </form>
           <form class="pull-xs-right">
             <div class="search">
@@ -303,7 +284,7 @@
             <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
               <!-- Indicators -->
               <ol class="carousel-indicators" id="carousel-indicators"></ol>
-  
+
               <!-- Wrapper for slides -->
               <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
             </div>
@@ -311,15 +292,14 @@
         </div>
       </div>
     </section>
-  
+
     <!-- 여행 일지 내용 표시 -->
     <div class="container my-4">
       <div class="row">
-        <div class="col">
-        </div>
+        <div class="col"></div>
       </div>
     </div>
-  
+
     <!-- 댓글 부분 -->
     <div class="container my-4">
       <div class="row">
@@ -330,10 +310,9 @@
               <form id="comment-form">
                 <div class="mb-3">
                   <!-- <label for="comment-input" class="form-label">댓글</label> -->
-                  <textarea class="form-control" id="comment-input" rows="2" cols="50"
-                    placeholder="댓글을 입력해주세요"></textarea>
+                  <textarea class="form-control" id="comment-input" rows="2" cols="50" placeholder="댓글을 입력해주세요"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary" style="margin-top: 10px;">댓글 추가</button>
+                <button type="submit" class="btn btn-primary" style="margin-top: 10px">댓글 추가</button>
               </form>
             </div>
           </div>
@@ -384,7 +363,7 @@
       </div>
     </footer>
     <!--footer start from here-->
-  
+
     <div class="copyright">
       <div class="container">
         <div class="col-lg-6 col-md-4">
@@ -401,21 +380,18 @@
         </div>
       </div>
     </div>
-  
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
-      crossorigin="anonymous"></script>
-    <script src="./js/diary-detail.js"></script>
-    <script src="./js/comment.js"></script>
-  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+
     <!-- Bootstrap core JavaScript
       ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>
-    <script src="js/logo.js"></script>
+    <script src="js/diary-detail.js"></script>
+    <script src="js/comment.js"></script>
+    <script src="js/common.js"></script>
   </body>
-  
-  </html>
+</html>
