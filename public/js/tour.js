@@ -1,5 +1,5 @@
-let serverURL = 'localhost:3000';
-const socket = io('http://localhost:3000'); // 여기서 주소는 서버 주소로 변경해야 합니다.
+let serverURL = 'tourplan.store/';
+const socket = io('http://tourplan.store/'); // 여기서 주소는 서버 주소로 변경해야 합니다.
 const urlParams = new URLSearchParams(window.location.search);
 const roomNumber = urlParams.get('tourId');
 const tour_id = urlParams.get('tourId');
