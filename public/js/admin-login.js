@@ -18,7 +18,7 @@ loginBtn.addEventListener('click', function () {
     .then((response) => response.json())
     .then((data) => {
       alert(data.message);
-      window.location.replace = '/';
+      window.location.replace('/');
     })
     .catch((error) => {
       console.error('로그인 실패:', error);

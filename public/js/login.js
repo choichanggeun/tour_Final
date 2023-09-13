@@ -30,8 +30,6 @@ function loginUser() {
       alert(data.message);
       if (data.status === 200) {
         window.location.href = '/';
-      } else {
-        alert(data.message);
       }
     })
     .catch((error) => {
