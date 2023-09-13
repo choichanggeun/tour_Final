@@ -20,7 +20,7 @@ class AdminController {
     const { email, password } = req.body;
     try {
       const token = await this.adminService.adminLogin(email, password);
-      res.cookie('authorization', `Bearer ${token}`);
+      res.cookie('author', `Bearer ${token}`);
       res.status(200).json({ message: '로그인 성공.' });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });

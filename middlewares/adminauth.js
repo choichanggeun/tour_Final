@@ -5,9 +5,8 @@ const env = process.env;
 
 module.exports = async (req, res, next) => {
   try {
-    const { authorization } = req.cookies;
-
-    const [tokenType, token] = authorization.split(' ');
+    const { author } = req.cookies;
+    const [tokenType, token] = author.split(' ');
     if (tokenType !== 'Bearer') {
       return res.status(401).json({ message: '토큰 타입이 일치하지 않습니다.' });
     }
@@ -16,14 +15,14 @@ module.exports = async (req, res, next) => {
     const adminId = decodedToken.id;
     const admin = await Admin.findOne({ where: { id: adminId } });
     if (!admin) {
-      res.clearCookie('authorization');
+      res.clearCookie('author');
       return res.status(401).json({ message: '토큰 사용자가 존재하지 않습니다.' });
     }
     res.locals.admin = admin;
 
     next();
   } catch (error) {
-    res.clearCookie('authorization');
+    res.clearCookie('author');
     return res.status(401).json({
       errorMessage: error.message,
     });

@@ -1,5 +1,4 @@
 const postUploadBtn = document.querySelector('#post-upload-btn');
-console.log(postUploadBtn);
 postUploadBtn.addEventListener('click', async () => {
   const image = document.querySelector('#post-upload-img').files[0];
   const formData = new FormData();
@@ -23,6 +22,7 @@ const searchButton = document.getElementById('search-button');
 const enterInput = document.getElementById('search-input');
 window.onload = function () {
   getSiteData();
+  checkLoggedInAdmin();
   fetch('/banner', {
     method: 'GET',
   })
@@ -101,6 +101,7 @@ function checkLoggedInAdmin() {
     .then((data) => {
       // 응답 처리
       if (data.data) {
+        console.log(data.data);
         document.querySelector('#post-upload-img').style.display = 'block';
         document.querySelector('#post-upload-btn').style.display = 'block';
         return data.data;
@@ -110,6 +111,7 @@ function checkLoggedInAdmin() {
       console.error('Error:', error);
     });
 }
+
 enterInput.addEventListener('keyup', function (event) {
   if (event.keyCode === 13) {
     const searchInput = document.getElementById('search-input').value;
