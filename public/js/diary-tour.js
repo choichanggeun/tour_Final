@@ -3,7 +3,7 @@ const getTourDiary = function () {
   const currentPageURL = window.location.href;
   const urlParams = new URLSearchParams(window.location.search);
   const tour_id = urlParams.get('Id');
-  const targetPageURL = `http://localhost:3000/diary-tour.html?Id=${tour_id}`;
+  const targetPageURL = `http://tourplan.store/diary-tour.html?Id=${tour_id}`;
   if (currentPageURL === targetPageURL) {
     addEventListener('DOMContentLoaded', async function renderDiary() {
       const row = document.getElementById('row');
@@ -37,7 +37,7 @@ const getTourDiary = function () {
                   imageElement.src = `https://final-tour-2.s3.ap-northeast-2.amazonaws.com/diary-img/${image.diary_img}`;
                   // 이미지 링크로 래핑함
                   const imageLink = document.createElement('a');
-                  imageLink.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+                  imageLink.href = `http://tourplan.store/diary-detail.html?diary_id=${diary.id}`;
                   imageLink.appendChild(imageElement);
                   diaryCard.appendChild(imageLink);
                   count++;
@@ -50,7 +50,7 @@ const getTourDiary = function () {
                 defaultImageElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
                 // Wrap the default image with a link
                 const defaultImageLink = document.createElement('a');
-                defaultImageLink.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+                defaultImageLink.href = `http://tourplan.store/diary-detail.html?diary_id=${diary.id}`;
                 defaultImageLink.appendChild(defaultImageElement);
                 diaryCard.appendChild(defaultImageLink);
               }
@@ -61,7 +61,7 @@ const getTourDiary = function () {
               defaultImageElement.src = 'https://final-tour-2.s3.ap-northeast-2.amazonaws.com/etc/no_img.png';
               // 기본 이미지 링크로 래핑함
               const defaultImageLink = document.createElement('a');
-              defaultImageLink.href = `http://localhost:3000/diary-detail.html?diary_id=${diary.id}`;
+              defaultImageLink.href = `http://tourplan.store/diary-detail.html?diary_id=${diary.id}`;
               defaultImageLink.appendChild(defaultImageElement);
               diaryCard.appendChild(defaultImageLink);
             }
