@@ -63,6 +63,10 @@ async function renderDiaryCards() {
           diaryImg = images.find((image) => diary.id === image.diary_id);
         }
 
+        // Create an anchor tag for the image
+        const cardLink = document.createElement('a');
+        cardLink.href = `http://tourplan.store/diary-detail.html?diary_id=${diary.id}`;
+
         // Create a Bootstrap card
         const card = document.createElement('div');
         card.classList.add('card', 'custom-card', 'mb-4'); // Add custom-card class for styling
@@ -87,10 +91,6 @@ async function renderDiaryCards() {
         cardText.classList.add('card-text', 'custom-card-text'); // Add custom-card-text class for styling
         cardText.textContent = diary.User.nickname;
 
-        // Create an anchor tag for the image
-        const imageAnchor = document.createElement('a');
-        imageAnchor.href = `http://tourplan.store/diary-detail.html?diary_id=${diary.id}`;
-
         // Create a div for image container and centering
         const imageContainer = document.createElement('div');
         imageContainer.classList.add('text-center');
@@ -113,15 +113,13 @@ async function renderDiaryCards() {
         // Append image to image container
         imageContainer.appendChild(diaryImage);
 
-        // Append image container to anchor tag
-        imageAnchor.appendChild(imageContainer);
-
         // Append card body and image anchor to card
+        cardLink.appendChild(card);
         card.appendChild(cardBody);
-        card.appendChild(imageAnchor);
+        card.appendChild(imageContainer);
 
         // Append card to card list
-        cardList.appendChild(card);
+        cardList.appendChild(cardLink);
       }
       cursor = data[data.length - 1].id;
     } else {
