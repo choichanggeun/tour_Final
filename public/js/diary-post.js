@@ -3,7 +3,7 @@ const postDiary = function () {
   const urlParams = new URLSearchParams(window.location.search);
   const tour_id = urlParams.get('Id');
   const currentPageURL = window.location.href;
-  const targetPageURL = `http://localhost:3000/diary-post.html?Id=${tour_id}`;
+  const targetPageURL = `http://tourplan.store/diary-post.html?Id=${tour_id}`;
   if (currentPageURL === targetPageURL) {
     document.getElementById('diary-post-button').addEventListener('click', async () => {
       const diaryTitle = document.getElementById('diary-title').value;
@@ -30,7 +30,7 @@ const postDiary = function () {
         if (response.ok) {
           const diary_id = data2[data2.length - 1].id;
           alert(data.message);
-          location.href = `http://localhost:3000/diary-detail.html?diary_id=${diary_id}`;
+          location.href = `http://tourplan.store/diary-detail.html?diary_id=${diary_id}`;
         } else {
           alert(data.message);
         }
