@@ -5,11 +5,15 @@ const tour_site_id = urlParams.get('id');
 const invitedUserList = document.getElementById('invitedUserListBox');
 const inviteBtn = document.getElementById('inviteBtn');
 const closeBtn = document.getElementById('closeBtn');
-inviteUser.addEventListener('click', function () {
-  checkInvitedUser();
+
+inviteUser.addEventListener('click', async function () {
+  const isChecked = await checkInvitedUser();
+  if (!isChecked) return;
+
   const modal = document.getElementById('invitemodal');
   modal.style.display = 'flex';
   document.getElementById('inviteEmail').value = '';
+
   inviteBtn.addEventListener('click', function () {
     const inviteEmail = document.getElementById('inviteEmail').value;
     fetch(`/invite/${tour_id}`, {
@@ -30,11 +34,12 @@ inviteUser.addEventListener('click', function () {
         console.error(error);
       });
   });
-  //모달의 x 버튼 누르면 꺼짐
 
+  //모달의 x 버튼 누르면 꺼짐
   closeBtn.addEventListener('click', () => {
     modal.style.display = 'none';
   });
+
   //모달의 바깥부분을 누르면 꺼짐
   modal.addEventListener('click', (e) => {
     const evTarget = e.target;
@@ -42,6 +47,7 @@ inviteUser.addEventListener('click', function () {
       modal.style.display = 'none';
     }
   });
+
   //esc누르면 꺼짐
   window.addEventListener('keyup', (e) => {
     if (modal.style.display === 'flex' && e.key === 'Escape') {
@@ -51,15 +57,21 @@ inviteUser.addEventListener('click', function () {
 });
 
 function checkInvitedUser() {
-  fetch(`/invite/${tour_id}`, {
+  return fetch(`/invite/${tour_id}`, {
     method: 'GET',
   })
     .then((response) => response.json())
     .then((data) => {
-      const invitedUser = data.data;
-      invitedUser.forEach((user) => {
-        const inviteCard = `<div><strong>${user.nickname}</strong></div>`;
-        invitedUserList.innerHTML += inviteCard;
-      });
+      if (data.data) {
+        const invitedUser = data.data;
+        invitedUser.forEach((user) => {
+          const inviteCard = `<div><strong>${user.nickname}</strong></div>`;
+          invitedUserList.innerHTML += inviteCard;
+        });
+        return true;
+      } else {
+        alert(data.message);
+        return false;
+      }
     });
 }

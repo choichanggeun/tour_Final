@@ -7,7 +7,7 @@ class PlanDateRepository {
     const REDIS_PREFIX = 'KEY_';
     const REDIS_SUFFIX = 'DAY_';
     for (let i = 1; i < days + 1; i++) {
-      const plan = await client.lRange(REDIS_PREFIX + tour_id + REDIS_SUFFIX + i, 0, -1);
+      const plan = await redisCli.lRange(REDIS_PREFIX + tour_id + REDIS_SUFFIX + i, 0, -1);
       const plandate = await PlanDate.create({ tour_id, day: i });
       for (let j = 0; j < plan.length; j++) {
         let value = JSON.parse(plan[j]);
