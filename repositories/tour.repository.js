@@ -186,19 +186,6 @@ class TourRepository {
   // 여행 계획 수정
   updateTour = async (tour_id, title, start_date, end_date) => {
     const updatedTour = await Tour.update({ title, start_date, end_date }, { where: { id: tour_id } });
-    if (updatedTour) {
-      const oldDate = new Date(start_date);
-      const newDate = new Date(end_date);
-      let diff = Math.abs(newDate.getTime() - oldDate.getTime());
-      diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
-      const countDate = await PlanDate.count({ where: { tour_id: tour_id } });
-      const necessaryDate = diff + 1 - countDate;
-      if (necessaryDate > 0) {
-        for (let i = 1; i < necessaryDate + 1; i++) {
-          await PlanDate.create({ tour_id, day: countDate + i });
-        }
-      }
-    }
     return updatedTour; // 업데이트 성공 여부 반환
   };
 

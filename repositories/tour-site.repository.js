@@ -94,7 +94,7 @@ class ToursiteRepository {
     if (value) {
       return JSON.parse(value);
     } else {
-      let data = await TourSite.findAll();
+      let data = await TourSite.findAll({ where: { id: { [Op.gt]: 12 } } });
       await redisCli.set('toursite', JSON.stringify(data));
       await redisCli.expire('toursite', 360);
     }
