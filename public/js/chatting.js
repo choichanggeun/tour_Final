@@ -1,4 +1,4 @@
-let serverURL = 'localhost:3000';
+let serverURL = 'tourplan.store/';
 const urlParams = new URLSearchParams(window.location.search);
 const roomNumber = urlParams.get('tourId');
 document.getElementById('RoomTitle').innerHTML = `방 번호 : ${roomNumber}`;
@@ -14,7 +14,7 @@ $(document).ready(async function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      const socket = io('http://localhost:3000/', { transports: ['websocket'] });
+      const socket = io('http://tourplan.store/', { transports: ['websocket'] });
       let name = data.data.nickname;
       let id = data.data.id;
       socket.on('connection', function (data) {
