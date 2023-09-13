@@ -82,7 +82,7 @@ class TourRepository {
         { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
         {
           model: Like,
-          attributes: [],
+          attributes: [[Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likeCount']],
         },
       ],
       attributes: {
@@ -90,6 +90,7 @@ class TourRepository {
         //합산한 결과 값을 가상의 컬럼인 likeCount에 지정
         exclude: ['password'], //제외할 DB 필드명
       },
+
       group: ['Tour.id'], // 컬럼을 기준으로 데이터를 정렬 Tour.id별로 데이터들이 그룹화 되도록 설정
       order: [[Sequelize.literal('likeCount'), 'DESC']], //특정 컬럼 기준으로 데이터 정렬 합산한 likeCount 결과값을 DESC(내림차순으로 정렬)
     });
