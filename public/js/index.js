@@ -23,7 +23,6 @@ fetch('/like_tours')
       //좋아요 많이 받은 순으로 6개만 화면에 표시
       topSixTours.forEach(function (item, index) {
         /* Tour Items */
-        console.log(item);
         let tourItemElement = document.createElement('div');
         tourItemElement.className = 'tour-card';
         tourItemElement.style.cursor = 'pointer'; // 카드에 마우스 커서 올렸을 때 커서 모양 변하게 함
