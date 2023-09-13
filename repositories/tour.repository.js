@@ -1,6 +1,7 @@
 const { Tour, User, TourSite, Like, PlanDate, Invite } = require('../models');
 const { Op } = require('sequelize');
 const redis = require('redis');
+const { Sequelize } = require('sequelize');
 //Redis 실행
 const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 반드시 설정 !!
 redisClient.connect().then(); // redis v4 연결 (비동기)
@@ -77,29 +78,26 @@ class TourRepository {
       });
     }
   };
-
   //좋아요 순으로 여행계획 조회하기
   getLikeList = async () => {
     let data = await Tour.findAll({
       include: [
         { model: User, attributes: ['nickname'] },
         { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
+        {
+          model: Like,
+          attributes: [],
+        },
       ],
-      attributes: ['id', 'title'], // 필요한 속성만 선택하여 가져옴
+      attributes: {
+        include: [[Sequelize.fn('COUNT', Sequelize.col('Likes.id')), 'likeCount']], //sequelize의 집계함수 COUNT를 사용하여 Likes.id 값을 합산
+        //합산한 결과 값을 가상의 컬럼인 likeCount에 지정
+        exclude: ['password'], //제외할 DB 필드명
+      },
+      group: ['Tour.id'], // 컬럼을 기준으로 데이터를 정렬 Tour.id별로 데이터들이 그룹화 되도록 설정
+      order: [[Sequelize.literal('likeCount'), 'DESC']], //특정 컬럼 기준으로 데이터 정렬 합산한 likeCount 결과값을 DESC(내림차순으로 정렬)
     });
 
-    for (let i = 0; i < data.length; i++) {
-      let likeCount = await Like.count({ where: { tour_id: data[i].id } });
-      console.log(`Tour ID: ${data[i].id}, Like Count: ${likeCount}`);
-      data[i].dataValues.likeCount = likeCount;
-    }
-
-    // 좋아요 많은 순서대로 정렬합니다.
-    data.sort((a, b) => b.dataValues.likeCount - a.dataValues.likeCount);
-    // Convert each Sequelize instance into a plain JavaScript object and include the likeCount property
-    data = data.map((tour) => {
-      return { ...tour.get(), likeCount: tour.dataValues.likeCount };
-    });
     return data;
   };
 
