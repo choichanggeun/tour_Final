@@ -32,7 +32,7 @@ class TourRepository {
           { model: User, attributes: ['nickname'] },
           { model: TourSite, attributes: ['site_name', 'site_address', 'site_img'] },
         ],
-        order: ['id', 'DESC'],
+        order: [['id', 'DESC']],
       });
       await redisCli.set('tour', JSON.stringify(data));
       await redisCli.expire('tour', 30);
