@@ -85,8 +85,4 @@ module.exports = {
     }
     return io;
   },
-
-  saveChattingData,
-
-  getChattingLog,
 };
