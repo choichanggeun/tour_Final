@@ -1,4 +1,7 @@
+let serverURL = 'localhost:3000';
+const socket = io('http://localhost:3000'); // 여기서 주소는 서버 주소로 변경해야 합니다.
 const urlParams = new URLSearchParams(window.location.search);
+const roomNumber = urlParams.get('tourId');
 const tour_id = urlParams.get('tourId');
 const tour_site_id = urlParams.get('id');
 const startChatting = document.getElementById('startChatting');
@@ -8,7 +11,6 @@ const createTourBtn = document.getElementById('createTour');
 const closeBtn = document.getElementById('tourcloseBtn');
 const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
-
 let linePath = [];
 let markers = [];
 let pathLines = [];
@@ -414,33 +416,35 @@ tourDays.addEventListener('change', function () {
       console.error(error);
     });
 });
-document.addEventListener('DOMContentLoaded', (event) => {
-  // 여기서 io 객체와 관련 코드를 사용하세요.
-  const socket = io();
 
-  createTourBtn.addEventListener('click', function () {
-    const days = tourDays.length;
-    const formData = { days };
+createTourBtn.addEventListener('click', function () {
+  const days = tourDays.length;
+  fetch(`/${tour_id}/planDate`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ days }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.code === 200) {
+        alert(data.message);
+        // 소켓이벤트 보내는 부분
+        socket.emit('new_plan', data.result);
+      }
+      if (data.code === 400) {
+        alert(data.message);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+});
 
-    // "createTour" 이벤트를 서버에 보냅니다.
-    socket.emit('createTour', { tourId: tour_id, formData });
-  });
-
-  // 백엔드에서 보낸 "tour created" 이벤트가 오면 알림을 표시합니다.
-  socket.on('tour created', function (data) {
-    if (data.code === 200) {
-      alert(data.message);
-      window.location.href = '/';
-    }
-
-    if (data.code === 400) {
-      alert(data.message);
-    }
-  });
-
-  socket.on('error', function (error) {
-    console.log(error);
-  });
+// Listen for the event from the server indicating that it has processed your update.
+socket.on('update_plan', function () {
+  window.location.href = '/';
 });
 
 function deletePlace() {
@@ -499,33 +503,24 @@ function createSite(places) {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => response.json())
+      .then((response) => {
+        if (!response.ok) {
+          // If the HTTP status code is not successful...
+          throw new Error(`HTTP error! status: ${response.status}`); // ...throw an error.
+        }
+        return response.json(); // Otherwise, parse the response as JSON.
+      })
       .then((data) => {
         alert(data.message);
         if (data.status === 201) {
           window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
+          socket.emit('update_plan', data.result);
         }
       })
       .catch((error) => {
         console.error('여행계획 생성 실패:', error);
-        alert('여행 계획 생성에 실패하였습니다.');
+        alert(`여행 계획 생성에 실패하였습니다. 에러 메시지: ${error.message}`);
       });
-  });
-  timeCloseBtn.addEventListener('click', () => {
-    window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
-  });
-  //모달의 바깥부분을 누르면 꺼짐
-  modal.addEventListener('click', (e) => {
-    const evTarget = e.target;
-    if (evTarget.classList.contains('modal-overlay')) {
-      window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
-    }
-  });
-  //esc누르면 꺼짐
-  window.addEventListener('keyup', (e) => {
-    if (modal.style.display === 'flex' && e.key === 'Escape') {
-      window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
-    }
   });
 }
 
