@@ -12,7 +12,6 @@ window.onload = function () {
   const urlParams = new URLSearchParams(window.location.search);
   const search_data = urlParams.get('data');
   const search_type = urlParams.get('type');
-  checkLoggedInStatus();
   if (search_data) {
     loadSearchSiteItem(search_data, search_type);
   } else {
@@ -53,43 +52,6 @@ function loadSearchSiteItem(search_data, search_type) {
       dataList = data.result;
       displayData(1, dataPerPage);
       paging(totalData, dataPerPage, pageCount, 1);
-    });
-}
-
-function checkLoggedInStatus() {
-  fetch('/users/me', {
-    method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // 응답 처리
-      if (data.data) {
-        const usernickname = document.getElementById('usernickname');
-        usernickname.innerHTML = data.data.nickname;
-        document.getElementById('usernickname').value = data.data.id;
-        document.querySelector('#profileimg').style.display = 'block';
-        document.querySelector('#loginbtn').style.display = 'none';
-      } else {
-        document.querySelector('#loginbtn').style.display = 'block';
-        document.querySelector('#profileimg').style.display = 'none';
-      }
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-}
-
-function logout() {
-  fetch('/logout', {
-    method: 'POST',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      alert('로그아웃 완료');
-      window.location.href = '/';
-    })
-    .catch((error) => {
-      console.error('Error:', error);
     });
 }
 

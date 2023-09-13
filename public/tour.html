@@ -393,22 +393,22 @@
         <div id="invitedUserListBox"></div>
       </div>
     </div>
-  </body>
 
-  <!-- 시간 기입 모달 -->
-  <div id="placeTimeModal" class="modal-overlay">
-    <div class="modal-window">
-      <div class="modal-title">
-        <h2 id="timeModalTitle">머무를 시간</h2>
-      </div>
-      <div class="modal-close-area" id="timeCloseBtn">X</div>
-      <div class="modal-conten">
-        <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
-        <input type="time" value="" id="endTime" />
-        <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+    <!-- 시간 기입 모달 -->
+    <div id="placeTimeModal" class="modal-overlay">
+      <div class="modal-window">
+        <div class="modal-title">
+          <h2 id="timeModalTitle">머무를 시간</h2>
+        </div>
+        <div class="modal-close-area" id="timeCloseBtn">X</div>
+        <div class="modal-conten">
+          <input type="time" value="" id="startTime" style="margin-top: 20px; margin-right: 10px" />
+          <input type="time" value="" id="endTime" />
+          <button id="createPlaceBtn" style="margin-top: 30px">작성하기</button>
+        </div>
       </div>
     </div>
-  </div>
+
 
   <script>
     //새로고침 방지입니다.
@@ -425,10 +425,13 @@
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54?autoload=false""></script>
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services?autoload=false""></script>
 
-  <!-- 실시간 소켓 사용하기 위한 script-->
-  <script src="/socket.io/socket.io.js"></script>
-  <script type="module" src="./js/tour.js"></script>
-  <script type="module" src="./js/invite.js"></script>
-  <script type="module" src="./js/inviteCheck.js"></script>
-  <script type="module" src="./js/go-home.js"></script>
+
+    <!-- 실시간 소켓 사용하기 위한 script-->
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="module" src="./js/tour.js"></script>
+    <script type="module" src="./js/invite.js"></script>
+    <script type="module" src="./js/inviteCheck.js"></script>
+    <script type="module" src="./js/go-home.js"></script>
+    <script type="module" src="./js/common.js"></script>
+  </body>
 </html>

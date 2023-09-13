@@ -26,7 +26,6 @@ let infowindow = new kakao.maps.InfoWindow({ zIndex: 1 });
 
 //창이 열리면 실행되는 목록
 window.onload = async function () {
-  checkLoggedInStatus();
   if (tour_site_id && !tour_id) {
     createTour(tour_site_id);
   }
@@ -330,38 +329,6 @@ function createTour(tour_site_id) {
   });
 }
 
-//로그인 여부, 유저 이름 불러오기
-function checkLoggedInStatus() {
-  fetch('/users/me', {
-    method: 'GET',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      // 응답 처리
-      if (data.data) {
-        const usernickname = document.getElementById('usernickname');
-        usernickname.innerHTML = data.data.nickname;
-      }
-      if (!data.data) {
-        alert('로그인을 먼저 진행해주세요.');
-        window.location.replace('/login.html');
-      }
-    });
-}
-
-function logout() {
-  fetch('/logout', {
-    method: 'POST',
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      alert('로그아웃 완료');
-      window.location.href = '/';
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
-}
 //채팅시작버튼
 startChatting.addEventListener('click', function () {
   window.open(`chatting.html?tourId=${tour_id}`, 'popup01', 'width=400, height=800, scrollbars= 0, toolbar=0, menubar=no');
