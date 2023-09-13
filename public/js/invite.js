@@ -25,11 +25,10 @@ inviteUser.addEventListener('click', async function () {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === '사용자 초대가 완료되었습니다.') {
-          alert(data.message);
-        } else {
-          alert(data.message);
-        }
+        alert(data.message);
+        const invitedUser = data.result;
+        const inviteCard = `<div><strong>${invitedUser.nickname}</strong></div>`;
+        invitedUserList.innerHTML += inviteCard;
       })
       .catch((error) => {
         console.error(error);

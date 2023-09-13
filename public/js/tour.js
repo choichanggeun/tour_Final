@@ -342,6 +342,10 @@ function checkLoggedInStatus() {
         const usernickname = document.getElementById('usernickname');
         usernickname.innerHTML = data.data.nickname;
       }
+      if (!data.data) {
+        alert('로그인을 먼저 진행해주세요.');
+        window.location.replace('/login.html');
+      }
     });
 }
 

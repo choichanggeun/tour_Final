@@ -1,5 +1,3 @@
-const redis = require('redis');
-//Redis 실행
 const client = require('../utils/redis');
 class RedisRepository {
   getRedis = async (key, day) => {

@@ -1,11 +1,9 @@
 const { Server } = require('socket.io');
-var redis = require('redis');
-var redisAdapter = require('socket.io-redis');
+var client = require('./redis');
 
 let io;
 const REDIS_PREFIX = 'CHAT_USER_';
 const REDIS_SUFFIX = 'CHAT_ROOM_';
-let client;
 
 async function saveChattingData(data) {
   try {
@@ -26,20 +24,7 @@ async function getChattingLog(data) {
 
 module.exports = {
   init: (httpServer) => {
-    client = redis.createClient();
-
-    (async () => {
-      await client.connect();
-    })();
-
-    client.on('error', function (err) {
-      console.log('Error ' + err);
-    });
-
     io = new Server(httpServer);
-
-    //다중 인스턴스간 데이터 공유
-    io.adapter(redisAdapter({ host: 'localhost', port: 6379 }));
 
     io.sockets.on('connection', function (socket) {
       socket.emit('connection', { type: 'connected' });

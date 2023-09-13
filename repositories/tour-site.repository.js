@@ -1,11 +1,7 @@
 const { TourSite } = require('../models');
 const axios = require('axios');
 const { Op } = require('sequelize');
-const redis = require('redis');
-//Redis 실행
-const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 반드시 설정 !!
-redisClient.connect().then(); // redis v4 연결 (비동기)
-const redisCli = redisClient.v4;
+const redisCli = require('./../utils/redis');
 const sigunguCode = [25, 10, 5, 9, 5, 16, 5, 1];
 const list = [
   {
@@ -121,9 +117,19 @@ class ToursiteRepository {
       return await TourSite.findAll({ where: { site_name: { [Op.like]: '%' + search_data + '%' } } });
     }
   };
+
   getFirstSite = async () => {
-    return await TourSite.findAll({ limit: 12 });
+    let value = await redisCli.get('firstSite', 0, -1);
+    if (value) {
+      return JSON.parse(value);
+    } else {
+      let data = await TourSite.findAll({ limit: 12, order: [['id', 'ASC']] });
+      await redisCli.set('firstSite', JSON.stringify(data));
+      await redisCli.expire('firstSite', 360);
+      return data;
+    }
   };
+
   //이거 먼저 실행해야함
   firstTourSite = async () => {
     for (let i = 0; i < 12; i++) {

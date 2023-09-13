@@ -1,11 +1,7 @@
 const { Tour, User, TourSite, Like, PlanDate, Invite } = require('../models');
 const { Op } = require('sequelize');
-const redis = require('redis');
-const { Sequelize } = require('sequelize');
-//Redis 실행
-const redisClient = redis.createClient({ legacyMode: true }); // legacy 모드 반드시 설정 !!
-redisClient.connect().then(); // redis v4 연결 (비동기)
-const redisCli = redisClient.v4;
+const redisCli = require('./../utils/redis');
+const Sequelize = require('sequelize');
 
 class TourRepository {
   // 여행 계획 등록
