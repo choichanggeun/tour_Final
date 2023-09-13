@@ -2,7 +2,6 @@ const { TourSite } = require('../models');
 const axios = require('axios');
 const { Op } = require('sequelize');
 const redisCli = require('./../utils/redis');
-const sigunguCode = [25, 10, 5, 9, 5, 16, 5, 1];
 const list = [
   {
     site_name: '서울',
@@ -136,9 +135,9 @@ class ToursiteRepository {
       await TourSite.create(list[i]);
     }
   };
-  createTourSite = async (startNumber) => {
+  createTourSite = async (startNumber, sigunguCode) => {
     var i = startNumber; // max = 8, min = 1(서울) 2(인천)
-    let Code = sigunguCode[i - 1];
+    let Code = sigunguCode;
     let h = 0;
     const interval = setInterval(async function () {
       h++;

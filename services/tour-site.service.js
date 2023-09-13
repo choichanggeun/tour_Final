@@ -30,10 +30,10 @@ class TourSiteService {
     await this.toursiteRepository.firstTourSite();
     return new ServiceReturn('관광지 테이블 채우기 성공', 200);
   };
-  createTourSite = async (admin_id, startNumber) => {
+  createTourSite = async (admin_id, startNumber, sigunguCode) => {
     const vailAdmin = await this.adminRepository.findAdminId(admin_id);
     if (!vailAdmin) throw new CustomError('관리자 권한이 존재하지 않습니다.', 403);
-    await this.toursiteRepository.createTourSite(startNumber);
+    await this.toursiteRepository.createTourSite(startNumber, sigunguCode);
     return new ServiceReturn('관광지 테이블 채우기 성공', 200);
   };
 

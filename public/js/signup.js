@@ -23,7 +23,7 @@ createBtn.addEventListener('click', function () {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.status === 200) {
+      if (data.status === 201) {
         alert(data.message);
         window.location.href = '/login.html';
       } else {
