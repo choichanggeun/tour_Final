@@ -47,13 +47,7 @@
   <body>
     <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
     <div class="loader loader-bg">
-      <div class="loader-inner ball-pulse-rise">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <div class="loader-inner ball-pulse-rise"></div>
     </div>
     <header>
       <div class="small-top">
@@ -99,14 +93,8 @@
                       </div>
                       <div id="dropdownMenu" class="dropdown-content" style="display: none">
                         <a href="./mypage.html">마이페이지</a>
-                        <a href="#" onclick="">로그아웃</a>
-                      </div> 
-                    </div> 
-                  </div> 
-                </div> 
-                     </div>
-                        </div>
-                     
+                        <a id="logoutbtn">로그아웃</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -116,28 +104,29 @@
         </div>
       </div>
     </header>
+
     <nav class="navbar top-nav">
       <div class="container">
         <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
         <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
           <a class="navbar-brand" href="#">Responsive navbar</a>
-  
+
           <ul class="nav navbar-nav">
             <li class="nav-item active">
               <!-- 홈 버튼 -->
               <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
             </li>
-  
+
             <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
             <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
             <!--<li class="nav-item"><a class="nav-link" href="#">Business</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
+              <li class="nav-item"><a class="nav-link" href="#">Science</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Sports</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Tech</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Travel</a></li>
+              <li class="nav-item"><a class="nav-link" href="#">Health</a></li> -->
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
@@ -157,7 +146,6 @@
 
     <div class="content">
       <div class="form-container">
-
         <!-- Update profile form -->
         <!-- New nickname input field -->
         <!-- New password input field -->
@@ -166,15 +154,15 @@
         <form id="updateProfileForm">
           <h1>프로필 수정</h1>
           <!-- New nickname input field -->
-          <label for="newNickname" style="font-size: 20px;">New Nickname:</label>
+          <label for="newNickname" style="font-size: 20px">New Nickname:</label>
           <input type="text" id="newNickname" value="" /><br />
 
           <!-- New password input field -->
-          <label for="newPassword" style="font-size: 20px;">New Password:</label>
+          <label for="newPassword" style="font-size: 20px">New Password:</label>
           <input type="password" id="newPassword" /><br />
 
           <!-- Save button to update profile -->
-          <button type="button" id="saveButton" style="font-size: 16px; padding: 10px 10px; background-color: #c0d7ff; width: 50%;margin: 0 auto;">저장하기</button>
+          <button type="button" id="saveButton" style="font-size: 16px; padding: 10px 10px; background-color: #c0d7ff; width: 50%; margin: 0 auto">저장하기</button>
         </form>
       </div>
     </div>
@@ -245,8 +233,7 @@
     <script src="js/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/core.js"></script>
-    <script src="./js/logo.js"></script>
-
-    <script src="./js/mypage-profile.js"></script>
+    <script src="js/mypage-profile.js"></script>
+    <script src="js/common.js"></script>
   </body>
 </html>

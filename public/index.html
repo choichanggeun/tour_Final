@@ -22,13 +22,7 @@
   <body>
     <!-- 이 부분이 페이지 로드할 때 애니메이션 부분 -->
     <div class="loader loader-bg">
-      <div class="loader-inner ball-pulse-rise">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
+      <div class="loader-inner ball-pulse-rise"></div>
     </div>
     <header>
       <div class="small-top">
@@ -41,7 +35,7 @@
           <div class="col-lg-3 offset-lg-5">
             <!-- 소셜 아이콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
             <!-- 소셜 아이ddddddd콘 연결되는 부분인데 git 연결하면 어떨까싶어서 남겨둠 -->
-            
+
             <div class="social-icon">
               <a target="_blank" href="#" class="fa fa-facebook"></a> <a target="_blank" href="#" class="fa fa-twitter"></a> <a target="_blank" href="#" class="fa fa-google-plus"></a> <a target="_blank" href="#" class="fa fa-linkedin"></a> <a target="_blank" href="#" class="fa fa-youtube"></a>
             </div>
@@ -49,53 +43,48 @@
         </div>
       </div>
 
-     <!-- 메인페이지 로고 및 드롭박스-->
-     <div class="top-head left">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <h1>
-              <a href="/index.html">  
-              <img id = "headerImage" src="./img/mainLogo.png" alt="mainLogo" />
-              <small>여행 계획을 알차게!</small></h1>
-          </div>
-          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
-            <!-- 사용자 부분 -->
-            <nav class="nav nav-inline">
-              <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
+      <!-- 메인페이지 로고 및 드롭박스-->
+      <div class="top-head left">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 col-lg-4">
+              <h1>
+                <a href="/index.html">
+                  <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" />
+                  <small>여행 계획을 알차게!</small></a
+                >
+              </h1>
+            </div>
+            <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down">
+              <!-- 사용자 부분 -->
+              <nav class="nav nav-inline">
+                <!-- 이 부분은 메시지함? 우편함? 편지함? 같은건데 일단 공백처리
                       <a href="#" class="nav-link">
                 <span class="ping"></span>
                 <i class="fa fa-envelope-o"></i
               ></a> -->
-              <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
-              <div class="container header-container">
-                <div class="button-container right-aligned-buttons">
-                  <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
-                  <div id="profileimg" class="dropdown" style='display: none;'>
-                    <div class='nav-link'>
-                      <span id='usernickname'>홍길동</span>
-                      <img id='profilePic' class='img-fluid img-circle' src='/img/profile.png' />
-                    </div>
-                      <div id='dropdownMenu' class='dropdown-content' style='display: none;'>
-                        <a href="./mypage.html">마이페이지</a>
-                        <a href="#" onclick="">채팅</a>
-                        <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
-                    </div> 
-                  </div> 
-                </div> 
-              </div> 
-                   </div>
+                <!-- 이부분이 사용자 정보탭으로 연결될 수 있게 하면 좋을 듯 -->
+                <div class="container header-container">
+                  <div class="button-container right-aligned-buttons">
+                    <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                    <div id="profileimg" class="dropdown" style="display: none">
+                      <div class="nav-link">
+                        <span id="usernickname">홍길동</span>
+                        <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
                       </div>
-                   
+                      <div id="dropdownMenu" class="dropdown-content" style="display: none">
+                        <a href="./mypage.html">마이페이지</a>
+                        <a id="logoutbtn">로그아웃</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </nav>
+              </nav>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </header>
+    </header>
 
     <nav class="navbar top-nav">
       <div class="container">
@@ -113,8 +102,6 @@
             <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
             <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
             <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
-          
-         
           </ul>
           <!-- 검색기능 -->
           <form class="pull-xs-right">
@@ -122,37 +109,36 @@
             <button id="post-upload-btn" style="display: none">버튼</button>
           </form>
 
-           <div class="search" style="float: right">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" accept-charset="utf-8" />
-              <button type="button" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
-            </div>
+          <div class="search" style="float: right">
+            <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" accept-charset="utf-8" />
+            <button type="button" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
+          </div>
         </div>
       </div>
-    
-    </nav><!-- 좋아요 top6 여행지 -->
+    </nav>
+    <!-- 좋아요 top6 여행지 -->
     <section class="likeplan-sec">
-          <!-- 좋아요 top9 여행지 -->
-          <div class="toprated">
-          </div>
+      <!-- 좋아요 top9 여행지 -->
+      <div class="toprated"></div>
       <div class="container">
-
         <div class="row">
-          <div id="main-content"> <!-- 이 div 안에 카드들을 동적으로 추가 -->
+          <div id="main-content">
+            <!-- 이 div 안에 카드들을 동적으로 추가 -->
             <!-- 카드들이 동적으로 추가될 위치입니다 -->
           </div>
         </div>
-          <!-- 배너부분이 들어갈 자리입니다. -->
-          <div class="row">
-        <div class="col-md-6 top-slider">
-          <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-            <!-- Indicators -->
-            <ol class="carousel-indicators" id="carousel-indicators"></ol>
+        <!-- 배너부분이 들어갈 자리입니다. -->
+        <div class="row">
+          <div class="col-md-6 top-slider">
+            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+              <!-- Indicators -->
+              <ol class="carousel-indicators" id="carousel-indicators"></ol>
 
-            <!-- Wrapper for slides -->
-            <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
+            </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
 
@@ -161,8 +147,7 @@
       <div class="container">
         <div class="row">
           <h3 class="heading-large">도시</h3>
-          <div class="row" id="siteCardBox">
-          </div>
+          <div class="row" id="siteCardBox"></div>
         </div>
       </div>
     </section>
@@ -229,7 +214,6 @@
       </div>
     </div>
 
-  
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
@@ -239,6 +223,6 @@
     <script src="js/core.js"></script>
     <script src="js/main.js"></script>
     <script src="js/index.js"></script>
-    <!-- <script src="/js/main.js"></script>  -->
+    <script src="js/common.js"></script>
   </body>
 </html>
