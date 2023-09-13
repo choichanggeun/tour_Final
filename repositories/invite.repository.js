@@ -23,7 +23,7 @@ class InviteRepository {
         pass: MAIL_KEY, // generated ethereal password
       },
     });
-    const url = `http://localhost:3000/invitecheck/?token=${inviteTokenFirst}`;
+    const url = `http://tourplan.store/invitecheck/?token=${inviteTokenFirst}`;
     await transporter.sendMail({
       from: `그룹 초대 메일 ~ <${inviteUser.nickname}>님의 초대입니다.`,
       to: email,
