@@ -24,8 +24,8 @@
   width: 150px; /* 드롭다운 메뉴의 너비 설정 */
   background-color: white; /* 배경색을 흰색으로 설정 */
 
-  left: 50%; /* 부모 요소(.dropdown) 대비 왼쪽에서부터 거리 비율 */
-  transform: translateX(-30%); /* 자신(.dropdown-content) 대비 왼쪽에서부터 거리 비율 */
+  /* left: 50%; 부모 요소(.dropdown) 대비 왼쪽에서부터 거리 비율
+  transform: translateX(-30%); 자신(.dropdown-content) 대비 왼쪽에서부터 거리 비율 */
 }
 
 .dropdown-content a {
