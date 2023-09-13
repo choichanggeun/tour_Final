@@ -43,7 +43,7 @@ $(document).ready(async function () {
       $('#message-input').keyup(function (event) {
         if (event.which === 13) {
           $('#message-button').click();
-          evt.preventDefault();
+          event.preventDefault();
         }
       });
 
@@ -55,7 +55,7 @@ $(document).ready(async function () {
           message: msg,
           room: roomNumber,
         });
-        writeMessage('me', name, msg);
+
         $('#message-input').val('');
       });
 
