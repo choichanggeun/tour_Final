@@ -56,8 +56,8 @@ class TourSiteController {
   createTourSite = async (req, res, next) => {
     try {
       const admin_id = res.locals.admin.id;
-      const { startNumber } = req.body;
-      const { status, message, result } = await this.tourSiteService.createTourSite(admin_id, startNumber);
+      const { startNumber, sigunguCode } = req.body;
+      const { status, message, result } = await this.tourSiteService.createTourSite(admin_id, startNumber, sigunguCode);
       return res.status(status).json({ message, result });
     } catch (error) {
       if (error.status) return res.status(error.status).json({ message: error.message });
