@@ -23,6 +23,7 @@ fetch('/like_tours')
       //좋아요 많이 받은 순으로 6개만 화면에 표시
       topSixTours.forEach(function (item, index) {
         /* Tour Items */
+        console.log(item);
         let tourItemElement = document.createElement('div');
         tourItemElement.className = 'tour-card';
         tourItemElement.style.cursor = 'pointer'; // 카드에 마우스 커서 올렸을 때 커서 모양 변하게 함
@@ -40,7 +41,7 @@ fetch('/like_tours')
         let siteNameElement = document.createElement('p');
 
         // 좋아요 개수 텍스트 요소 생성
-        let likeCountText = item.likeCount ? ` : ${item.likeCount}` : ' : 0';
+        let likeCountText = item.likeCount ? ` : ${item.likeCount.likeCount}` : ' : 0';
         let likeCountTextNode = document.createTextNode(likeCountText);
 
         // 좋아요 요소에 이미지와 텍스트 추가
