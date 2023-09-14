@@ -1,10 +1,27 @@
 .button-container {
-  float: right;
+  position: absolute;
+  right: 50px;
+  text-align: end;
 }
+
+.button-container2 {
+  margin: 35px;
+  position: absolute;
+  right: 50px;
+  text-align: end;
+}
+
 .dropdown {
-  width: auto; /* 너비를 자동으로 설정 */
-  position: relative; /* 위치를 상대적으로 설정 */
-  display: inline-block; /* 인라인 블록 형태로 표시 */
+  display: flex;
+}
+
+.dropbtn {
+  line-height: 2;
+}
+
+#profilePic {
+  width: 40px;
+  margin-left: 10px;
 }
 
 .dropdown-content {
@@ -39,9 +56,9 @@
   text-align: center; /* 가로 방향으로 중앙 정렬 */
 }
 
-.dropdown:hover .dropdown-content {
+/* .dropdown:hover .dropdown-content {
   display: block;
-}
+} */
 
 /* 로그인한 유저 닉네임 명 폰트 및 크기 */
 #profileimg {

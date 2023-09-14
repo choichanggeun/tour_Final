@@ -26,28 +26,26 @@
         /* height: 13%; */
         background-color: black;
       }
-      .dropdown {
+      /* .dropdown {
         width: auto;
         color: white;
         position: relative;
         display: inline-block;
         margin-right: 30px;
         margin-top: 40px;
-      }
-      .dropdown-content {
+      } */
+      /* .dropdown-content {
         overflow: hidden;
         display: none;
         position: absolute;
-        z-index: 1; /*다른 요소들보다 앞에 배치*/
+        z-index: 1;
       }
-
       .dropdown-content a {
         display: block;
-      }
-
-      .dropdown:hover .dropdown-content {
+      } */
+      /* .dropdown:hover .dropdown-content {
         display: block;
-      }
+      } */
       .header-button {
         float: left;
         margin-right: 30px;
@@ -220,11 +218,17 @@
           <button class="header-button" id="updateTour" value="none" style="display: none">여행계획수정</button>
           <button class="header-button" id="startChatting" value="none" style="display: none">채팅방 입장</button>
 
-          <div class="dropdown" style="float: right">
-            <span class="dropbtn" id="usernickname">홍길동</span>
-            <div class="dropdown-content">
-              <a href="javascript:void(0);" onclick="">회원정보</a>
-              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+          <div id="profileimg" class="dropdown" style="display: none">
+            <div class="button-container2 right-aligned-buttons">
+              <div class="dropdown">
+                <span class="dropbtn" id="usernickname"></span>
+
+                <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
+                <div id="dropdownMenu" class="dropdown-content" style="display: none">
+                  <a href="javascript:void(0);" onclick="">회원정보</a>
+                  <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
