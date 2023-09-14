@@ -49,10 +49,6 @@ socket.on('update_plan', function () {
   getplaceData(tour_id);
 });
 
-socket.on('delete_plan', function () {
-  getplaceData(tour_id);
-});
-
 socket.on('end_plan', function () {
   window.location.href = '/tour-all-post.html';
 });
@@ -443,8 +439,8 @@ function deletePlace() {
       .then((response) => response.json())
       .then((data) => {
         linePath.pop();
+        socket.emit('update_plan', data.message);
         alert(data.message);
-        socket.emit('delete_plan');
         window.location.reload();
       });
   } else {
