@@ -1,5 +1,5 @@
 let serverURL = 'tourplan.store/';
-const socket = io('http://tourplan.store/'); // 여기서 주소는 서버 주소로 변경해야 합니다.
+const socket = io('http://tourplan.store/', { transports: ['websocket'] }); // 여기서 주소는 서버 주소로 변경해야 합니다.
 const urlParams = new URLSearchParams(window.location.search);
 const roomNumber = urlParams.get('tourId');
 const tour_id = urlParams.get('tourId');
@@ -38,8 +38,24 @@ window.onload = async function () {
       alert('비정상적인 접근입니다.');
       window.location.href = '/';
     }
+    socket.emit('connection', {
+      type: 'connected',
+      room: roomNumber,
+    });
   }
 };
+
+socket.on('update_plan', function () {
+  getplaceData(tour_id);
+});
+
+socket.on('delete_plan', function () {
+  getplaceData(tour_id);
+});
+
+socket.on('end_plan', function () {
+  window.location.href = '/tour-all-post.html';
+});
 
 function displayPlaces(places) {
   let listEl = document.getElementById('placesList'),
@@ -403,6 +419,7 @@ createTourBtn.addEventListener('click', function () {
         alert(data.message);
         // 소켓이벤트 보내는 부분
         socket.emit('new_plan', data.result);
+        window.location.href = '/tour-all-post.html';
       }
       if (data.code === 400) {
         alert(data.message);
@@ -411,11 +428,6 @@ createTourBtn.addEventListener('click', function () {
     .catch((error) => {
       console.log(error);
     });
-});
-
-// Listen for the event from the server indicating that it has processed your update.
-socket.on('update_plan', function () {
-  window.location.href = '/';
 });
 
 function deletePlace() {
@@ -432,6 +444,7 @@ function deletePlace() {
       .then((data) => {
         linePath.pop();
         alert(data.message);
+        socket.emit('delete_plan');
         window.location.reload();
       });
   } else {
@@ -484,8 +497,8 @@ function createSite(places) {
       .then((data) => {
         alert(data.message);
         if (data.status === 201) {
-          window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
           socket.emit('update_plan', data.result);
+          window.location.href = `tour.html?tourId=${tour_id}&id=${tour_site_id}`;
         }
       })
       .catch((error) => {
