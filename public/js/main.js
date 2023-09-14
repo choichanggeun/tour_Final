@@ -37,7 +37,9 @@ window.onload = function () {
         if (i === 0) {
           const bannerList = `<div class="carousel-item active">
                                 <div class="news-block">
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform?usp=sf_link">
                                     <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
+                                    </a>
                                         <div class="news-title">
                                             <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
                                         </div>
@@ -101,7 +103,6 @@ function checkLoggedInAdmin() {
     .then((data) => {
       // 응답 처리
       if (data.data) {
-        console.log(data.data);
         document.querySelector('#post-upload-img').style.display = 'block';
         document.querySelector('#post-upload-btn').style.display = 'block';
         return data.data;
