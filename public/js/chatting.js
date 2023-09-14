@@ -17,15 +17,12 @@ $(document).ready(async function () {
       const socket = io('http://tourplan.store/', { transports: ['websocket'] });
       let name = data.data.nickname;
       let id = data.data.id;
-      socket.on('connection', function (data) {
-        if (data.type == 'connected') {
-          socket.emit('connection', {
-            type: 'join',
-            name: name,
-            room: roomNumber,
-            id: id,
-          });
-        }
+
+      socket.emit('connection', {
+        type: 'join',
+        name: name,
+        room: roomNumber,
+        id: id,
       });
 
       socket.on('system', function (data) {
