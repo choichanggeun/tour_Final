@@ -47,18 +47,20 @@ class DiaryService {
   };
 
   // 여행 일지 수정
-  putDiary = async (diary_id, title, content, status) => {
+  putDiary = async (user_id, diary_id, title, content, status) => {
     const diary = await this.diaryRepository.getDiary(diary_id);
     if (!diary) throw new CustomError('존재하지 않는 여행 일지입니다.', 404);
+    if (diary.user_id !== user_id) throw new CustomError('여행 일지를 수정할 수 있는 권한이 없습니다.', 403);
     if (!title) throw new CustomError('제목을 입력해주세요.', 400);
     if (!content) throw new CustomError('내용을 입력해주세요.', 400);
     await this.diaryRepository.putDiary(diary_id, title, content, status);
   };
 
   // 여행 일지 삭제
-  deleteDiary = async (diary_id) => {
+  deleteDiary = async (user_id, diary_id) => {
     const diary = await this.diaryRepository.getDiary(diary_id);
     if (!diary) throw new CustomError('존재하지 않는 여행 일지입니다.', 404);
+    if (diary.user_id !== user_id) throw new CustomError('여행 일지를 삭제할 수 있는 권한이 없습니다.', 403);
     await this.diaryRepository.deleteDiary(diary_id);
   };
 }

@@ -1,17 +1,12 @@
-// 여행 일지, 이미지 조회
-const getDiary = function () {
-  // 특정 페이지에 있을 때 실행
-  const currentPageURL = window.location.href;
+// DOM이 로드되면 getDiary 호출
+document.addEventListener('DOMContentLoaded', function () {
   const urlParams = new URLSearchParams(window.location.search);
   const diary_id = urlParams.get('diary_id');
-  const targetPageURL = `http://tourplan.store/diary-detail.html?diary_id=${diary_id}`;
-  if (currentPageURL === targetPageURL) {
-    renderDiary(diary_id);
-  }
-};
+  getDiary(diary_id);
+});
 
-// 일지 내용을 렌더링
-const renderDiary = async (diary_id) => {
+// 일지 내용을 조회
+const getDiary = async (diary_id) => {
   try {
     const response = await fetch(`/diaries/${Number(diary_id)}`, {
       method: 'GET',
@@ -94,8 +89,6 @@ const renderDiary = async (diary_id) => {
     console.error(error);
   }
 };
-// DOM이 로드되면 getDiary 호출
-document.addEventListener('DOMContentLoaded', getDiary);
 
 // 여행 일지, 이미지 삭제
 const deleteDiary = async function (diary_id) {
