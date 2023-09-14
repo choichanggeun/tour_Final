@@ -12,7 +12,7 @@
   display: none; /* 기본적으로 숨김 상태 */
 
   position: absolute; /* 위치를 절대값으로 설정 */
-  z-index: 1; /* 다른 요소들보다 앞에 배치 */
+  z-index: 2; /* 다른 요소들보다 앞에 배치 */
 
   /* 이미지 바로 아래에 위치 */
   top: calc(100% + 5px); /* 프로필 이미지의 높이 + 원하는 간격 */
@@ -39,7 +39,7 @@
   text-align: center; /* 가로 방향으로 중앙 정렬 */
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown-content {
   display: block;
 }
 
