@@ -66,6 +66,8 @@ body {
   float: left;
   background-color: #0074f947;
   box-shadow: 0 4px 8px rgb(0 0 0 / 36%);
+  margin-right: 20px;
+  /* 서버 마이페이지에 간격 뜨는것때문에 추가 */
 }
 
 #main-content-diary .diary-item {
