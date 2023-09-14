@@ -204,11 +204,13 @@
   <body>
     <header>
       <div class="top-head left">
+
         <div class="row">
           <div class="col-md-6 col-lg-4">
-            <h1>
-              <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px; margin-left: 10px" /></a>
-              <small>여행 계획을 알차게!</small>
+            <h1 style="margin-left: 250px">
+              
+              <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px " /></a>
+              <small>여행 계획을 알차게! </small>
             </h1>
           </div>
           <div id="likeCounter" style="float: left; margin-top: 45px">좋아요 : 0</div>
@@ -218,49 +220,29 @@
           <button class="header-button" id="updateTour" value="none" style="display: none">여행계획수정</button>
           <button class="header-button" id="startChatting" value="none" style="display: none">채팅방 입장</button>
 
-          <div id="profileimg" class="dropdown" style="display: none">
-            <div class="button-container2 right-aligned-buttons">
-              <div class="dropdown">
-                <span class="dropbtn" id="usernickname"></span>
-
-                <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
-                <div id="dropdownMenu" class="dropdown-content" style="display: none">
-                  <a href="javascript:void(0);" onclick="">회원정보</a>
-                  <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+          <div class="col-md-6 col-lg-5 offset-lg-3 admin-bar hidden-sm-down" style="margin: -50px 0 0 750px; width: 15%">
+            <!-- 사용자 부분 -->
+            <nav class="nav nav-inline">
+              <div class="container header-container">
+                <div class="button-container right-aligned-buttons">
+                  <button type="button" class="btn btn-search" id="loginbtn"><a href="/login.html">로그인</a></button>
+                  <div id="profileimg" class="dropdown" style="display: none">
+                    <div class="nav-link">
+                      <span id="usernickname">홍길동</span>
+                      <img id="profilePic" class="img-fluid img-circle" src="/img/profile.png" />
+                    </div>
+                    <div id="dropdownMenu" class="dropdown-content" style="display: none">
+                      <a href="./mypage.html">마이페이지</a>
+                      <a id="logoutbtn">로그아웃</a>
                 </div>
               </div>
+              </nav>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </header>
-    <nav class="navbar top-nav">
-      <div class="container">
-        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false" aria-label="Toggle navigation">&#9776;</button>
-        <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
-          <a class="navbar-brand" href="#">Responsive navbar</a>
-
-          <ul class="nav navbar-nav">
-            <li class="nav-item active">
-              <!-- 홈 버튼 -->
-              <a class="nav-link" href="/">홈 <span class="sr-only">(current)</span></a>
-            </li>
-
-            <!-- 다른 매뉴들인데 쓸 일이 없을 것 같습니다. -->
-            <li class="nav-item"><a class="nav-link" href="./tourSite.html">여행지</a></li>
-            <li class="nav-item"><a class="nav-link" href="./tour-all-post.html">여행 계획</a></li>
-            <li class="nav-item"><a class="nav-link" href="./diary-all.html">여행 일지</a></li>
-          </ul>
-          <!-- 검색기능 -->
-          <form class="pull-xs-right">
-            <div class="search">
-              <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" />
-              <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </nav>
 
     <div class="map_wrap">
       <div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden"></div>
