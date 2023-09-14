@@ -66,6 +66,8 @@ body {
   float: left;
   background-color: #0074f947;
   box-shadow: 0 4px 8px rgb(0 0 0 / 36%);
+  margin-right: 20px;
+  /* 서버 마이페이지에 간격 뜨는것때문에 추가 */
 }
 
 #main-content-diary .diary-item {
@@ -82,6 +84,8 @@ body {
   float: left; /* 카드를 왼쪽으로 정렬 */
   background-color: #0074f947;
   box-shadow: 0 4px 8px rgb(0 0 0 / 36%);
+  margin-right: 20px; 
+  /* 서버에서 마이페이지 css수정 */
 }
 
 #main-content .tour-item p,
@@ -113,7 +117,8 @@ body {
 }
 
 #main-content {
-  display: flex;
+  /* display: flex; */
+  /* 서버때문에 마이페이지수정 */
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -126,7 +131,8 @@ body {
 }
 
 #main-content-diary {
-  display: flex;
+  /* display: flex; */
+  /* 서버때문에 마이페이지수정 */
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-between;

@@ -1,4 +1,6 @@
 // 사용자 정보 확인하여 로그인 상태에 따라 버튼 표시
+let flag = false;
+
 function checkLoggedInStatus() {
   fetch('/users/me', {
     method: 'GET',
@@ -19,8 +21,10 @@ function checkLoggedInStatus() {
           event.stopPropagation(); // Stop the event from bubbling up to the window object
           if (dropdownMenu.style.display === 'block') {
             dropdownMenu.style.display = 'none';
+            console.log('success');
           } else {
             dropdownMenu.style.display = 'block';
+            console.log('fail');
           }
         });
 
