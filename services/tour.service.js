@@ -93,7 +93,7 @@ class TourService {
     const newDate = new Date(end_date);
     let diff = Math.abs(newDate.getTime() - oldDate.getTime());
     diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
-    if (diff - 1 <= 0) throw { code: 400, message: '기존 날짜보다 짧게 수정은 불가능합니다.' };
+    if (diff < 0) throw { code: 400, message: '날짜를 다시 확인해주세요.' };
 
     const updatedTour = await this.tourRepository.updateTour(tour_id, title, start_date, end_date);
     if (!updatedTour) throw { code: 400, message: '여행 계획 수정에 실패했습니다.' };
