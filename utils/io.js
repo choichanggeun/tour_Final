@@ -28,7 +28,7 @@ module.exports = {
 
     io.sockets.on('connection', function (socket) {
       socket.emit('connection', { type: 'connected' });
-
+      socket.join(socket.room);
       socket.on('new_plan', function (plan) {
         //모든 클라이언트에게 새로운 여행 계획 전송
         io.emit('update_plan', plan);
@@ -48,6 +48,18 @@ module.exports = {
 
       socket.on('plan_updated', function (data) {
         io.to(data.room).emit('plan_updated', data);
+      });
+
+      socket.on('update_plan', function () {
+        io.to(socket.room).emit('update_plan');
+      });
+
+      socket.on('delete_plan', function () {
+        io.to(socket.room).emit('update_plan');
+      });
+
+      socket.on('new_plan', function () {
+        io.to(socket.room).emit('end_plan');
       });
 
       socket.on('connection', async function (data) {
