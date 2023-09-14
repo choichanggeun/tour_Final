@@ -79,6 +79,7 @@ async function renderDiaryCards() {
         // Create a card title
         const cardTitleLabel = document.createElement('label'); // Label for title
         cardTitleLabel.textContent = '제목 ';
+        cardTitleLabel.style.margin = '0';
         const cardTitle = document.createElement('h5');
         cardTitle.classList.add('card-title', 'custom-card-title'); // Add custom-card-title class for styling
         cardTitle.textContent = diary.title;
@@ -87,6 +88,7 @@ async function renderDiaryCards() {
         const cardNicknameLabel = document.createElement('label'); // Label for nickname
         cardNicknameLabel.style.transform = 'translateY(-20px)'; // 간격을 조절합니다.
         cardNicknameLabel.textContent = '닉네임 ';
+        cardNicknameLabel.style.margin = '0';
         const cardText = document.createElement('p');
         cardText.classList.add('card-text', 'custom-card-text'); // Add custom-card-text class for styling
         cardText.textContent = diary.User.nickname;

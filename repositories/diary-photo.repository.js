@@ -1,4 +1,4 @@
-const { DiaryPhoto } = require('../models');
+const { DiaryPhoto, Diary } = require('../models');
 
 class DiaryPhotoRepository {
   postDiaryPhoto = async (diary_id, diary_img) => {
@@ -19,6 +19,14 @@ class DiaryPhotoRepository {
 
   getPhoto = async (photo_id) => {
     return await DiaryPhoto.findOne({ where: { id: photo_id } });
+  };
+
+  getDiary = async (diary_id) => {
+    return await Diary.findOne({ where: { id: diary_id } });
+  };
+
+  getDiaryByPhotoId = async (photo_id) => {
+    return await DiaryPhoto.findOne({ where: { id: photo_id }, include: [{ model: Diary, attributes: ['user_id'] }] });
   };
 }
 
