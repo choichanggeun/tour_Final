@@ -146,15 +146,6 @@ async function getMyDiary() {
                 imgElement.classList.add('img-element');
 
                 diaryBoxElement.appendChild(imgElement);
-
-                // 공개/비공개 상태 표시
-                let statusElement = document.createElement('p');
-                if (diary.status === '0') {
-                  statusElement.textContent = '상태: 공개';
-                } else {
-                  statusElement.textContent = '상태: 비공개';
-                }
-                diaryBoxElement.appendChild(statusElement);
               }
             } else {
               let defaultImgElement = document.createElement('img');
