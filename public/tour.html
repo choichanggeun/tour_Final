@@ -307,21 +307,23 @@
   </head>
   <header>
     <div class="top-head left">
-      <div class="row">
-        <div class="col-md-6 col-lg-4">
-          <h1>
-            <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px; margin-left: 10px" /></a>
-            <small>여행 계획을 알차게!</small>
-          </h1>
-        </div>
-        <button class="header-button" id="inviteUser">초대하기</button>
-        <button class="header-button" id="startChatting">채팅창 입장</button>
-        <button class="header-button" id="createTour">등록하기</button>
-        <div class="dropdown" style="float: right">
-          <span class="dropbtn" id="usernickname">홍길동</span>
-          <div class="dropdown-content">
-            <a href="javascript:void(0);" onclick="">회원정보</a>
-            <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 col-lg-4">
+            <h1>
+              <a href="/index.html"> <img id="headerImage" src="./img/mainLogo.png" alt="mainLogo" style="width: 200px; margin-left: 10px" /></a>
+              <small>여행 계획을 알차게!</small>
+            </h1>
+          </div>
+          <button class="header-button" id="inviteUser">초대하기</button>
+          <button class="header-button" id="startChatting">채팅창 입장</button>
+          <button class="header-button" id="createTour">등록하기</button>
+          <div class="dropdown" style="float: right">
+            <span class="dropbtn" id="usernickname">홍길동</span>
+            <div class="dropdown-content">
+              <a href="javascript:void(0);" onclick="">회원정보</a>
+              <a href="javascript:void(0);" onclick="logout()">로그아웃</a>
+            </div>
           </div>
         </div>
       </div>
@@ -409,22 +411,20 @@
       </div>
     </div>
 
-
-  <script>
-    //새로고침 방지입니다.
-    function noEvent() {
-      if (event.keyCode == 116) {
-        event.keyCode = 2;
-        return false;
-      } else if (event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) {
-        return false;
+    <script>
+      //새로고침 방지입니다.
+      function noEvent() {
+        if (event.keyCode == 116) {
+          event.keyCode = 2;
+          return false;
+        } else if (event.ctrlKey && (event.keyCode == 78 || event.keyCode == 82)) {
+          return false;
+        }
       }
-    }
-    document.onkeydown = noEvent;
-  </script>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54?autoload=false""></script>
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services?autoload=false""></script>
-
+      document.onkeydown = noEvent;
+    </script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54?autoload=false"></script>
+    <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=200394b6b99f1bb41cd864c72ac8df54&libraries=services?autoload=false"></script>
 
     <!-- 실시간 소켓 사용하기 위한 script-->
     <script src="/socket.io/socket.io.js"></script>
