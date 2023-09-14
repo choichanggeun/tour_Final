@@ -84,7 +84,7 @@ body {
   float: left; /* 카드를 왼쪽으로 정렬 */
   background-color: #0074f947;
   box-shadow: 0 4px 8px rgb(0 0 0 / 36%);
-  margin-right: 20px; 
+  margin-right: 20px;
   /* 서버에서 마이페이지 css수정 */
 }
 
@@ -152,17 +152,21 @@ body {
   margin: 10px auto;
 }
 
+.boxes {
+  margin-right: 200px;
+}
 h3 {
   background-color: rgb(0, 0, 0);
   border: 1px solid rgb(68, 0, 255);
   padding: 3px;
-  width: 200px;
+  width: 500px;
   display: block;
   border-radius: 10px;
   text-align: center; /* 텍스트를 중앙 정렬합니다. */
-  margin: 0 auto; /* 좌우 여백을 자동으로 조절하여 요소를 가운데 정렬합니다. */
+  margin-left: 400px; /* 좌우 여백을 자동으로 조절하여 요소를 가운데 정렬합니다. */
   font-size: 20px;
   color: white;
+  margin-bottom: 20px;
 }
 
 .title-element {
@@ -183,4 +187,28 @@ div.copyright {
 #usernickname {
   white-space: nowrap;
   display: inline-block;
+}
+
+#plan-box,
+#diary-box {
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 100px; /* 왼쪽 마진 값 변경 */
+  margin-right: auto;
+}
+
+#plan-box {
+  height: 500px;
+
+  overflow: scroll;
+  width: 100%;
+  /* 서버에 마이페이지 카드수정 */
+}
+
+#diary-box {
+  height: 740px;
+
+  overflow: scroll;
+  width: 100%;
+  /* 서버에 마이페이지 카드수정 */
 }
