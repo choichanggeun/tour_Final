@@ -96,10 +96,11 @@ class DiaryController {
   // 여행 일지 수정
   putDiary = async (req, res) => {
     try {
+      const { id: user_id } = res.locals.user;
       const { diary_id } = req.params;
       const { title, content, status } = req.body;
 
-      await this.diaryService.putDiary(diary_id, title, content, status);
+      await this.diaryService.putDiary(user_id, diary_id, title, content, status);
       return res.status(200).json({ message: '여행 일지가 수정되었습니다.' });
     } catch (error) {
       console.log(error);
@@ -110,9 +111,10 @@ class DiaryController {
   // 여행 일지 삭제
   deleteDiary = async (req, res) => {
     try {
+      const { id: user_id } = res.locals.user;
       const { diary_id } = req.params;
 
-      await this.diaryService.deleteDiary(diary_id);
+      await this.diaryService.deleteDiary(user_id, diary_id);
       return res.status(200).json({ message: '여행 일지가 삭제되었습니다.' });
     } catch (error) {
       console.log(error);
