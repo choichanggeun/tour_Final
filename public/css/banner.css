@@ -1,0 +1,41 @@
+body {
+  position: relative;
+}
+
+.carousel {
+  position: absolute;
+  top: 18%;
+  left: 1100px;
+
+  /* 테두리와 둥근 모서리 추가 */
+  border: solid skyblue; /* 테두리 색상 설정 */
+  border-radius: 10px; /* 둥근 모서리 설정, 값을 조절하여 원하는 만큼 둥글게 할 수 있습니다 */
+}
+
+.carousel-images img {
+  width: 650px;
+  height: 400px;
+  display: none;
+
+  cursor: pointer;
+}
+
+.carousel-images img.active {
+  display: block;
+}
+
+.slide-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+}
+#prevBtn {
+  left: -30px;
+}
+
+#nextBtn {
+  right: -30px;
+}

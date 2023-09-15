@@ -10,10 +10,6 @@ fetch('/like_tours')
     mainContentTour.innerHTML = ''; // 기존 내용 초기화
 
     // 좋아요 순위 제목 추가
-    let likeRankingTitle = document.createElement('h2');
-    likeRankingTitle.textContent = '좋아요 순위';
-    likeRankingTitle.className = 'like-ranking-title'; // 클래스 이름 변경
-    mainContentTour.appendChild(likeRankingTitle);
 
     var tourDataList = data.result;
 

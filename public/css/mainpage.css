@@ -5,6 +5,7 @@
   /* align-items: flex-start; */
   width: calc(100% - 260px); /* 전체 너비에서 360px 만큼 빼기 */
   margin-right: 20px; /* 오른쪽 여백 추가 */
+  margin-left: -100px;
 }
 
 .tour-card {
@@ -95,4 +96,13 @@
 
 .like-img {
   margin-top: 8px;
+}
+
+#likePlan {
+  width: 350px;
+  height: 100px;
+  margin-left: 430px;
+  margin-top: 25px;
+  border: 2px solid skyblue;
+  border-radius: 15px;
 }
