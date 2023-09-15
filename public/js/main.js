@@ -37,7 +37,7 @@ window.onload = function () {
         if (i === 0) {
           const bannerList = `<div class="carousel-item active">
                                 <div class="news-block">
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform?usp=sf_link">
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform?usp=sf_link" target="_blank">
                                     <div class="news-media"><img class="img-fluid" src="${banner.img}" alt="" /></div>
                                     </a>
                                         <div class="news-title">
