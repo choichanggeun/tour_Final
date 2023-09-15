@@ -19,7 +19,7 @@ class UserService {
     }
 
     // 패스워드 형식 검사: 최소 4자 이상, 문자와 숫자 포함
-    const passwordRegex = /^[a-zA-Z0-9]{4,}$/;
+    const passwordRegex = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{4,}$/;
     if (!passwordRegex.test(password)) {
       throw new CustomError('패스워드의 형식이 일치하지 않습니다.', 400);
     }
@@ -28,8 +28,8 @@ class UserService {
       throw new CustomError('패스워드가 일치하지 않습니다.', 400);
     }
 
-    // 닉네임 형식 검사: 최소 3자 이상, 문자 및 숫자만 가능
-    const nicknameRegex = /^[a-zA-Zㄱ-힣0-9-_.]{3,}$/;
+    // 닉네임 형식 검사: 최소 1자 이상, 문자 및 숫자만 가능
+    const nicknameRegex = /^[a-zA-Zㄱ-힣0-9-_.]{1,}$/;
     if (!nicknameRegex.test(nickname)) {
       throw new CustomError('닉네임의 형식이 일치하지 않습니다.', 400);
     }

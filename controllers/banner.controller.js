@@ -18,8 +18,7 @@ class BannerController {
   createBanner = async (req, res, next) => {
     try {
       const admin_id = 1;
-      let image = req.file.filename;
-      const img = image;
+      const { img } = req.body;
       const { status, message, result } = await this.bannerService.createBanner(admin_id, img);
       return res.status(status).json({ message, result });
     } catch (error) {

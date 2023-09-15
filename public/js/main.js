@@ -37,13 +37,13 @@ window.onload = function () {
         if (i === 0) {
           const bannerList = `<div class="carousel-item active">
                                 <div class="news-block">
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform?usp=sf_link">
-                                    <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
+                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform?usp=sf_link" target="_blank">
+                                    <div class="news-media"><img class="img-fluid" src="${banner.img}" alt="" /></div>
                                     </a>
                                         <div class="news-title">
-                                            <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
+                                            <h2 class="title-large"><a href="#">저희 사이트를 평가해주세요.</a></h2>
                                         </div>
-                                    <div class="news-des">말도 안듣고 밥만 먹고 잠만 자는 이상한 아이...</div>
+                                    <div class="news-des">이미지를 클릭하면 구글 폼이 나옵니다...</div>
                                     <div class="time-text"><strong>${banner.time}분 전</strong></div>
                                     <div></div>
                                 </div>
@@ -52,11 +52,11 @@ window.onload = function () {
         } else {
           const bannerList = `<div class="carousel-item">
                                 <div class="news-block">
-                                    <div class="news-media"><img class="img-fluid" src="/img-server/${banner.img}" alt="" /></div>
+                                    <div class="news-media"><img class="img-fluid" src="${banner.img}" alt="" /></div>
                                             <div class="news-title">
-                                            <h2 class="title-large"><a href="#">우리집 고양이입니다.</a></h2>
+                                            <h2 class="title-large"><a href="#">여러분의 여행을 지금 바로 만들어보세요.</a></h2>
                                         </div>
-                                    <div class="news-des">말도 안듣고 밥만 먹고 잠만 자는 이상한 아이...</div>
+                                    <div class="news-des">친구들 혹은 가족들과 오붓한 시간을 보내며 여행을 떠나보세요.</div>
                                     <div class="time-text"><strong>${banner.time}분 전</strong></div>
                                     <div></div>
                                 </div>
