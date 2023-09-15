@@ -138,34 +138,37 @@ class ToursiteRepository {
     }
   };
   createTourSite = async (startNumber, sigunguCode) => {
-    var i = startNumber; // max = 8, min = 1(서울) 2(인천)
-    let Code = sigunguCode;
+    var i = startNumber; // 시
+    let Code = sigunguCode; // 구
     let h = 0;
     const interval = setInterval(async function () {
-      h++;
       console.log(h);
       if (h > Code - 1) {
         clearInterval(interval);
       }
-      const result = await axios({
-        url: `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?serviceKey=hrod6tZP0dYmxXU3PQEgldYC6jxh0vc0sCpDTi5/o/AGn86x5kYA7nzJhu0l0uUWM/ks/OozWsCz8H74FkGKEQ==&numOfRows=200&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&showflag=1&listYN=Y&arrange=A&contentTypeId=12&areaCode=${i}&sigunguCode=${h}`,
-        method: 'get', // 통신할 방식
-      });
-      const list = result.data.response.body.items.item;
-      if (list !== undefined) {
-        console.log(list.length);
-        for (let j = 0; j < list.length; j++) {
-          if (list[j].firstimage !== '') {
-            const site_name = list[j].title;
-            const site_address = list[j].addr1;
-            const site_img = list[j].firstimage;
-            const mapx = list[j].mapx;
-            const mapy = list[j].mapy;
-            await TourSite.create({ site_name, site_address, site_img, mapx, mapy });
+      setTimeout(async () => {
+        const result = await axios({
+          url: `https://apis.data.go.kr/B551011/KorService1/areaBasedSyncList1?serviceKey=hrod6tZP0dYmxXU3PQEgldYC6jxh0vc0sCpDTi5/o/AGn86x5kYA7nzJhu0l0uUWM/ks/OozWsCz8H74FkGKEQ==&numOfRows=200&pageNo=1&MobileOS=ETC&MobileApp=AppTest&_type=json&showflag=1&listYN=Y&arrange=A&contentTypeId=12&areaCode=${i}&sigunguCode=${h}`,
+          method: 'get', // 통신할 방식
+        });
+        const list = result.data.response.body.items.item;
+        if (list !== undefined) {
+          console.log(list.length);
+          for (let j = 0; j < list.length; j++) {
+            if (list[j].firstimage !== '') {
+              const site_name = list[j].title;
+              const site_address = list[j].addr1;
+              const site_img = list[j].firstimage;
+              const mapx = list[j].mapx;
+              const mapy = list[j].mapy;
+              await TourSite.create({ site_name, site_address, site_img, mapx, mapy });
+            }
           }
         }
-      }
-    }, 5000);
+        h++;
+        interval();
+      }, 5000);
+    });
   };
 
   initTourSite = async () => {
