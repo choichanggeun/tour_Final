@@ -17,6 +17,8 @@
     <link rel="stylesheet" type="text/css" href="css/mainpage.css" />
     <!--메인로고 및 드롭박스 CSS-->
     <link rel="stylesheet" type="text/css" href="css/mainLogo.css" />
+    <!--배너 css-->
+    <link rel="stylesheet" type="text/css" href="css/banner.css" />
   </head>
 
   <body>
@@ -108,11 +110,6 @@
             <input id="post-upload-img" type="file" style="display: none" />
             <button id="post-upload-btn" style="display: none">버튼</button>
           </form>
-
-          <div class="search" style="float: right">
-            <input type="text" class="form-control" maxlength="80" placeholder="Search" id="search-input" accept-charset="utf-8" />
-            <button type="button" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
-          </div>
         </div>
       </div>
     </nav>
@@ -130,14 +127,10 @@
         </div>
         <!-- 배너부분이 들어갈 자리입니다. -->
         <div class="row">
-          <div class="col-md-6 top-slider">
-            <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-              <!-- Indicators -->
-              <ol class="carousel-indicators" id="carousel-indicators"></ol>
-
-              <!-- Wrapper for slides -->
-              <div class="carousel-inner" role="listbox" id="bannerlistbox"></div>
-            </div>
+          <div class="carousel">
+            <button id="prevBtn" class="slide-btn">←</button>
+            <div id="bannerlistbox" class="carousel-images"></div>
+            <button id="nextBtn" class="slide-btn">→</button>
           </div>
         </div>
       </div>

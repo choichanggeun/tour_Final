@@ -16,59 +16,70 @@ postUploadBtn.addEventListener('click', async () => {
   }
 });
 
-const indicators = document.getElementById('carousel-indicators');
-const bannerListbox = document.getElementById('bannerlistbox');
-const searchButton = document.getElementById('search-button');
-const enterInput = document.getElementById('search-input');
+//배너 생성
+let slideIndex = 0;
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const bannerUrls = ['https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform', 'https://www.yanolja.com/', 'http://m.brightonmall.co.kr/', 'https://www.mangoplate.com/'];
+
 window.onload = function () {
   getSiteData();
   checkLoggedInAdmin();
-  fetch('/banner', {
-    method: 'GET',
-  })
+
+  fetch('/banner', { method: 'GET' })
     .then((response) => response.json())
     .then((data) => {
-      const banner = data.result;
-      bannerListbox.innerHTML = '';
-      indicators.innerHTML = '';
-      let i = 0;
-      banner.forEach((banner) => {
-        const indicatorslist = `<li data-target="#carousel-example-generic" data-slide-to="${i}" class="active"></li>`;
-        if (i === 0) {
-          const bannerList = `<div class="carousel-item active">
-                                <div class="news-block">
-                                <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform?usp=sf_link" target="_blank">
-                                    <div class="news-media"><img class="img-fluid" src="${banner.img}" alt="" /></div>
-                                    </a>
-                                        <div class="news-title">
-                                            <h2 class="title-large"><a href="#">저희 사이트를 평가해주세요.</a></h2>
-                                        </div>
-                                    <div class="news-des">이미지를 클릭하면 구글 폼이 나옵니다...</div>
-                                    <div class="time-text"><strong>${banner.time}분 전</strong></div>
-                                    <div></div>
-                                </div>
-                            </div>`;
-          bannerListbox.innerHTML += bannerList;
-        } else {
-          const bannerList = `<div class="carousel-item">
-                                <div class="news-block">
-                                    <div class="news-media"><img class="img-fluid" src="${banner.img}" alt="" /></div>
-                                            <div class="news-title">
-                                            <h2 class="title-large"><a href="#">여러분의 여행을 지금 바로 만들어보세요.</a></h2>
-                                        </div>
-                                    <div class="news-des">친구들 혹은 가족들과 오붓한 시간을 보내며 여행을 떠나보세요.</div>
-                                    <div class="time-text"><strong>${banner.time}분 전</strong></div>
-                                    <div></div>
-                                </div>
-                            </div>`;
-          bannerListbox.innerHTML += bannerList;
+      const banners = data.result;
+      const bannerListbox = document.getElementById('bannerlistbox');
+
+      banners.forEach((banner, index) => {
+        // Add image src using banner.img
+        const imgElement = document.createElement('img');
+        imgElement.src = './img/' + banner.img;
+        imgElement.alt = 'Banner image';
+        imgElement.id = 'img' + (index + 1); // Assign unique ID to each image
+
+        // Add click event listener to each image
+        imgElement.addEventListener('click', function () {
+          window.open(bannerUrls[index]); // Use the corresponding URL from the array
+        });
+
+        if (index === 0) {
+          imgElement.classList.add('active'); // Make the first slide active initially
         }
-        indicators.innerHTML += indicatorslist;
-        i++;
+
+        bannerListbox.appendChild(imgElement);
       });
+
+      const slides = document.querySelectorAll('#bannerlistbox img');
+
+      function prevSlide() {
+        slideIndex--;
+        if (slideIndex < 0) {
+          slideIndex = slides.length - 1;
+        }
+        showSlide(slideIndex);
+      }
+
+      function showSlide(n) {
+        for (let i = 0; i < slides.length; i++) {
+          slides[i].classList.remove('active');
+        }
+        slides[n].classList.add('active');
+      }
+
+      function nextSlide() {
+        slideIndex++;
+        if (slideIndex > slides.length - 1) {
+          slideIndex = 0;
+        }
+        showSlide(slideIndex);
+      }
+      nextBtn.addEventListener('click', nextSlide);
+      prevBtn.addEventListener('click', prevSlide);
+      setInterval(nextSlide, 3000);
     });
 };
-
 function getSiteData() {
   fetch('/first_toursite', {
     method: 'GET',
@@ -113,16 +124,16 @@ function checkLoggedInAdmin() {
     });
 }
 
-enterInput.addEventListener('keyup', function (event) {
-  if (event.keyCode === 13) {
-    const searchInput = document.getElementById('search-input').value;
-    const search_type = '제목';
-    window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
-  }
-});
+// enterInput.addEventListener('keyup', function (event) {
+//   if (event.keyCode === 13) {
+//     const searchInput = document.getElementById('search-input').value;
+//     const search_type = '제목';
+//     window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+//   }
+// });
 
-searchButton.addEventListener('click', function () {
-  const searchInput = document.getElementById('search-input').value;
-  const search_type = '제목';
-  window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
-});
+// searchButton.addEventListener('click', function () {
+//   const searchInput = document.getElementById('search-input').value;
+//   const search_type = '제목';
+//   window.location.href = `tourSite.html?data=${searchInput}&type=${search_type}`;
+// });
