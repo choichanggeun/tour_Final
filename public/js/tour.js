@@ -11,6 +11,7 @@ const createTourBtn = document.getElementById('createTour');
 const closeBtn = document.getElementById('tourcloseBtn');
 const tourcloseBtn = document.getElementById('tourcloseBtn');
 const siteCreateBtn = document.getElementById('siteCreateBtn');
+const timeCloseBtn = document.getElementById('timeCloseBtn');
 let linePath = [];
 let markers = [];
 let pathLines = [];
@@ -312,7 +313,7 @@ function createTour(tour_site_id) {
       .then((data) => {
         alert(data.message);
         if (data.code === 405) {
-          window.location.href = `tour-update.html?id=${data.result.id}`;
+          window.location.href = `tour.html?tourId=${data.result.id}&id=${data.result.tour_site_id}`;
         }
         if (data.code === 200) {
           window.location.href = `tour.html?tourId=${data.result.id}&id=${tour_site_id}`;
@@ -323,7 +324,7 @@ function createTour(tour_site_id) {
         alert('여행 계획 생성에 실패하였습니다.');
       });
   });
-  closeBtn.addEventListener('click', () => {
+  tourcloseBtn.addEventListener('click', () => {
     window.location.href = `tourSite.html`;
   });
   //모달의 바깥부분을 누르면 꺼짐
@@ -465,7 +466,6 @@ function createSite(places) {
   const placeTimeModal = document.getElementById('placeTimeModal');
   placeTimeModal.style.display = 'flex';
   const createPlaceBtn = document.getElementById('createPlaceBtn');
-  const timeCloseBtn = document.getElementById('timeCloseBtn');
   createPlaceBtn.addEventListener('click', function () {
     const day = document.getElementById('tourDays').value;
     const startTime = document.getElementById('startTime').value;
@@ -483,13 +483,7 @@ function createSite(places) {
       },
       body: JSON.stringify(formData),
     })
-      .then((response) => {
-        if (!response.ok) {
-          // If the HTTP status code is not successful...
-          throw new Error(`HTTP error! status: ${response.status}`); // ...throw an error.
-        }
-        return response.json(); // Otherwise, parse the response as JSON.
-      })
+      .then((response) => response.json()) // Otherwise, parse the response as JSON.
       .then((data) => {
         alert(data.message);
         if (data.status === 201) {
