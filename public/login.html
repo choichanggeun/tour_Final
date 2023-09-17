@@ -27,18 +27,18 @@
       } */
     #userEmail,
     #userPassword {
-      width: 50%;
-      margin-left: 15px;
+      width: 80%;
+      margin-left: 50px;
       border-radius: 10px;
       /* margin-top: 50px; */
     }
 
     #loginBtn {
       width: 20% !important;
-      height: 30px;
-      display: block;
+      /* height: 30px; */
+      /* display: block; */
       margin-top: 10px;
-      color: #03207f;
+      color: #ffffff;
       margin-left: 15px;
       border-radius: 30px;
       /* margin: auto; */
@@ -65,10 +65,10 @@
     #togglePassword {
       cursor: pointer;
       position: absolute;
-      right: 1280px;
-      transform: translateY(-300%);
+      left: 445px;
+      z-index: 9999;
+      top: 10px;
     }
-    
   </style>
 </head>
 
@@ -180,7 +180,7 @@
     </div>
   </nav>
   <!-- 왼쪽에 4개 있는 부분입니다. -->
-  <section class="banner-sec">
+  <section class="banner-sec" style="margin-bottom: 35px;">
     <div class="container">
       <div class="row">
         <!-- 여행 일지 나열하는 자리입니다. -->
@@ -199,114 +199,118 @@
     </div>
   </section>
 
-  <div class="container">
+  <!-- <div class="container">
     <div class="card-body">
       <div class="pb-2">
         <h5 class="card-title text-center pb-0 fs-4"><strong>Login to Your Account</strong></h5>
         <p class="text-center small">로그인 후 이용이 가능합니다.</p>
-      </div>
+      </div> -->
 
-      <div class="row g-3 needs-validation">
-        <div class="col-12">
-          <label for="userEmail" class="form-label">이메일</label>
-          <div class="input-group has-validation">
-            <span class="input-group-text" id="inputGroupPrepend"></span>
-            <input type="text" name="username" class="form-control" id="userEmail" required />
+      <div class="container mt-5">
+        <div class="row justify-content-center">
+          <div class="col-md-6" style="margin-bottom: 25px;">
+            <div class="card" style="position: relative; left: 258px;border-radius: 30px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1);">
+              <div class="card-body" style="margin-top: 25px; margin-bottom: 25px;">
+                <h5 class="card-title text-center pb-0 fs-4"><strong>Login to Your Account</strong></h5>
+                <p class="text-center small">로그인 후 이용이 가능합니다.</p>
+                <form>
+                  <div class="mb-3">
+                    <label for="userEmail" class="form-label">이메일</label>
+                    <input type="email" class="form-control" id="userEmail" placeholder="이메일을 입력하세요">
+                  </div>
+                  <div class="mb-3">
+                    <label for="userPassword" class="form-label">패스워드</label>
+                    <div class="input-group">
+                      <input type="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" id="userPassword" required />
+                        <i class="fa fa-eye fa-lg" id="togglePassword"></i>
+                    </div>
+                  </div>
+                  <button type="button" class="btn btn-primary w-100" id="loginBtn">로그인</button>
+                </form>
+                <p class="text-center mt-3" style="margin-top: 10px;">
+                  계정이 없으신가요? <a href="/signup.html">회원가입하러 가기</a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
+      </div>
 
-        <div class="col-12">
-          <label for="yourPassword" class="form-label">패스워드</label>
-          <input type="password" name="password" class="form-control" placeholder="비밀번호를 입력하세요" id="userPassword"
-            required />
-          <i class="fa fa-eye fa-lg" id="togglePassword"></i>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-12">
+              <h6 class="heading-footer">ABOUT US</h6>
+              <p>나만의 여행 코스를 만들고 함께 만드는 "투어 플래너"</p>
+              <p><i class="fa fa-phone"></i> <span>전화번호 :</span>내배캠-119</p>
+              <p><i class="fa fa-envelope"></i> <span>github :</span>https://github.com/choichanggeun/tour_Final</p>
+            </div>
+            <div class="col-lg-2 col-md-4">
+              <h6 class="heading-footer">QUICK LINKS</h6>
+              <ul class="footer-ul">
+                <li><a href="#"> 최창근</a></li>
+                <li><a href="#"> 이예진</a></li>
+                <li><a href="#"> 이수현</a></li>
+                <li><a href="#"> 정희윤</a></li>
+                <li><a href="#"> 최원빈</a></li>
+                <li><a href="#"> 마님과 돌쇠들(2조)</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-4 col-md-4">
+              <h6 class="heading-footer">LATEST NEWS</h6>
+              <li><a href="#" style="color: #ffffff"> https://github.com/choichanggeun</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/dldPwls03</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/jrmun</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/yuni416</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/wonbinchoi2353</a></li>
+            </div>
+            <div class="col-lg-2 col-md-4 social-icons">
+              <h6 class="heading-footer">FOLLOW</h6>
+              <ul class="footer-ul">
+                <li>
+                  <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-google-plus"></i> Google+</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-linkedin"></i> Linkedin</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
+      </footer>
+      <!--footer start from here-->
 
-        <div class="col-12">
-          <button class="btn btn-dark w-100" id="loginBtn">Login</button>
-        </div>
-        <div class="col-12" style="margin-left: 5px">
-          <p class="small mb-0" style="color: #0a70ff">계정이 없으신가요? <a href="/signup.html">회원가입</a></p>
+      <div class="copyright">
+        <div class="container">
+          <div class="col-lg-6 col-md-4">
+            <p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a></p>
+          </div>
+          <div class="col-lg-6 col-md-8">
+            <ul class="bottom_ul">
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Faq's</a></li>
+              <li><a href="#">Contact us</a></li>
+              <li><a href="#">Site Map</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-12">
-          <h6 class="heading-footer">ABOUT US</h6>
-          <p>나만의 여행 코스를 만들고 함께 만드는 "투어 플래너"</p>
-          <p><i class="fa fa-phone"></i> <span>전화번호 :</span>내배캠-119</p>
-          <p><i class="fa fa-envelope"></i> <span>github :</span>https://github.com/choichanggeun/tour_Final</p>
-        </div>
-        <div class="col-lg-2 col-md-4">
-          <h6 class="heading-footer">QUICK LINKS</h6>
-          <ul class="footer-ul">
-            <li><a href="#"> 최창근</a></li>
-            <li><a href="#"> 이예진</a></li>
-            <li><a href="#"> 이수현</a></li>
-            <li><a href="#"> 정희윤</a></li>
-            <li><a href="#"> 최원빈</a></li>
-            <li><a href="#"> 마님과 돌쇠들(2조)</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <h6 class="heading-footer">LATEST NEWS</h6>
-          <li><a href="#" style="color: #ffffff"> https://github.com/choichanggeun</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/dldPwls03</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/jrmun</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/yuni416</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/wonbinchoi2353</a></li>
-        </div>
-        <div class="col-lg-2 col-md-4 social-icons">
-          <h6 class="heading-footer">FOLLOW</h6>
-          <ul class="footer-ul">
-            <li>
-              <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-google-plus"></i> Google+</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-linkedin"></i> Linkedin</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!--footer start from here-->
-
-  <div class="copyright">
-    <div class="container">
-      <div class="col-lg-6 col-md-4">
-        <p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a></p>
-      </div>
-      <div class="col-lg-6 col-md-8">
-        <ul class="bottom_ul">
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Faq's</a></li>
-          <li><a href="#">Contact us</a></li>
-          <li><a href="#">Site Map</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap core JavaScript
+      <!-- Bootstrap core JavaScript
     ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/core.js"></script>
-  <script src="js/login.js"></script>
-  <script src="js/common.js"></script>
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/core.js"></script>
+      <script src="js/login.js"></script>
+      <script src="js/common.js"></script>
 </body>
 
 </html>
