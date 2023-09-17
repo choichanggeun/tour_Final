@@ -27,6 +27,7 @@ fetch('/like_tours')
 
         // 좋아요 이미지와 텍스트 요소 생성
         let likesElement = document.createElement('span');
+        likesElement.className = 'tour-card-like';
         let likesImageElement = document.createElement('img');
 
         likesImageElement.src = 'img/likeimg.png'; // 여기에 실제 이미지 경로 입력 img/media-8.jpg
@@ -34,6 +35,7 @@ fetch('/like_tours')
 
         // 사이트 이름 요소 생성
         let siteNameElement = document.createElement('p');
+        siteNameElement.className = 'tour-card-title';
 
         // 좋아요 개수 텍스트 요소 생성
         let likeCountText = item.likeCount ? ` : ${item.likeCount.likeCount}` : ' : 0';
