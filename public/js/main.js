@@ -20,7 +20,7 @@ postUploadBtn.addEventListener('click', async () => {
 let slideIndex = 0;
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
-const bannerUrls = ['https://docs.google.com/forms/d/e/1FAIpQLSdLrQJoFlr8fub--LXA5WF-UpbFAx69DHZaAqJ13i5V1taEDg/viewform', 'https://www.yanolja.com/', 'http://m.brightonmall.co.kr/', 'https://www.mangoplate.com/'];
+const bannerUrls = ['https://kr.trip.com/sale/w/5433/2023krhotelhighlight.html?locale=ko_kr&pid=10650103058&promo_referer=14_5433_2', 'https://www.jejuair.net/ko/main/base/index.do', 'https://www.myrealtrip.com/promotions/myrealhocance_ep378', 'https://www.mangoplate.com/'];
 
 window.onload = function () {
   getSiteData();
