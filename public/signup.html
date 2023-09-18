@@ -27,19 +27,20 @@
     #authCode,
     #userConfirmPassword,
     #userNickname {
-      width: 50%;
-      margin-left: 15px;
+      width: 450px;
+      margin-left: 75px;
       border-radius: 10px;
     }
 
     #createBtn {
-      width: 20% !important;
-      height: 30px;
-      display: block;
+      width: 30% !important;
+      /* height: 30px; */
+      /* display: block; */
       margin-top: 10px;
-      color: #03207f;
+      color: #ffffff;
       margin-left: 15px;
       border-radius: 30px;
+      background-color: #0275d8;
     }
 
     @keyframes blink {
@@ -70,15 +71,17 @@
     #togglePassword {
       cursor: pointer;
       position: absolute;
-      right: 1280px;
+      /* right: 1280px; */
       transform: translateY(-300%);
+      margin-left: 180px;
     }
 
     #toggleConfirmPassword {
       cursor: pointer;
       position: absolute;
-      right: 1280px;
+      /* right: 1280px; */
       transform: translateY(-300%);
+      margin-left: 180px;
     }
   </style>
 </head>
@@ -154,9 +157,8 @@
       <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse"
         data-target="#exCollapsingNavbar2" aria-controls="exCollapsingNavbar2" aria-expanded="false"
         aria-label="Toggle navigation">&#9776;</button>
-      <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
         <a class="navbar-brand" href="#">Responsive navbar</a>
-
         <ul class="nav navbar-nav">
           <li class="nav-item active">
             <!-- 홈 버튼 -->
@@ -181,7 +183,7 @@
             <button type="submit" class="btn btn-search" id="search-button"><i class="fa fa-search"></i></button>
           </div>
         </form>
-      </div>
+    </div>
     </div>
   </nav>
   <!-- 왼쪽에 4개 있는 부분입니다. -->
@@ -204,132 +206,141 @@
     </div>
   </section>
 
-  <div class="container">
-    <div class="card-body">
-      <div class="pt-4 pb-2">
-        <h5 class="card-title text-center pb-0 fs-4" style="color: #0a70ff">Create an Account</h5>
-        <p class="text-center small">회원가입 시 모든 정보는 필수로 입력해 주세요.</p>
-      </div>
+  <div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6" style="margin-bottom: 30px; margin-top: 35px;">
+        <div class="card" style="border-radius:30px; box-shadow: 0px 0px 10px rgba(0,0,0,0.1); width: 600px; margin: 0 275px;">
+          <div class="card-body">
+            <div class="pt-4 pb-2" style="margin-top: 20px;">
+              <h5 class="card-title text-center pb-0 fs-4" style="color: #0a70ff">Create an Account</h5>
+              <p class="text-center small">회원가입 시 모든 정보는 필수로 입력해 주세요.</p>
+            </div>
 
-      <div class="row g-3 needs-validation" novalidate>
-        <div class="col-12">
-          <label class="form-label">이메일</label>
-          <div style="display: flex">
-            <input type="email" class="form-control me-2 fs-14" id="userEmail" placeholder="hongkildong@gmail.com" />
-            <button class="btn btn-dark fs-14" style="margin-left: 10px; width: 12%; border-radius: 15px"
-              id="authEmailBtn">인증</button>
+            <div class="row g-3 needs-validation" novalidate>
+              <div class="col-12">
+                <label class="form-label">이메일</label>
+                <div style="display: flex">
+                  <input type="email" class="form-control me-2 fs-14" id="userEmail"
+                    placeholder="hongkildong@gmail.com" />
+                  <button class="btn btn-dark fs-14" style="margin-left: 10px; width: 10%; border-radius: 15px;height: 35px;"
+                    id="authEmailBtn">인증</button>
+                </div>
+              </div>
+
+              <div class="col-12 d-none" id="authCodeBox">
+                <input type="text" class="form-control fs-14" id="authCode" placeholder="인증번호를 입력해 주세요." />
+                <span class="fs-12 ms-2" style="color: gray; margin-left: 12px"> 인증메일이 안오셨나요? <a href="#"
+                    onclick="authMailSending()">재발송</a></span>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">비밀번호</label>
+                <input type="password" class="form-control fs-14" id="userPassword"
+                  placeholder="영문, 숫자, 특수문자를 포함해야합니다." />
+                <i class="fa fa-eye fa-lg toggle-password" id="togglePassword"></i>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">확인 비밀번호</label>
+                <input type="password" class="form-control fs-14" id="userConfirmPassword"
+                  placeholder="비밀번호를 한번 더 입력해 주세요." />
+                <i class="fa fa-eye fa-lg toggle-password" id="toggleConfirmPassword"></i>
+              </div>
+
+              <div class="col-12">
+                <label class="form-label">닉네임</label>
+                <input type="text" class="form-control fs-14" id="userNickname" placeholder="길똥이" />
+              </div>
+
+              <div class="col-12">
+                <button class="btn btn-dark w-100" id="createBtn">Create Account</button>
+              </div>
+              <div class="col-12" style="display: flex; justify-content: space-between">
+                <p class="small mb-0" style="color: #0a70ff;margin-left: 225px;margin-top: 10px;">이미 가입된 계정이 있습니까? <a href="/login.html">로그인</a></p>
+              </div>
+            </div>
           </div>
         </div>
-
-        <div class="col-12 d-none" id="authCodeBox">
-          <input type="text" class="form-control fs-14" id="authCode" placeholder="인증번호를 입력해 주세요." />
-          <span class="fs-12 ms-2" style="color: gray; margin-left: 12px"> 인증메일이 안오셨나요? <a href="#"
-              onclick="authMailSending()">재발송</a></span>
-        </div>
-        
-        <div class="col-12">
-          <label class="form-label">비밀번호</label>
-          <input type="password" class="form-control fs-14" id="userPassword" placeholder="영문, 숫자, 특수문자를 포함해야합니다." />
-          <i class="fa fa-eye fa-lg toggle-password" id="togglePassword"></i>
-        </div>
-
-        <div class="col-12">
-          <label class="form-label">확인 비밀번호</label>
-          <input type="password" class="form-control fs-14" id="userConfirmPassword"
-            placeholder="비밀번호를 한번 더 입력해 주세요." />
-          <i class="fa fa-eye fa-lg toggle-password" id="toggleConfirmPassword"></i>
-        </div>
-
-        <div class="col-12">
-          <label class="form-label">닉네임</label>
-          <input type="text" class="form-control fs-14" id="userNickname" placeholder="길똥이" />
-        </div>
-
-        <div class="col-12">
-          <button class="btn btn-dark w-100" id="createBtn">Create Account</button>
-        </div>
-        <div class="col-12" style="display: flex; justify-content: space-between">
-          <p class="small mb-0" style="color: #0a70ff">이미 가입된 계정이 있습니까? <a href="/login.html">로그인</a></p>
-        </div>
       </div>
     </div>
   </div>
+      
 
-  <footer>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 col-md-12">
-          <h6 class="heading-footer">ABOUT US</h6>
-          <p>나만의 여행 코스를 만들고 함께 만드는 "투어 플래너"</p>
-          <p><i class="fa fa-phone"></i> <span>전화번호 :</span> 내배캠-119</p>
-          <p><i class="fa fa-envelope"></i> <span>github :</span> https://github.com/choichanggeun/tour_Final</p>
+      <footer>
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-4 col-md-12">
+              <h6 class="heading-footer">ABOUT US</h6>
+              <p>나만의 여행 코스를 만들고 함께 만드는 "투어 플래너"</p>
+              <p><i class="fa fa-phone"></i> <span>전화번호 :</span> 내배캠-119</p>
+              <p><i class="fa fa-envelope"></i> <span>github :</span> https://github.com/choichanggeun/tour_Final</p>
+            </div>
+            <div class="col-lg-2 col-md-4">
+              <h6 class="heading-footer">QUICK LINKS</h6>
+              <ul class="footer-ul">
+                <li><a href="#"> 최창근</a></li>
+                <li><a href="#"> 이예진</a></li>
+                <li><a href="#"> 이수현</a></li>
+                <li><a href="#"> 정희윤</a></li>
+                <li><a href="#"> 최원빈</a></li>
+                <li><a href="#"> 마님과 돌쇠들(2조)</a></li>
+              </ul>
+            </div>
+            <div class="col-lg-4 col-md-4">
+              <h6 class="heading-footer">LATEST NEWS</h6>
+              <li><a href="#" style="color: #ffffff"> https://github.com/choichanggeun</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/dldPwls03</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/jrmun</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/yuni416</a></li>
+              <li><a href="#" style="color: #ffffff"> https://github.com/wonbinchoi2353</a></li>
+            </div>
+            <div class="col-lg-2 col-md-4 social-icons">
+              <h6 class="heading-footer">FOLLOW</h6>
+              <ul class="footer-ul">
+                <li>
+                  <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-google-plus"></i> Google+</a>
+                </li>
+                <li>
+                  <a href="#"><i class="fa fa-linkedin"></i> Linkedin</a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
-        <div class="col-lg-2 col-md-4">
-          <h6 class="heading-footer">QUICK LINKS</h6>
-          <ul class="footer-ul">
-            <li><a href="#"> 최창근</a></li>
-            <li><a href="#"> 이예진</a></li>
-            <li><a href="#"> 이수현</a></li>
-            <li><a href="#"> 정희윤</a></li>
-            <li><a href="#"> 최원빈</a></li>
-            <li><a href="#"> 마님과 돌쇠들(2조)</a></li>
-          </ul>
-        </div>
-        <div class="col-lg-4 col-md-4">
-          <h6 class="heading-footer">LATEST NEWS</h6>
-          <li><a href="#" style="color: #ffffff"> https://github.com/choichanggeun</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/dldPwls03</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/jrmun</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/yuni416</a></li>
-          <li><a href="#" style="color: #ffffff"> https://github.com/wonbinchoi2353</a></li>
-        </div>
-        <div class="col-lg-2 col-md-4 social-icons">
-          <h6 class="heading-footer">FOLLOW</h6>
-          <ul class="footer-ul">
-            <li>
-              <a href="#"><i class="fa fa-facebook"></i> Facebook</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-twitter"></i> Twitter</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-google-plus"></i> Google+</a>
-            </li>
-            <li>
-              <a href="#"><i class="fa fa-linkedin"></i> Linkedin</a>
-            </li>
-          </ul>
+      </footer>
+      <!--footer start from here-->
+
+      <div class="copyright">
+        <div class="container">
+          <div class="col-lg-6 col-md-4">
+            <p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a></p>
+          </div>
+          <div class="col-lg-6 col-md-8">
+            <ul class="bottom_ul">
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Faq's</a></li>
+              <li><a href="#">Contact us</a></li>
+              <li><a href="#">Site Map</a></li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
-  <!--footer start from here-->
 
-  <div class="copyright">
-    <div class="container">
-      <div class="col-lg-6 col-md-4">
-        <p>Shared by <i class="fa fa-love"></i><a href="https://bootstrapthemes.co">BootstrapThemes</a></p>
-      </div>
-      <div class="col-lg-6 col-md-8">
-        <ul class="bottom_ul">
-          <li><a href="#">About us</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Faq's</a></li>
-          <li><a href="#">Contact us</a></li>
-          <li><a href="#">Site Map</a></li>
-        </ul>
-      </div>
-    </div>
-  </div>
-
-  <!-- Bootstrap core JavaScript
+      <!-- Bootstrap core JavaScript
     ================================================== -->
-  <!-- Placed at the end of the document so the pages load faster -->
-  <script src="js/jquery.min.js"></script>
-  <script src="js/bootstrap.min.js"></script>
-  <script src="js/core.js"></script>
-  <script src="js/signup.js"></script>
-  <script src="js/common.js"></script>
+      <!-- Placed at the end of the document so the pages load faster -->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      <script src="js/core.js"></script>
+      <script src="js/signup.js"></script>
+      <script src="js/common.js"></script>
 </body>
 
 </html>

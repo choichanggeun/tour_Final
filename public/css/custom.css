@@ -122,7 +122,7 @@ section {
   float: left;
   width: 100%;
   background: #ffffff;
-  border-bottom: 2px solid #000000;
+  /* border-bottom: 2px solid #000000; */
 }
 .card-block {
   padding: 0 10px 10px;
